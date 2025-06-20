@@ -1,0 +1,1573 @@
+2025-06-21 02:14:52,619 - INFO - bsp_finder - <module> - 487 - Script execution started.
+2025-06-21 02:14:52,620 - INFO - bsp_finder - get_input_csv - 98 - CSV: Reading input: 'bet sample.csv'
+2025-06-21 02:14:52,622 - DEBUG - bsp_finder - get_input_csv - 103 - CSV: Header: ['Time', 'Venue', 'Code', 'RaceNo', 'RunnerNo', 'RunnerName', 'Type', 'Market', 'Bookie', 'Odds']
+2025-06-21 02:14:52,623 - DEBUG - bsp_finder - get_input_csv - 106 - CSV: 'Odds' column at index 9.
+2025-06-21 02:14:52,637 - INFO - bsp_finder - get_input_csv - 121 - CSV: Loaded 3553 tasks from 'bet sample.csv'.
+2025-06-21 02:14:52,639 - INFO - bsp_finder - scrape_and_enrich_csv - 178 - Starting main scraping and enrichment process...
+2025-06-21 02:14:52,640 - INFO - bsp_finder - setup_driver - 51 - Initializing Chrome WebDriver setup...
+2025-06-21 02:14:52,640 - DEBUG - bsp_finder - setup_driver - 57 - WebDriverManager: Installing/Locating ChromeDriver...
+2025-06-21 02:15:26,282 - INFO - bsp_finder - setup_driver - 60 - WebDriver setup successful.
+2025-06-21 02:15:26,283 - DEBUG - bsp_finder - scrape_and_enrich_csv - 190 - Preprocessing 'time' column for 'date_only'.
+2025-06-21 02:15:26,386 - INFO - bsp_finder - scrape_and_enrich_csv - 203 - Input tasks (after date parse) grouped into 186 [Date, Code, Venue] groups.
+2025-06-21 02:15:26,386 - INFO - bsp_finder - scrape_and_enrich_csv - 206 - Navigating to base URL: https://www.betfair.com.au/hub/racing/horse-racing/racing-results/
+2025-06-21 02:15:30,945 - INFO - bsp_finder - scrape_and_enrich_csv - 207 - Page loaded.
+2025-06-21 02:15:30,957 - INFO - bsp_finder - scrape_and_enrich_csv - 213 - Processing Group: Date='13/06/2025', Code='HARNESS', Venue='MILDURA' (31 tasks)
+2025-06-21 02:15:30,959 - INFO - bsp_finder - scrape_and_enrich_csv - 221 - DATE CHANGE: Current='None', Target='13/06/2025'.
+2025-06-21 02:15:30,959 - INFO - bsp_finder - select_date_on_calendar - 66 - Calendar: Selecting date: '13/06/2025'.
+2025-06-21 02:15:30,962 - DEBUG - bsp_finder - select_date_on_calendar - 71 - Calendar: Clicking icon.
+2025-06-21 02:15:32,268 - DEBUG - bsp_finder - select_date_on_calendar - 72 - Calendar: Widget visible.
+2025-06-21 02:15:32,408 - DEBUG - bsp_finder - select_date_on_calendar - 77 - Calendar: Display: June 2025. Target: June 2025.
+2025-06-21 02:15:32,408 - DEBUG - bsp_finder - select_date_on_calendar - 78 - Calendar: Correct month/year.
+2025-06-21 02:15:32,408 - DEBUG - bsp_finder - select_date_on_calendar - 86 - Calendar: Clicking day XPath: //span[contains(@class, 'flatpickr-day') and not(contains(@class, 'prevMonthDay')) and not(contains(@class, 'nextMonthDay')) and normalize-space()='13']
+2025-06-21 02:15:32,549 - INFO - bsp_finder - select_date_on_calendar - 87 - Calendar: Day '13' selected.
+2025-06-21 02:15:32,550 - DEBUG - bsp_finder - select_date_on_calendar - 89 - Calendar: Waiting for spinner post-date selection (up to 120s)...
+2025-06-21 02:15:32,592 - DEBUG - bsp_finder - select_date_on_calendar - 91 - Calendar: Spinner detected. Waiting for invisibility.
+2025-06-21 02:15:33,245 - INFO - bsp_finder - select_date_on_calendar - 92 - Calendar: Date selection complete, spinner gone.
+2025-06-21 02:15:33,245 - INFO - bsp_finder - scrape_and_enrich_csv - 229 - DATE '13/06/2025' selected. Verifying data panel (up to 2 mins)...
+2025-06-21 02:15:33,259 - DEBUG - bsp_finder - scrape_and_enrich_csv - 231 - Filter panel present for 13/06/2025.
+2025-06-21 02:15:33,278 - INFO - bsp_finder - scrape_and_enrich_csv - 233 - FILTER LIST POPULATED for 13/06/2025. Date load OK.
+2025-06-21 02:15:33,278 - INFO - bsp_finder - scrape_and_enrich_csv - 248 - CODE CHANGE: Current='None', Target='harness'.
+2025-06-21 02:15:36,099 - INFO - bsp_finder - scrape_and_enrich_csv - 253 - CODE SWITCHED to 'harness'.
+2025-06-21 02:15:36,099 - INFO - bsp_finder - scrape_and_enrich_csv - 261 - VENUE CHANGE: Current='None', Target='MILDURA'.
+2025-06-21 02:15:36,100 - DEBUG - bsp_finder - scrape_and_enrich_csv - 264 - VENUE: Locating filters with CSS: div.filters-list div.filter:not([style*='display: none'])
+2025-06-21 02:15:36,221 - DEBUG - bsp_finder - scrape_and_enrich_csv - 267 - VENUE: Found 11 filters for code 'harness'. Searching for 'MILDURA'.
+2025-06-21 02:15:36,284 - DEBUG - bsp_finder - scrape_and_enrich_csv - 274 - VENUE: Found 'Mildura'. Clicking.
+2025-06-21 02:15:36,992 - DEBUG - bsp_finder - scrape_and_enrich_csv - 279 - VENUE: Waiting for spinner post-click 'MILDURA'.
+2025-06-21 02:15:42,318 - DEBUG - bsp_finder - scrape_and_enrich_csv - 281 - VENUE: Spinner not detected/timed out for 'MILDURA'.
+2025-06-21 02:15:42,363 - INFO - bsp_finder - scrape_and_enrich_csv - 285 - VENUE SELECTED: 'MILDURA'.
+2025-06-21 02:15:42,363 - DEBUG - bsp_finder - scrape_and_enrich_csv - 313 - Venue 'MILDURA': Processing 5 race number(s).
+2025-06-21 02:15:42,365 - INFO - bsp_finder - _fetch_bsp_for_race_runners - 130 - Race R6 (MILDURA): Processing 7 task(s).
+2025-06-21 02:15:42,365 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 133 - Race R6: Locating Tab XPath: .//div[contains(@class, 'race-tab') and div[@class='race-number' and normalize-space(text())='6']]
+2025-06-21 02:15:42,410 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 136 - Race R6: Tab not active. Clicking.
+2025-06-21 02:15:44,930 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 141 - Race R6: Locating runners XPath: .//div[@class='races']/div[contains(@class, 'betfair-url') and not(contains(@style,'display: none'))]//div[@class='runners']
+2025-06-21 02:15:44,956 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 147 -   Runner 7 ('CAVALRY') in R6: Scraping BSP.
+2025-06-21 02:15:45,003 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 153 -   Runner 7 ('CAVALRY') in R6: SUCCESS. BSP Win: '8.08', Place: '2.48'.
+2025-06-21 02:15:45,004 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 147 -   Runner 7 ('CAVALRY') in R6: Scraping BSP.
+2025-06-21 02:15:45,039 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 153 -   Runner 7 ('CAVALRY') in R6: SUCCESS. BSP Win: '8.08', Place: '2.48'.
+2025-06-21 02:15:45,041 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 147 -   Runner 10 ('CRUZ WITH ROME') in R6: Scraping BSP.
+2025-06-21 02:15:45,078 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 153 -   Runner 10 ('CRUZ WITH ROME') in R6: SUCCESS. BSP Win: '11', Place: '2.74'.
+2025-06-21 02:15:45,079 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 147 -   Runner 4 ('PUNTO CALIENTE') in R6: Scraping BSP.
+2025-06-21 02:15:45,127 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 153 -   Runner 4 ('PUNTO CALIENTE') in R6: SUCCESS. BSP Win: '12.5', Place: '2.74'.
+2025-06-21 02:15:45,129 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 147 -   Runner 10 ('CRUZ WITH ROME') in R6: Scraping BSP.
+2025-06-21 02:15:45,174 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 153 -   Runner 10 ('CRUZ WITH ROME') in R6: SUCCESS. BSP Win: '11', Place: '2.74'.
+2025-06-21 02:15:45,175 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 147 -   Runner 6 ('DAYLIGHT') in R6: Scraping BSP.
+2025-06-21 02:15:45,239 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 153 -   Runner 6 ('DAYLIGHT') in R6: SUCCESS. BSP Win: '142.4', Place: '24.12'.
+2025-06-21 02:15:45,243 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 147 -   Runner 4 ('PUNTO CALIENTE') in R6: Scraping BSP.
+2025-06-21 02:15:45,869 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 153 -   Runner 4 ('PUNTO CALIENTE') in R6: SUCCESS. BSP Win: '12.5', Place: '2.74'.
+2025-06-21 02:15:45,871 - INFO - bsp_finder - _fetch_bsp_for_race_runners - 163 - Race R6 (MILDURA): Processed 7/7 tasks successfully.
+2025-06-21 02:15:45,871 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 174 - Race R6: Finished. Returning 7 tasks.
+2025-06-21 02:15:45,873 - INFO - bsp_finder - _fetch_bsp_for_race_runners - 130 - Race R5 (MILDURA): Processing 9 task(s).
+2025-06-21 02:15:45,873 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 133 - Race R5: Locating Tab XPath: .//div[contains(@class, 'race-tab') and div[@class='race-number' and normalize-space(text())='5']]
+2025-06-21 02:15:45,903 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 136 - Race R5: Tab not active. Clicking.
+2025-06-21 02:15:48,342 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 141 - Race R5: Locating runners XPath: .//div[@class='races']/div[contains(@class, 'betfair-url') and not(contains(@style,'display: none'))]//div[@class='runners']
+2025-06-21 02:15:48,368 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 147 -   Runner 5 ('ROBERT CROCKA') in R5: Scraping BSP.
+2025-06-21 02:15:48,429 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 153 -   Runner 5 ('ROBERT CROCKA') in R5: SUCCESS. BSP Win: '6.4', Place: '2.68'.
+2025-06-21 02:15:48,432 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 147 -   Runner 5 ('ROBERT CROCKA') in R5: Scraping BSP.
+2025-06-21 02:15:48,634 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 153 -   Runner 5 ('ROBERT CROCKA') in R5: SUCCESS. BSP Win: '6.4', Place: '2.68'.
+2025-06-21 02:15:48,637 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 147 -   Runner 5 ('ROBERT CROCKA') in R5: Scraping BSP.
+2025-06-21 02:15:48,845 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 153 -   Runner 5 ('ROBERT CROCKA') in R5: SUCCESS. BSP Win: '6.4', Place: '2.68'.
+2025-06-21 02:15:48,847 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 147 -   Runner 4 ('STONEBRIDGE STAR') in R5: Scraping BSP.
+2025-06-21 02:15:48,963 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 153 -   Runner 4 ('STONEBRIDGE STAR') in R5: SUCCESS. BSP Win: '7.8', Place: '2.18'.
+2025-06-21 02:15:48,964 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 147 -   Runner 3 ('STEAL SOME TIME') in R5: Scraping BSP.
+2025-06-21 02:15:49,059 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 153 -   Runner 3 ('STEAL SOME TIME') in R5: SUCCESS. BSP Win: '10', Place: '2.84'.
+2025-06-21 02:15:49,062 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 147 -   Runner 3 ('STEAL SOME TIME') in R5: Scraping BSP.
+2025-06-21 02:15:49,181 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 153 -   Runner 3 ('STEAL SOME TIME') in R5: SUCCESS. BSP Win: '10', Place: '2.84'.
+2025-06-21 02:15:49,182 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 147 -   Runner 3 ('STEAL SOME TIME') in R5: Scraping BSP.
+2025-06-21 02:15:49,250 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 153 -   Runner 3 ('STEAL SOME TIME') in R5: SUCCESS. BSP Win: '10', Place: '2.84'.
+2025-06-21 02:15:49,253 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 147 -   Runner 3 ('STEAL SOME TIME') in R5: Scraping BSP.
+2025-06-21 02:15:49,342 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 153 -   Runner 3 ('STEAL SOME TIME') in R5: SUCCESS. BSP Win: '10', Place: '2.84'.
+2025-06-21 02:15:49,345 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 147 -   Runner 3 ('STEAL SOME TIME') in R5: Scraping BSP.
+2025-06-21 02:15:49,415 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 153 -   Runner 3 ('STEAL SOME TIME') in R5: SUCCESS. BSP Win: '10', Place: '2.84'.
+2025-06-21 02:15:49,416 - INFO - bsp_finder - _fetch_bsp_for_race_runners - 163 - Race R5 (MILDURA): Processed 9/9 tasks successfully.
+2025-06-21 02:15:49,416 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 174 - Race R5: Finished. Returning 9 tasks.
+2025-06-21 02:15:49,416 - INFO - bsp_finder - _fetch_bsp_for_race_runners - 130 - Race R4 (MILDURA): Processing 1 task(s).
+2025-06-21 02:15:49,417 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 133 - Race R4: Locating Tab XPath: .//div[contains(@class, 'race-tab') and div[@class='race-number' and normalize-space(text())='4']]
+2025-06-21 02:15:49,481 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 136 - Race R4: Tab not active. Clicking.
+2025-06-21 02:15:51,848 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 141 - Race R4: Locating runners XPath: .//div[@class='races']/div[contains(@class, 'betfair-url') and not(contains(@style,'display: none'))]//div[@class='runners']
+2025-06-21 02:15:52,146 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 147 -   Runner 5 ('A ROCKNROLL JET') in R4: Scraping BSP.
+2025-06-21 02:15:52,244 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 153 -   Runner 5 ('A ROCKNROLL JET') in R4: SUCCESS. BSP Win: '30.4', Place: '6.2'.
+2025-06-21 02:15:52,246 - INFO - bsp_finder - _fetch_bsp_for_race_runners - 163 - Race R4 (MILDURA): Processed 1/1 tasks successfully.
+2025-06-21 02:15:52,246 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 174 - Race R4: Finished. Returning 1 tasks.
+2025-06-21 02:15:52,246 - INFO - bsp_finder - _fetch_bsp_for_race_runners - 130 - Race R3 (MILDURA): Processing 11 task(s).
+2025-06-21 02:15:52,246 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 133 - Race R3: Locating Tab XPath: .//div[contains(@class, 'race-tab') and div[@class='race-number' and normalize-space(text())='3']]
+2025-06-21 02:15:52,300 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 136 - Race R3: Tab not active. Clicking.
+2025-06-21 02:15:54,671 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 141 - Race R3: Locating runners XPath: .//div[@class='races']/div[contains(@class, 'betfair-url') and not(contains(@style,'display: none'))]//div[@class='runners']
+2025-06-21 02:15:55,309 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 147 -   Runner 4 ('SHIREEN') in R3: Scraping BSP.
+2025-06-21 02:15:55,385 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 153 -   Runner 4 ('SHIREEN') in R3: SUCCESS. BSP Win: '18.55', Place: '4.6'.
+2025-06-21 02:15:55,388 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 147 -   Runner 4 ('SHIREEN') in R3: Scraping BSP.
+2025-06-21 02:15:55,568 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 153 -   Runner 4 ('SHIREEN') in R3: SUCCESS. BSP Win: '18.55', Place: '4.6'.
+2025-06-21 02:15:55,572 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 147 -   Runner 4 ('SHIREEN') in R3: Scraping BSP.
+2025-06-21 02:15:55,643 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 153 -   Runner 4 ('SHIREEN') in R3: SUCCESS. BSP Win: '18.55', Place: '4.6'.
+2025-06-21 02:15:55,644 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 147 -   Runner 4 ('SHIREEN') in R3: Scraping BSP.
+2025-06-21 02:15:55,718 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 153 -   Runner 4 ('SHIREEN') in R3: SUCCESS. BSP Win: '18.55', Place: '4.6'.
+2025-06-21 02:15:55,722 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 147 -   Runner 8 ('CORZAN DRAMA') in R3: Scraping BSP.
+2025-06-21 02:15:55,781 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 153 -   Runner 8 ('CORZAN DRAMA') in R3: SUCCESS. BSP Win: '9.11', Place: '2.44'.
+2025-06-21 02:15:55,784 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 147 -   Runner 8 ('CORZAN DRAMA') in R3: Scraping BSP.
+2025-06-21 02:15:55,857 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 153 -   Runner 8 ('CORZAN DRAMA') in R3: SUCCESS. BSP Win: '9.11', Place: '2.44'.
+2025-06-21 02:15:55,860 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 147 -   Runner 4 ('SHIREEN') in R3: Scraping BSP.
+2025-06-21 02:15:55,932 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 153 -   Runner 4 ('SHIREEN') in R3: SUCCESS. BSP Win: '18.55', Place: '4.6'.
+2025-06-21 02:15:55,935 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 147 -   Runner 1 ('OUR MASTER PLAY') in R3: Scraping BSP.
+2025-06-21 02:15:55,999 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 153 -   Runner 1 ('OUR MASTER PLAY') in R3: SUCCESS. BSP Win: '11.5', Place: '2.45'.
+2025-06-21 02:15:56,000 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 147 -   Runner 1 ('OUR MASTER PLAY') in R3: Scraping BSP.
+2025-06-21 02:15:56,097 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 153 -   Runner 1 ('OUR MASTER PLAY') in R3: SUCCESS. BSP Win: '11.5', Place: '2.45'.
+2025-06-21 02:15:56,100 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 147 -   Runner 1 ('OUR MASTER PLAY') in R3: Scraping BSP.
+2025-06-21 02:15:56,207 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 153 -   Runner 1 ('OUR MASTER PLAY') in R3: SUCCESS. BSP Win: '11.5', Place: '2.45'.
+2025-06-21 02:15:56,209 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 147 -   Runner 1 ('OUR MASTER PLAY') in R3: Scraping BSP.
+2025-06-21 02:15:56,365 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 153 -   Runner 1 ('OUR MASTER PLAY') in R3: SUCCESS. BSP Win: '11.5', Place: '2.45'.
+2025-06-21 02:15:56,367 - INFO - bsp_finder - _fetch_bsp_for_race_runners - 163 - Race R3 (MILDURA): Processed 11/11 tasks successfully.
+2025-06-21 02:15:56,372 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 174 - Race R3: Finished. Returning 11 tasks.
+2025-06-21 02:15:56,372 - INFO - bsp_finder - _fetch_bsp_for_race_runners - 130 - Race R2 (MILDURA): Processing 3 task(s).
+2025-06-21 02:15:56,372 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 133 - Race R2: Locating Tab XPath: .//div[contains(@class, 'race-tab') and div[@class='race-number' and normalize-space(text())='2']]
+2025-06-21 02:15:56,561 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 136 - Race R2: Tab not active. Clicking.
+2025-06-21 02:15:58,918 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 141 - Race R2: Locating runners XPath: .//div[@class='races']/div[contains(@class, 'betfair-url') and not(contains(@style,'display: none'))]//div[@class='runners']
+2025-06-21 02:15:58,950 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 147 -   Runner 4 ('GRENADE') in R2: Scraping BSP.
+2025-06-21 02:15:59,034 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 153 -   Runner 4 ('GRENADE') in R2: SUCCESS. BSP Win: '8.92', Place: '2.18'.
+2025-06-21 02:15:59,041 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 147 -   Runner 4 ('GRENADE') in R2: Scraping BSP.
+2025-06-21 02:15:59,330 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 153 -   Runner 4 ('GRENADE') in R2: SUCCESS. BSP Win: '8.92', Place: '2.18'.
+2025-06-21 02:15:59,333 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 147 -   Runner 4 ('GRENADE') in R2: Scraping BSP.
+2025-06-21 02:15:59,466 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 153 -   Runner 4 ('GRENADE') in R2: SUCCESS. BSP Win: '8.92', Place: '2.18'.
+2025-06-21 02:15:59,467 - INFO - bsp_finder - _fetch_bsp_for_race_runners - 163 - Race R2 (MILDURA): Processed 3/3 tasks successfully.
+2025-06-21 02:15:59,467 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 174 - Race R2: Finished. Returning 3 tasks.
+2025-06-21 02:15:59,467 - INFO - bsp_finder - scrape_and_enrich_csv - 213 - Processing Group: Date='13/06/2025', Code='HARNESS', Venue='ALBION PARK' (1 tasks)
+2025-06-21 02:15:59,467 - INFO - bsp_finder - scrape_and_enrich_csv - 261 - VENUE CHANGE: Current='MILDURA', Target='ALBION PARK'.
+2025-06-21 02:15:59,467 - DEBUG - bsp_finder - scrape_and_enrich_csv - 264 - VENUE: Locating filters with CSS: div.filters-list div.filter:not([style*='display: none'])
+2025-06-21 02:15:59,600 - DEBUG - bsp_finder - scrape_and_enrich_csv - 267 - VENUE: Found 11 filters for code 'harness'. Searching for 'ALBION PARK'.
+2025-06-21 02:15:59,621 - DEBUG - bsp_finder - scrape_and_enrich_csv - 274 - VENUE: Found 'Albion Park'. Clicking.
+2025-06-21 02:16:00,578 - DEBUG - bsp_finder - scrape_and_enrich_csv - 279 - VENUE: Waiting for spinner post-click 'ALBION PARK'.
+2025-06-21 02:16:06,025 - DEBUG - bsp_finder - scrape_and_enrich_csv - 281 - VENUE: Spinner not detected/timed out for 'ALBION PARK'.
+2025-06-21 02:16:06,048 - INFO - bsp_finder - scrape_and_enrich_csv - 285 - VENUE SELECTED: 'ALBION PARK'.
+2025-06-21 02:16:06,049 - DEBUG - bsp_finder - scrape_and_enrich_csv - 313 - Venue 'ALBION PARK': Processing 1 race number(s).
+2025-06-21 02:16:06,050 - INFO - bsp_finder - _fetch_bsp_for_race_runners - 130 - Race R1 (ALBION PARK): Processing 1 task(s).
+2025-06-21 02:16:06,050 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 133 - Race R1: Locating Tab XPath: .//div[contains(@class, 'race-tab') and div[@class='race-number' and normalize-space(text())='1']]
+2025-06-21 02:16:06,100 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 138 - Race R1: Tab already active.
+2025-06-21 02:16:06,614 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 141 - Race R1: Locating runners XPath: .//div[@class='races']/div[contains(@class, 'betfair-url') and not(contains(@style,'display: none'))]//div[@class='runners']
+2025-06-21 02:16:06,794 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 147 -   Runner 2 ('ALLNIGHT DANCER') in R1: Scraping BSP.
+2025-06-21 02:16:06,959 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 153 -   Runner 2 ('ALLNIGHT DANCER') in R1: SUCCESS. BSP Win: '83.02', Place: '8.2'.
+2025-06-21 02:16:06,960 - INFO - bsp_finder - _fetch_bsp_for_race_runners - 163 - Race R1 (ALBION PARK): Processed 1/1 tasks successfully.
+2025-06-21 02:16:06,961 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 174 - Race R1: Finished. Returning 1 tasks.
+2025-06-21 02:16:06,961 - INFO - bsp_finder - scrape_and_enrich_csv - 213 - Processing Group: Date='13/06/2025', Code='GREYHOUNDS', Venue='WARRAGUL' (6 tasks)
+2025-06-21 02:16:06,961 - INFO - bsp_finder - scrape_and_enrich_csv - 248 - CODE CHANGE: Current='harness', Target='greyhound'.
+2025-06-21 02:16:09,650 - INFO - bsp_finder - scrape_and_enrich_csv - 253 - CODE SWITCHED to 'greyhound'.
+2025-06-21 02:16:09,652 - INFO - bsp_finder - scrape_and_enrich_csv - 261 - VENUE CHANGE: Current='None', Target='WARRAGUL'.
+2025-06-21 02:16:09,653 - DEBUG - bsp_finder - scrape_and_enrich_csv - 264 - VENUE: Locating filters with CSS: div.filters-list div.filter:not([style*='display: none'])
+2025-06-21 02:16:09,862 - DEBUG - bsp_finder - scrape_and_enrich_csv - 267 - VENUE: Found 14 filters for code 'greyhound'. Searching for 'WARRAGUL'.
+2025-06-21 02:16:10,007 - DEBUG - bsp_finder - scrape_and_enrich_csv - 274 - VENUE: Found 'Warragul'. Clicking.
+2025-06-21 02:16:10,679 - DEBUG - bsp_finder - scrape_and_enrich_csv - 279 - VENUE: Waiting for spinner post-click 'WARRAGUL'.
+2025-06-21 02:16:16,029 - DEBUG - bsp_finder - scrape_and_enrich_csv - 281 - VENUE: Spinner not detected/timed out for 'WARRAGUL'.
+2025-06-21 02:16:16,111 - INFO - bsp_finder - scrape_and_enrich_csv - 285 - VENUE SELECTED: 'WARRAGUL'.
+2025-06-21 02:16:16,112 - DEBUG - bsp_finder - scrape_and_enrich_csv - 313 - Venue 'WARRAGUL': Processing 3 race number(s).
+2025-06-21 02:16:16,112 - INFO - bsp_finder - _fetch_bsp_for_race_runners - 130 - Race R7 (WARRAGUL): Processing 4 task(s).
+2025-06-21 02:16:16,112 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 133 - Race R7: Locating Tab XPath: .//div[contains(@class, 'race-tab') and div[@class='race-number' and normalize-space(text())='7']]
+2025-06-21 02:16:16,165 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 136 - Race R7: Tab not active. Clicking.
+2025-06-21 02:16:18,536 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 141 - Race R7: Locating runners XPath: .//div[@class='races']/div[contains(@class, 'betfair-url') and not(contains(@style,'display: none'))]//div[@class='runners']
+2025-06-21 02:16:18,571 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 147 -   Runner 2 ('FIELD OF ANGELS') in R7: Scraping BSP.
+2025-06-21 02:16:18,628 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 153 -   Runner 2 ('FIELD OF ANGELS') in R7: SUCCESS. BSP Win: '6.7', Place: '1.58'.
+2025-06-21 02:16:18,630 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 147 -   Runner 2 ('FIELD OF ANGELS') in R7: Scraping BSP.
+2025-06-21 02:16:18,711 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 153 -   Runner 2 ('FIELD OF ANGELS') in R7: SUCCESS. BSP Win: '6.7', Place: '1.58'.
+2025-06-21 02:16:18,714 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 147 -   Runner 2 ('FIELD OF ANGELS') in R7: Scraping BSP.
+2025-06-21 02:16:18,872 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 153 -   Runner 2 ('FIELD OF ANGELS') in R7: SUCCESS. BSP Win: '6.7', Place: '1.58'.
+2025-06-21 02:16:18,874 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 147 -   Runner 2 ('FIELD OF ANGELS') in R7: Scraping BSP.
+2025-06-21 02:16:18,944 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 153 -   Runner 2 ('FIELD OF ANGELS') in R7: SUCCESS. BSP Win: '6.7', Place: '1.58'.
+2025-06-21 02:16:18,946 - INFO - bsp_finder - _fetch_bsp_for_race_runners - 163 - Race R7 (WARRAGUL): Processed 4/4 tasks successfully.
+2025-06-21 02:16:18,946 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 174 - Race R7: Finished. Returning 4 tasks.
+2025-06-21 02:16:18,946 - INFO - bsp_finder - _fetch_bsp_for_race_runners - 130 - Race R6 (WARRAGUL): Processing 1 task(s).
+2025-06-21 02:16:18,947 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 133 - Race R6: Locating Tab XPath: .//div[contains(@class, 'race-tab') and div[@class='race-number' and normalize-space(text())='6']]
+2025-06-21 02:16:19,012 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 136 - Race R6: Tab not active. Clicking.
+2025-06-21 02:16:21,353 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 141 - Race R6: Locating runners XPath: .//div[@class='races']/div[contains(@class, 'betfair-url') and not(contains(@style,'display: none'))]//div[@class='runners']
+2025-06-21 02:16:21,400 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 147 -   Runner 2 ('PLAY LAB') in R6: Scraping BSP.
+2025-06-21 02:16:21,480 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 153 -   Runner 2 ('PLAY LAB') in R6: SUCCESS. BSP Win: '2.99', Place: '1.25'.
+2025-06-21 02:16:21,481 - INFO - bsp_finder - _fetch_bsp_for_race_runners - 163 - Race R6 (WARRAGUL): Processed 1/1 tasks successfully.
+2025-06-21 02:16:21,482 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 174 - Race R6: Finished. Returning 1 tasks.
+2025-06-21 02:16:21,482 - INFO - bsp_finder - _fetch_bsp_for_race_runners - 130 - Race R5 (WARRAGUL): Processing 1 task(s).
+2025-06-21 02:16:21,482 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 133 - Race R5: Locating Tab XPath: .//div[contains(@class, 'race-tab') and div[@class='race-number' and normalize-space(text())='5']]
+2025-06-21 02:16:21,532 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 136 - Race R5: Tab not active. Clicking.
+2025-06-21 02:16:23,938 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 141 - Race R5: Locating runners XPath: .//div[@class='races']/div[contains(@class, 'betfair-url') and not(contains(@style,'display: none'))]//div[@class='runners']
+2025-06-21 02:16:23,988 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 147 -   Runner 4 ('AUSSIE SUPREME') in R5: Scraping BSP.
+2025-06-21 02:16:24,034 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 153 -   Runner 4 ('AUSSIE SUPREME') in R5: SUCCESS. BSP Win: '17.01', Place: '6.2'.
+2025-06-21 02:16:24,035 - INFO - bsp_finder - _fetch_bsp_for_race_runners - 163 - Race R5 (WARRAGUL): Processed 1/1 tasks successfully.
+2025-06-21 02:16:24,036 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 174 - Race R5: Finished. Returning 1 tasks.
+2025-06-21 02:16:24,036 - INFO - bsp_finder - scrape_and_enrich_csv - 213 - Processing Group: Date='13/06/2025', Code='HARNESS', Venue='NEWCASTLE' (7 tasks)
+2025-06-21 02:16:24,036 - INFO - bsp_finder - scrape_and_enrich_csv - 248 - CODE CHANGE: Current='greyhound', Target='harness'.
+2025-06-21 02:16:26,739 - INFO - bsp_finder - scrape_and_enrich_csv - 253 - CODE SWITCHED to 'harness'.
+2025-06-21 02:16:26,739 - INFO - bsp_finder - scrape_and_enrich_csv - 261 - VENUE CHANGE: Current='None', Target='NEWCASTLE'.
+2025-06-21 02:16:26,740 - DEBUG - bsp_finder - scrape_and_enrich_csv - 264 - VENUE: Locating filters with CSS: div.filters-list div.filter:not([style*='display: none'])
+2025-06-21 02:16:26,924 - DEBUG - bsp_finder - scrape_and_enrich_csv - 267 - VENUE: Found 11 filters for code 'harness'. Searching for 'NEWCASTLE'.
+2025-06-21 02:16:26,998 - DEBUG - bsp_finder - scrape_and_enrich_csv - 274 - VENUE: Found 'Newcastle'. Clicking.
+2025-06-21 02:16:27,731 - DEBUG - bsp_finder - scrape_and_enrich_csv - 279 - VENUE: Waiting for spinner post-click 'NEWCASTLE'.
+2025-06-21 02:16:33,252 - DEBUG - bsp_finder - scrape_and_enrich_csv - 281 - VENUE: Spinner not detected/timed out for 'NEWCASTLE'.
+2025-06-21 02:16:33,283 - INFO - bsp_finder - scrape_and_enrich_csv - 285 - VENUE SELECTED: 'NEWCASTLE'.
+2025-06-21 02:16:33,284 - DEBUG - bsp_finder - scrape_and_enrich_csv - 313 - Venue 'NEWCASTLE': Processing 1 race number(s).
+2025-06-21 02:16:33,284 - INFO - bsp_finder - _fetch_bsp_for_race_runners - 130 - Race R1 (NEWCASTLE): Processing 7 task(s).
+2025-06-21 02:16:33,285 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 133 - Race R1: Locating Tab XPath: .//div[contains(@class, 'race-tab') and div[@class='race-number' and normalize-space(text())='1']]
+2025-06-21 02:16:33,349 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 138 - Race R1: Tab already active.
+2025-06-21 02:16:33,850 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 141 - Race R1: Locating runners XPath: .//div[@class='races']/div[contains(@class, 'betfair-url') and not(contains(@style,'display: none'))]//div[@class='runners']
+2025-06-21 02:16:33,876 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 147 -   Runner 7 ('OZZIE CORKA') in R1: Scraping BSP.
+2025-06-21 02:16:33,943 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 153 -   Runner 7 ('OZZIE CORKA') in R1: SUCCESS. BSP Win: '3.95', Place: '1.58'.
+2025-06-21 02:16:33,946 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 147 -   Runner 6 ('MEMPHIS FURY') in R1: Scraping BSP.
+2025-06-21 02:16:33,996 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 153 -   Runner 6 ('MEMPHIS FURY') in R1: SUCCESS. BSP Win: '12.57', Place: '2.84'.
+2025-06-21 02:16:33,997 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 147 -   Runner 3 ('HUNGER STRIKE') in R1: Scraping BSP.
+2025-06-21 02:16:34,093 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 153 -   Runner 3 ('HUNGER STRIKE') in R1: SUCCESS. BSP Win: '19.77', Place: '3.65'.
+2025-06-21 02:16:34,094 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 147 -   Runner 6 ('MEMPHIS FURY') in R1: Scraping BSP.
+2025-06-21 02:16:34,138 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 153 -   Runner 6 ('MEMPHIS FURY') in R1: SUCCESS. BSP Win: '12.57', Place: '2.84'.
+2025-06-21 02:16:34,140 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 147 -   Runner 6 ('MEMPHIS FURY') in R1: Scraping BSP.
+2025-06-21 02:16:34,184 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 153 -   Runner 6 ('MEMPHIS FURY') in R1: SUCCESS. BSP Win: '12.57', Place: '2.84'.
+2025-06-21 02:16:34,187 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 147 -   Runner 6 ('MEMPHIS FURY') in R1: Scraping BSP.
+2025-06-21 02:16:34,229 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 153 -   Runner 6 ('MEMPHIS FURY') in R1: SUCCESS. BSP Win: '12.57', Place: '2.84'.
+2025-06-21 02:16:34,230 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 147 -   Runner 3 ('HUNGER STRIKE') in R1: Scraping BSP.
+2025-06-21 02:16:34,273 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 153 -   Runner 3 ('HUNGER STRIKE') in R1: SUCCESS. BSP Win: '19.77', Place: '3.65'.
+2025-06-21 02:16:34,274 - INFO - bsp_finder - _fetch_bsp_for_race_runners - 163 - Race R1 (NEWCASTLE): Processed 7/7 tasks successfully.
+2025-06-21 02:16:34,274 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 174 - Race R1: Finished. Returning 7 tasks.
+2025-06-21 02:16:34,274 - INFO - bsp_finder - scrape_and_enrich_csv - 213 - Processing Group: Date='13/06/2025', Code='GREYHOUNDS', Venue='THE GARDENS' (13 tasks)
+2025-06-21 02:16:34,275 - INFO - bsp_finder - scrape_and_enrich_csv - 248 - CODE CHANGE: Current='harness', Target='greyhound'.
+2025-06-21 02:16:36,922 - INFO - bsp_finder - scrape_and_enrich_csv - 253 - CODE SWITCHED to 'greyhound'.
+2025-06-21 02:16:36,922 - INFO - bsp_finder - scrape_and_enrich_csv - 261 - VENUE CHANGE: Current='None', Target='THE GARDENS'.
+2025-06-21 02:16:36,922 - DEBUG - bsp_finder - scrape_and_enrich_csv - 264 - VENUE: Locating filters with CSS: div.filters-list div.filter:not([style*='display: none'])
+2025-06-21 02:16:37,076 - DEBUG - bsp_finder - scrape_and_enrich_csv - 267 - VENUE: Found 14 filters for code 'greyhound'. Searching for 'THE GARDENS'.
+2025-06-21 02:16:37,172 - DEBUG - bsp_finder - scrape_and_enrich_csv - 274 - VENUE: Found 'The Gardens'. Clicking.
+2025-06-21 02:16:37,861 - DEBUG - bsp_finder - scrape_and_enrich_csv - 279 - VENUE: Waiting for spinner post-click 'THE GARDENS'.
+2025-06-21 02:16:43,330 - DEBUG - bsp_finder - scrape_and_enrich_csv - 281 - VENUE: Spinner not detected/timed out for 'THE GARDENS'.
+2025-06-21 02:16:43,413 - INFO - bsp_finder - scrape_and_enrich_csv - 285 - VENUE SELECTED: 'THE GARDENS'.
+2025-06-21 02:16:43,413 - DEBUG - bsp_finder - scrape_and_enrich_csv - 313 - Venue 'THE GARDENS': Processing 4 race number(s).
+2025-06-21 02:16:43,415 - INFO - bsp_finder - _fetch_bsp_for_race_runners - 130 - Race R6 (THE GARDENS): Processing 2 task(s).
+2025-06-21 02:16:43,415 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 133 - Race R6: Locating Tab XPath: .//div[contains(@class, 'race-tab') and div[@class='race-number' and normalize-space(text())='6']]
+2025-06-21 02:16:43,462 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 136 - Race R6: Tab not active. Clicking.
+2025-06-21 02:16:45,824 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 141 - Race R6: Locating runners XPath: .//div[@class='races']/div[contains(@class, 'betfair-url') and not(contains(@style,'display: none'))]//div[@class='runners']
+2025-06-21 02:16:45,872 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 147 -   Runner 4 ('HARD HEAD RED') in R6: Scraping BSP.
+2025-06-21 02:16:45,983 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 153 -   Runner 4 ('HARD HEAD RED') in R6: SUCCESS. BSP Win: '11.19', Place: '2.42'.
+2025-06-21 02:16:45,985 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 147 -   Runner 4 ('HARD HEAD RED') in R6: Scraping BSP.
+2025-06-21 02:16:46,031 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 153 -   Runner 4 ('HARD HEAD RED') in R6: SUCCESS. BSP Win: '11.19', Place: '2.42'.
+2025-06-21 02:16:46,032 - INFO - bsp_finder - _fetch_bsp_for_race_runners - 163 - Race R6 (THE GARDENS): Processed 2/2 tasks successfully.
+2025-06-21 02:16:46,032 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 174 - Race R6: Finished. Returning 2 tasks.
+2025-06-21 02:16:46,032 - INFO - bsp_finder - _fetch_bsp_for_race_runners - 130 - Race R5 (THE GARDENS): Processing 3 task(s).
+2025-06-21 02:16:46,032 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 133 - Race R5: Locating Tab XPath: .//div[contains(@class, 'race-tab') and div[@class='race-number' and normalize-space(text())='5']]
+2025-06-21 02:16:46,077 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 136 - Race R5: Tab not active. Clicking.
+2025-06-21 02:16:48,435 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 141 - Race R5: Locating runners XPath: .//div[@class='races']/div[contains(@class, 'betfair-url') and not(contains(@style,'display: none'))]//div[@class='runners']
+2025-06-21 02:16:48,491 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 147 -   Runner 7 ('STRICTLY LIMITED') in R5: Scraping BSP.
+2025-06-21 02:16:48,555 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 153 -   Runner 7 ('STRICTLY LIMITED') in R5: SUCCESS. BSP Win: '4.98', Place: '2.64'.
+2025-06-21 02:16:48,556 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 147 -   Runner 7 ('STRICTLY LIMITED') in R5: Scraping BSP.
+2025-06-21 02:16:48,610 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 153 -   Runner 7 ('STRICTLY LIMITED') in R5: SUCCESS. BSP Win: '4.98', Place: '2.64'.
+2025-06-21 02:16:48,612 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 147 -   Runner 7 ('STRICTLY LIMITED') in R5: Scraping BSP.
+2025-06-21 02:16:48,663 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 153 -   Runner 7 ('STRICTLY LIMITED') in R5: SUCCESS. BSP Win: '4.98', Place: '2.64'.
+2025-06-21 02:16:48,664 - INFO - bsp_finder - _fetch_bsp_for_race_runners - 163 - Race R5 (THE GARDENS): Processed 3/3 tasks successfully.
+2025-06-21 02:16:48,665 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 174 - Race R5: Finished. Returning 3 tasks.
+2025-06-21 02:16:48,665 - INFO - bsp_finder - _fetch_bsp_for_race_runners - 130 - Race R4 (THE GARDENS): Processing 3 task(s).
+2025-06-21 02:16:48,665 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 133 - Race R4: Locating Tab XPath: .//div[contains(@class, 'race-tab') and div[@class='race-number' and normalize-space(text())='4']]
+2025-06-21 02:16:48,761 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 136 - Race R4: Tab not active. Clicking.
+2025-06-21 02:16:51,159 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 141 - Race R4: Locating runners XPath: .//div[@class='races']/div[contains(@class, 'betfair-url') and not(contains(@style,'display: none'))]//div[@class='runners']
+2025-06-21 02:16:51,204 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 147 -   Runner 5 ('FLYING GODDESS') in R4: Scraping BSP.
+2025-06-21 02:16:51,256 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 153 -   Runner 5 ('FLYING GODDESS') in R4: SUCCESS. BSP Win: '3.91', Place: '2.28'.
+2025-06-21 02:16:51,258 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 147 -   Runner 7 ('RAGING SAIGE') in R4: Scraping BSP.
+2025-06-21 02:16:51,316 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 153 -   Runner 7 ('RAGING SAIGE') in R4: SUCCESS. BSP Win: '3.85', Place: '2.2'.
+2025-06-21 02:16:51,318 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 147 -   Runner 7 ('RAGING SAIGE') in R4: Scraping BSP.
+2025-06-21 02:16:51,365 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 153 -   Runner 7 ('RAGING SAIGE') in R4: SUCCESS. BSP Win: '3.85', Place: '2.2'.
+2025-06-21 02:16:51,366 - INFO - bsp_finder - _fetch_bsp_for_race_runners - 163 - Race R4 (THE GARDENS): Processed 3/3 tasks successfully.
+2025-06-21 02:16:51,366 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 174 - Race R4: Finished. Returning 3 tasks.
+2025-06-21 02:16:51,367 - INFO - bsp_finder - _fetch_bsp_for_race_runners - 130 - Race R1 (THE GARDENS): Processing 5 task(s).
+2025-06-21 02:16:51,367 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 133 - Race R1: Locating Tab XPath: .//div[contains(@class, 'race-tab') and div[@class='race-number' and normalize-space(text())='1']]
+2025-06-21 02:16:51,472 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 136 - Race R1: Tab not active. Clicking.
+2025-06-21 02:16:53,852 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 141 - Race R1: Locating runners XPath: .//div[@class='races']/div[contains(@class, 'betfair-url') and not(contains(@style,'display: none'))]//div[@class='runners']
+2025-06-21 02:16:53,894 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 147 -   Runner 1 ('RARE OBSIDIAN') in R1: Scraping BSP.
+2025-06-21 02:16:53,953 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 153 -   Runner 1 ('RARE OBSIDIAN') in R1: SUCCESS. BSP Win: '1.46', Place: '1.16'.
+2025-06-21 02:16:53,956 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 147 -   Runner 1 ('RARE OBSIDIAN') in R1: Scraping BSP.
+2025-06-21 02:16:54,007 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 153 -   Runner 1 ('RARE OBSIDIAN') in R1: SUCCESS. BSP Win: '1.46', Place: '1.16'.
+2025-06-21 02:16:54,008 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 147 -   Runner 1 ('RARE OBSIDIAN') in R1: Scraping BSP.
+2025-06-21 02:16:54,057 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 153 -   Runner 1 ('RARE OBSIDIAN') in R1: SUCCESS. BSP Win: '1.46', Place: '1.16'.
+2025-06-21 02:16:54,058 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 147 -   Runner 1 ('RARE OBSIDIAN') in R1: Scraping BSP.
+2025-06-21 02:16:54,106 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 153 -   Runner 1 ('RARE OBSIDIAN') in R1: SUCCESS. BSP Win: '1.46', Place: '1.16'.
+2025-06-21 02:16:54,107 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 147 -   Runner 1 ('RARE OBSIDIAN') in R1: Scraping BSP.
+2025-06-21 02:16:54,157 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 153 -   Runner 1 ('RARE OBSIDIAN') in R1: SUCCESS. BSP Win: '1.46', Place: '1.16'.
+2025-06-21 02:16:54,158 - INFO - bsp_finder - _fetch_bsp_for_race_runners - 163 - Race R1 (THE GARDENS): Processed 5/5 tasks successfully.
+2025-06-21 02:16:54,158 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 174 - Race R1: Finished. Returning 5 tasks.
+2025-06-21 02:16:54,158 - INFO - bsp_finder - scrape_and_enrich_csv - 213 - Processing Group: Date='13/06/2025', Code='HARNESS', Venue='WAGGA' (15 tasks)
+2025-06-21 02:16:54,158 - INFO - bsp_finder - scrape_and_enrich_csv - 248 - CODE CHANGE: Current='greyhound', Target='harness'.
+2025-06-21 02:16:56,902 - INFO - bsp_finder - scrape_and_enrich_csv - 253 - CODE SWITCHED to 'harness'.
+2025-06-21 02:16:56,902 - INFO - bsp_finder - scrape_and_enrich_csv - 261 - VENUE CHANGE: Current='None', Target='WAGGA'.
+2025-06-21 02:16:56,903 - DEBUG - bsp_finder - scrape_and_enrich_csv - 264 - VENUE: Locating filters with CSS: div.filters-list div.filter:not([style*='display: none'])
+2025-06-21 02:16:57,033 - DEBUG - bsp_finder - scrape_and_enrich_csv - 267 - VENUE: Found 11 filters for code 'harness'. Searching for 'WAGGA'.
+2025-06-21 02:16:57,138 - DEBUG - bsp_finder - scrape_and_enrich_csv - 274 - VENUE: Found 'Wagga'. Clicking.
+2025-06-21 02:16:57,963 - DEBUG - bsp_finder - scrape_and_enrich_csv - 279 - VENUE: Waiting for spinner post-click 'WAGGA'.
+2025-06-21 02:17:03,337 - DEBUG - bsp_finder - scrape_and_enrich_csv - 281 - VENUE: Spinner not detected/timed out for 'WAGGA'.
+2025-06-21 02:17:03,366 - INFO - bsp_finder - scrape_and_enrich_csv - 285 - VENUE SELECTED: 'WAGGA'.
+2025-06-21 02:17:03,367 - DEBUG - bsp_finder - scrape_and_enrich_csv - 313 - Venue 'WAGGA': Processing 7 race number(s).
+2025-06-21 02:17:03,368 - INFO - bsp_finder - _fetch_bsp_for_race_runners - 130 - Race R8 (WAGGA): Processing 2 task(s).
+2025-06-21 02:17:03,368 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 133 - Race R8: Locating Tab XPath: .//div[contains(@class, 'race-tab') and div[@class='race-number' and normalize-space(text())='8']]
+2025-06-21 02:17:03,472 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 136 - Race R8: Tab not active. Clicking.
+2025-06-21 02:17:05,816 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 141 - Race R8: Locating runners XPath: .//div[@class='races']/div[contains(@class, 'betfair-url') and not(contains(@style,'display: none'))]//div[@class='runners']
+2025-06-21 02:17:05,869 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 147 -   Runner 3 ('MY ULTIMATE SKEETA') in R8: Scraping BSP.
+2025-06-21 02:17:05,923 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 153 -   Runner 3 ('MY ULTIMATE SKEETA') in R8: SUCCESS. BSP Win: '6.8', Place: '2.34'.
+2025-06-21 02:17:05,924 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 147 -   Runner 3 ('MY ULTIMATE SKEETA') in R8: Scraping BSP.
+2025-06-21 02:17:05,974 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 153 -   Runner 3 ('MY ULTIMATE SKEETA') in R8: SUCCESS. BSP Win: '6.8', Place: '2.34'.
+2025-06-21 02:17:05,975 - INFO - bsp_finder - _fetch_bsp_for_race_runners - 163 - Race R8 (WAGGA): Processed 2/2 tasks successfully.
+2025-06-21 02:17:05,975 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 174 - Race R8: Finished. Returning 2 tasks.
+2025-06-21 02:17:05,976 - INFO - bsp_finder - _fetch_bsp_for_race_runners - 130 - Race R7 (WAGGA): Processing 3 task(s).
+2025-06-21 02:17:05,976 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 133 - Race R7: Locating Tab XPath: .//div[contains(@class, 'race-tab') and div[@class='race-number' and normalize-space(text())='7']]
+2025-06-21 02:17:06,032 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 136 - Race R7: Tab not active. Clicking.
+2025-06-21 02:17:08,390 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 141 - Race R7: Locating runners XPath: .//div[@class='races']/div[contains(@class, 'betfair-url') and not(contains(@style,'display: none'))]//div[@class='runners']
+2025-06-21 02:17:08,446 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 147 -   Runner 8 ('JACKS ULTIMATE FURY NZ') in R7: Scraping BSP.
+2025-06-21 02:17:08,662 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 153 -   Runner 8 ('JACKS ULTIMATE FURY NZ') in R7: SUCCESS. BSP Win: '1.31', Place: '1.06'.
+2025-06-21 02:17:08,663 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 147 -   Runner 8 ('JACKS ULTIMATE FURY NZ') in R7: Scraping BSP.
+2025-06-21 02:17:08,727 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 153 -   Runner 8 ('JACKS ULTIMATE FURY NZ') in R7: SUCCESS. BSP Win: '1.31', Place: '1.06'.
+2025-06-21 02:17:08,728 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 147 -   Runner 8 ('JACKS ULTIMATE FURY NZ') in R7: Scraping BSP.
+2025-06-21 02:17:08,780 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 153 -   Runner 8 ('JACKS ULTIMATE FURY NZ') in R7: SUCCESS. BSP Win: '1.31', Place: '1.06'.
+2025-06-21 02:17:08,781 - INFO - bsp_finder - _fetch_bsp_for_race_runners - 163 - Race R7 (WAGGA): Processed 3/3 tasks successfully.
+2025-06-21 02:17:08,782 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 174 - Race R7: Finished. Returning 3 tasks.
+2025-06-21 02:17:08,782 - INFO - bsp_finder - _fetch_bsp_for_race_runners - 130 - Race R6 (WAGGA): Processing 1 task(s).
+2025-06-21 02:17:08,782 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 133 - Race R6: Locating Tab XPath: .//div[contains(@class, 'race-tab') and div[@class='race-number' and normalize-space(text())='6']]
+2025-06-21 02:17:08,857 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 136 - Race R6: Tab not active. Clicking.
+2025-06-21 02:17:11,213 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 141 - Race R6: Locating runners XPath: .//div[@class='races']/div[contains(@class, 'betfair-url') and not(contains(@style,'display: none'))]//div[@class='runners']
+2025-06-21 02:17:11,308 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 147 -   Runner 4 ('OUR REBEL YELL') in R6: Scraping BSP.
+2025-06-21 02:17:11,357 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 153 -   Runner 4 ('OUR REBEL YELL') in R6: SUCCESS. BSP Win: '42', Place: '3.75'.
+2025-06-21 02:17:11,358 - INFO - bsp_finder - _fetch_bsp_for_race_runners - 163 - Race R6 (WAGGA): Processed 1/1 tasks successfully.
+2025-06-21 02:17:11,358 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 174 - Race R6: Finished. Returning 1 tasks.
+2025-06-21 02:17:11,358 - INFO - bsp_finder - _fetch_bsp_for_race_runners - 130 - Race R5 (WAGGA): Processing 2 task(s).
+2025-06-21 02:17:11,359 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 133 - Race R5: Locating Tab XPath: .//div[contains(@class, 'race-tab') and div[@class='race-number' and normalize-space(text())='5']]
+2025-06-21 02:17:11,398 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 136 - Race R5: Tab not active. Clicking.
+2025-06-21 02:17:13,746 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 141 - Race R5: Locating runners XPath: .//div[@class='races']/div[contains(@class, 'betfair-url') and not(contains(@style,'display: none'))]//div[@class='runners']
+2025-06-21 02:17:13,784 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 147 -   Runner 6 ('VILLAGE AREA') in R5: Scraping BSP.
+2025-06-21 02:17:13,850 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 153 -   Runner 6 ('VILLAGE AREA') in R5: SUCCESS. BSP Win: '14.41', Place: '4.27'.
+2025-06-21 02:17:13,851 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 147 -   Runner 6 ('VILLAGE AREA') in R5: Scraping BSP.
+2025-06-21 02:17:13,910 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 153 -   Runner 6 ('VILLAGE AREA') in R5: SUCCESS. BSP Win: '14.41', Place: '4.27'.
+2025-06-21 02:17:13,911 - INFO - bsp_finder - _fetch_bsp_for_race_runners - 163 - Race R5 (WAGGA): Processed 2/2 tasks successfully.
+2025-06-21 02:17:13,911 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 174 - Race R5: Finished. Returning 2 tasks.
+2025-06-21 02:17:13,911 - INFO - bsp_finder - _fetch_bsp_for_race_runners - 130 - Race R3 (WAGGA): Processing 3 task(s).
+2025-06-21 02:17:13,911 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 133 - Race R3: Locating Tab XPath: .//div[contains(@class, 'race-tab') and div[@class='race-number' and normalize-space(text())='3']]
+2025-06-21 02:17:14,018 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 136 - Race R3: Tab not active. Clicking.
+2025-06-21 02:17:16,390 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 141 - Race R3: Locating runners XPath: .//div[@class='races']/div[contains(@class, 'betfair-url') and not(contains(@style,'display: none'))]//div[@class='runners']
+2025-06-21 02:17:16,442 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 147 -   Runner 6 ('FEAR THE PAIN NZ') in R3: Scraping BSP.
+2025-06-21 02:17:16,495 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 153 -   Runner 6 ('FEAR THE PAIN NZ') in R3: SUCCESS. BSP Win: '7.2', Place: '2.04'.
+2025-06-21 02:17:16,496 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 147 -   Runner 3 ('EXCLUSIVE HUSTLER') in R3: Scraping BSP.
+2025-06-21 02:17:16,542 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 153 -   Runner 3 ('EXCLUSIVE HUSTLER') in R3: SUCCESS. BSP Win: '1.83', Place: '1.2'.
+2025-06-21 02:17:16,543 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 147 -   Runner 3 ('EXCLUSIVE HUSTLER') in R3: Scraping BSP.
+2025-06-21 02:17:16,586 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 153 -   Runner 3 ('EXCLUSIVE HUSTLER') in R3: SUCCESS. BSP Win: '1.83', Place: '1.2'.
+2025-06-21 02:17:16,587 - INFO - bsp_finder - _fetch_bsp_for_race_runners - 163 - Race R3 (WAGGA): Processed 3/3 tasks successfully.
+2025-06-21 02:17:16,587 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 174 - Race R3: Finished. Returning 3 tasks.
+2025-06-21 02:17:16,587 - INFO - bsp_finder - _fetch_bsp_for_race_runners - 130 - Race R2 (WAGGA): Processing 3 task(s).
+2025-06-21 02:17:16,587 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 133 - Race R2: Locating Tab XPath: .//div[contains(@class, 'race-tab') and div[@class='race-number' and normalize-space(text())='2']]
+2025-06-21 02:17:16,632 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 136 - Race R2: Tab not active. Clicking.
+2025-06-21 02:17:18,995 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 141 - Race R2: Locating runners XPath: .//div[@class='races']/div[contains(@class, 'betfair-url') and not(contains(@style,'display: none'))]//div[@class='runners']
+2025-06-21 02:17:19,100 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 147 -   Runner 6 ('FIVE OCLOCK WAVE') in R2: Scraping BSP.
+2025-06-21 02:17:19,144 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 153 -   Runner 6 ('FIVE OCLOCK WAVE') in R2: SUCCESS. BSP Win: '33.2', Place: '13'.
+2025-06-21 02:17:19,145 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 147 -   Runner 4 ('KENO ROSIE') in R2: Scraping BSP.
+2025-06-21 02:17:19,183 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 153 -   Runner 4 ('KENO ROSIE') in R2: SUCCESS. BSP Win: '11.5', Place: '4.6'.
+2025-06-21 02:17:19,184 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 147 -   Runner 4 ('KENO ROSIE') in R2: Scraping BSP.
+2025-06-21 02:17:19,227 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 153 -   Runner 4 ('KENO ROSIE') in R2: SUCCESS. BSP Win: '11.5', Place: '4.6'.
+2025-06-21 02:17:19,228 - INFO - bsp_finder - _fetch_bsp_for_race_runners - 163 - Race R2 (WAGGA): Processed 3/3 tasks successfully.
+2025-06-21 02:17:19,228 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 174 - Race R2: Finished. Returning 3 tasks.
+2025-06-21 02:17:19,228 - INFO - bsp_finder - _fetch_bsp_for_race_runners - 130 - Race R1 (WAGGA): Processing 1 task(s).
+2025-06-21 02:17:19,229 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 133 - Race R1: Locating Tab XPath: .//div[contains(@class, 'race-tab') and div[@class='race-number' and normalize-space(text())='1']]
+2025-06-21 02:17:19,272 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 136 - Race R1: Tab not active. Clicking.
+2025-06-21 02:17:21,626 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 141 - Race R1: Locating runners XPath: .//div[@class='races']/div[contains(@class, 'betfair-url') and not(contains(@style,'display: none'))]//div[@class='runners']
+2025-06-21 02:17:21,652 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 147 -   Runner 5 ('EASTENDA') in R1: Scraping BSP.
+2025-06-21 02:17:21,698 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 153 -   Runner 5 ('EASTENDA') in R1: SUCCESS. BSP Win: '18.5', Place: '2.9'.
+2025-06-21 02:17:21,699 - INFO - bsp_finder - _fetch_bsp_for_race_runners - 163 - Race R1 (WAGGA): Processed 1/1 tasks successfully.
+2025-06-21 02:17:21,700 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 174 - Race R1: Finished. Returning 1 tasks.
+2025-06-21 02:17:21,700 - INFO - bsp_finder - scrape_and_enrich_csv - 213 - Processing Group: Date='13/06/2025', Code='GREYHOUNDS', Venue='Q1 LAKESIDE' (26 tasks)
+2025-06-21 02:17:21,700 - INFO - bsp_finder - scrape_and_enrich_csv - 248 - CODE CHANGE: Current='harness', Target='greyhound'.
+2025-06-21 02:17:24,393 - INFO - bsp_finder - scrape_and_enrich_csv - 253 - CODE SWITCHED to 'greyhound'.
+2025-06-21 02:17:24,393 - INFO - bsp_finder - scrape_and_enrich_csv - 261 - VENUE CHANGE: Current='None', Target='Q1 LAKESIDE'.
+2025-06-21 02:17:24,393 - DEBUG - bsp_finder - scrape_and_enrich_csv - 264 - VENUE: Locating filters with CSS: div.filters-list div.filter:not([style*='display: none'])
+2025-06-21 02:17:24,539 - DEBUG - bsp_finder - scrape_and_enrich_csv - 267 - VENUE: Found 14 filters for code 'greyhound'. Searching for 'Q1 LAKESIDE'.
+2025-06-21 02:17:24,637 - DEBUG - bsp_finder - scrape_and_enrich_csv - 274 - VENUE: Found 'Q1 Lakeside'. Clicking.
+2025-06-21 02:17:25,360 - DEBUG - bsp_finder - scrape_and_enrich_csv - 279 - VENUE: Waiting for spinner post-click 'Q1 LAKESIDE'.
+2025-06-21 02:17:30,718 - DEBUG - bsp_finder - scrape_and_enrich_csv - 281 - VENUE: Spinner not detected/timed out for 'Q1 LAKESIDE'.
+2025-06-21 02:17:30,764 - INFO - bsp_finder - scrape_and_enrich_csv - 285 - VENUE SELECTED: 'Q1 LAKESIDE'.
+2025-06-21 02:17:30,765 - DEBUG - bsp_finder - scrape_and_enrich_csv - 313 - Venue 'Q1 LAKESIDE': Processing 4 race number(s).
+2025-06-21 02:17:30,765 - INFO - bsp_finder - _fetch_bsp_for_race_runners - 130 - Race R6 (Q1 LAKESIDE): Processing 4 task(s).
+2025-06-21 02:17:30,766 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 133 - Race R6: Locating Tab XPath: .//div[contains(@class, 'race-tab') and div[@class='race-number' and normalize-space(text())='6']]
+2025-06-21 02:17:30,926 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 136 - Race R6: Tab not active. Clicking.
+2025-06-21 02:17:33,309 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 141 - Race R6: Locating runners XPath: .//div[@class='races']/div[contains(@class, 'betfair-url') and not(contains(@style,'display: none'))]//div[@class='runners']
+2025-06-21 02:17:33,366 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 147 -   Runner 6 ('SPRING MOLLY') in R6: Scraping BSP.
+2025-06-21 02:17:33,433 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 153 -   Runner 6 ('SPRING MOLLY') in R6: SUCCESS. BSP Win: '29', Place: '3.08'.
+2025-06-21 02:17:33,435 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 147 -   Runner 6 ('SPRING MOLLY') in R6: Scraping BSP.
+2025-06-21 02:17:33,486 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 153 -   Runner 6 ('SPRING MOLLY') in R6: SUCCESS. BSP Win: '29', Place: '3.08'.
+2025-06-21 02:17:33,489 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 147 -   Runner 6 ('SPRING MOLLY') in R6: Scraping BSP.
+2025-06-21 02:17:33,537 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 153 -   Runner 6 ('SPRING MOLLY') in R6: SUCCESS. BSP Win: '29', Place: '3.08'.
+2025-06-21 02:17:33,538 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 147 -   Runner 6 ('SPRING MOLLY') in R6: Scraping BSP.
+2025-06-21 02:17:33,587 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 153 -   Runner 6 ('SPRING MOLLY') in R6: SUCCESS. BSP Win: '29', Place: '3.08'.
+2025-06-21 02:17:33,590 - INFO - bsp_finder - _fetch_bsp_for_race_runners - 163 - Race R6 (Q1 LAKESIDE): Processed 4/4 tasks successfully.
+2025-06-21 02:17:33,590 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 174 - Race R6: Finished. Returning 4 tasks.
+2025-06-21 02:17:33,590 - INFO - bsp_finder - _fetch_bsp_for_race_runners - 130 - Race R5 (Q1 LAKESIDE): Processing 11 task(s).
+2025-06-21 02:17:33,590 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 133 - Race R5: Locating Tab XPath: .//div[contains(@class, 'race-tab') and div[@class='race-number' and normalize-space(text())='5']]
+2025-06-21 02:17:33,645 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 136 - Race R5: Tab not active. Clicking.
+2025-06-21 02:17:36,011 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 141 - Race R5: Locating runners XPath: .//div[@class='races']/div[contains(@class, 'betfair-url') and not(contains(@style,'display: none'))]//div[@class='runners']
+2025-06-21 02:17:36,047 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 147 -   Runner 9 ('NORTH STAR') in R5: Scraping BSP.
+2025-06-21 02:17:36,097 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 153 -   Runner 9 ('NORTH STAR') in R5: SUCCESS. BSP Win: '16.98', Place: '3.32'.
+2025-06-21 02:17:36,098 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 147 -   Runner 4 ('SPRING TARA') in R5: Scraping BSP.
+2025-06-21 02:17:36,149 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 153 -   Runner 4 ('SPRING TARA') in R5: SUCCESS. BSP Win: '11', Place: '2.64'.
+2025-06-21 02:17:36,152 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 147 -   Runner 9 ('NORTH STAR') in R5: Scraping BSP.
+2025-06-21 02:17:36,200 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 153 -   Runner 9 ('NORTH STAR') in R5: SUCCESS. BSP Win: '16.98', Place: '3.32'.
+2025-06-21 02:17:36,202 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 147 -   Runner 9 ('NORTH STAR') in R5: Scraping BSP.
+2025-06-21 02:17:36,248 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 153 -   Runner 9 ('NORTH STAR') in R5: SUCCESS. BSP Win: '16.98', Place: '3.32'.
+2025-06-21 02:17:36,250 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 147 -   Runner 4 ('SPRING TARA') in R5: Scraping BSP.
+2025-06-21 02:17:36,337 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 153 -   Runner 4 ('SPRING TARA') in R5: SUCCESS. BSP Win: '11', Place: '2.64'.
+2025-06-21 02:17:36,338 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 147 -   Runner 4 ('SPRING TARA') in R5: Scraping BSP.
+2025-06-21 02:17:36,383 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 153 -   Runner 4 ('SPRING TARA') in R5: SUCCESS. BSP Win: '11', Place: '2.64'.
+2025-06-21 02:17:36,384 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 147 -   Runner 4 ('SPRING TARA') in R5: Scraping BSP.
+2025-06-21 02:17:36,436 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 153 -   Runner 4 ('SPRING TARA') in R5: SUCCESS. BSP Win: '11', Place: '2.64'.
+2025-06-21 02:17:36,437 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 147 -   Runner 2 ('SLEEK KARMA') in R5: Scraping BSP.
+2025-06-21 02:17:36,487 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 153 -   Runner 2 ('SLEEK KARMA') in R5: SUCCESS. BSP Win: '25.28', Place: '3.53'.
+2025-06-21 02:17:36,489 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 147 -   Runner 2 ('SLEEK KARMA') in R5: Scraping BSP.
+2025-06-21 02:17:36,532 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 153 -   Runner 2 ('SLEEK KARMA') in R5: SUCCESS. BSP Win: '25.28', Place: '3.53'.
+2025-06-21 02:17:36,533 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 147 -   Runner 2 ('SLEEK KARMA') in R5: Scraping BSP.
+2025-06-21 02:17:36,597 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 153 -   Runner 2 ('SLEEK KARMA') in R5: SUCCESS. BSP Win: '25.28', Place: '3.53'.
+2025-06-21 02:17:36,600 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 147 -   Runner 2 ('SLEEK KARMA') in R5: Scraping BSP.
+2025-06-21 02:17:36,693 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 153 -   Runner 2 ('SLEEK KARMA') in R5: SUCCESS. BSP Win: '25.28', Place: '3.53'.
+2025-06-21 02:17:36,694 - INFO - bsp_finder - _fetch_bsp_for_race_runners - 163 - Race R5 (Q1 LAKESIDE): Processed 11/11 tasks successfully.
+2025-06-21 02:17:36,695 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 174 - Race R5: Finished. Returning 11 tasks.
+2025-06-21 02:17:36,695 - INFO - bsp_finder - _fetch_bsp_for_race_runners - 130 - Race R4 (Q1 LAKESIDE): Processing 2 task(s).
+2025-06-21 02:17:36,695 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 133 - Race R4: Locating Tab XPath: .//div[contains(@class, 'race-tab') and div[@class='race-number' and normalize-space(text())='4']]
+2025-06-21 02:17:36,745 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 136 - Race R4: Tab not active. Clicking.
+2025-06-21 02:17:39,072 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 141 - Race R4: Locating runners XPath: .//div[@class='races']/div[contains(@class, 'betfair-url') and not(contains(@style,'display: none'))]//div[@class='runners']
+2025-06-21 02:17:39,100 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 147 -   Runner 6 ('REDBACK JACK') in R4: Scraping BSP.
+2025-06-21 02:17:39,148 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 153 -   Runner 6 ('REDBACK JACK') in R4: SUCCESS. BSP Win: '15.5', Place: '3.2'.
+2025-06-21 02:17:39,150 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 147 -   Runner 6 ('REDBACK JACK') in R4: Scraping BSP.
+2025-06-21 02:17:39,198 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 153 -   Runner 6 ('REDBACK JACK') in R4: SUCCESS. BSP Win: '15.5', Place: '3.2'.
+2025-06-21 02:17:39,199 - INFO - bsp_finder - _fetch_bsp_for_race_runners - 163 - Race R4 (Q1 LAKESIDE): Processed 2/2 tasks successfully.
+2025-06-21 02:17:39,199 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 174 - Race R4: Finished. Returning 2 tasks.
+2025-06-21 02:17:39,199 - INFO - bsp_finder - _fetch_bsp_for_race_runners - 130 - Race R1 (Q1 LAKESIDE): Processing 9 task(s).
+2025-06-21 02:17:39,199 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 133 - Race R1: Locating Tab XPath: .//div[contains(@class, 'race-tab') and div[@class='race-number' and normalize-space(text())='1']]
+2025-06-21 02:17:39,246 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 136 - Race R1: Tab not active. Clicking.
+2025-06-21 02:17:41,586 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 141 - Race R1: Locating runners XPath: .//div[@class='races']/div[contains(@class, 'betfair-url') and not(contains(@style,'display: none'))]//div[@class='runners']
+2025-06-21 02:17:41,629 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 147 -   Runner 6 ('CUSTARD') in R1: Scraping BSP.
+2025-06-21 02:17:41,678 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 153 -   Runner 6 ('CUSTARD') in R1: SUCCESS. BSP Win: '41.74', Place: '3.65'.
+2025-06-21 02:17:41,680 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 147 -   Runner 6 ('CUSTARD') in R1: Scraping BSP.
+2025-06-21 02:17:41,727 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 153 -   Runner 6 ('CUSTARD') in R1: SUCCESS. BSP Win: '41.74', Place: '3.65'.
+2025-06-21 02:17:41,728 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 147 -   Runner 6 ('CUSTARD') in R1: Scraping BSP.
+2025-06-21 02:17:41,777 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 153 -   Runner 6 ('CUSTARD') in R1: SUCCESS. BSP Win: '41.74', Place: '3.65'.
+2025-06-21 02:17:41,778 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 147 -   Runner 4 ('ZABDON NO DOUBT') in R1: Scraping BSP.
+2025-06-21 02:17:41,870 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 153 -   Runner 4 ('ZABDON NO DOUBT') in R1: SUCCESS. BSP Win: '24', Place: '3.5'.
+2025-06-21 02:17:41,871 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 147 -   Runner 4 ('ZABDON NO DOUBT') in R1: Scraping BSP.
+2025-06-21 02:17:41,918 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 153 -   Runner 4 ('ZABDON NO DOUBT') in R1: SUCCESS. BSP Win: '24', Place: '3.5'.
+2025-06-21 02:17:41,920 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 147 -   Runner 4 ('ZABDON NO DOUBT') in R1: Scraping BSP.
+2025-06-21 02:17:41,965 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 153 -   Runner 4 ('ZABDON NO DOUBT') in R1: SUCCESS. BSP Win: '24', Place: '3.5'.
+2025-06-21 02:17:41,966 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 147 -   Runner 8 ('NO STYLIST') in R1: Scraping BSP.
+2025-06-21 02:17:42,021 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 153 -   Runner 8 ('NO STYLIST') in R1: SUCCESS. BSP Win: '19.5', Place: '3.7'.
+2025-06-21 02:17:42,023 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 147 -   Runner 3 ('LADY SCOTCH') in R1: Scraping BSP.
+2025-06-21 02:17:42,069 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 153 -   Runner 3 ('LADY SCOTCH') in R1: SUCCESS. BSP Win: '38', Place: '4.1'.
+2025-06-21 02:17:42,071 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 147 -   Runner 4 ('ZABDON NO DOUBT') in R1: Scraping BSP.
+2025-06-21 02:17:42,116 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 153 -   Runner 4 ('ZABDON NO DOUBT') in R1: SUCCESS. BSP Win: '24', Place: '3.5'.
+2025-06-21 02:17:42,118 - INFO - bsp_finder - _fetch_bsp_for_race_runners - 163 - Race R1 (Q1 LAKESIDE): Processed 9/9 tasks successfully.
+2025-06-21 02:17:42,119 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 174 - Race R1: Finished. Returning 9 tasks.
+2025-06-21 02:17:42,119 - INFO - bsp_finder - scrape_and_enrich_csv - 213 - Processing Group: Date='13/06/2025', Code='GREYHOUNDS', Venue='MURRAY BRIDGE' (17 tasks)
+2025-06-21 02:17:42,119 - INFO - bsp_finder - scrape_and_enrich_csv - 261 - VENUE CHANGE: Current='Q1 LAKESIDE', Target='MURRAY BRIDGE'.
+2025-06-21 02:17:42,120 - DEBUG - bsp_finder - scrape_and_enrich_csv - 264 - VENUE: Locating filters with CSS: div.filters-list div.filter:not([style*='display: none'])
+2025-06-21 02:17:42,263 - DEBUG - bsp_finder - scrape_and_enrich_csv - 267 - VENUE: Found 14 filters for code 'greyhound'. Searching for 'MURRAY BRIDGE'.
+2025-06-21 02:17:42,335 - DEBUG - bsp_finder - scrape_and_enrich_csv - 274 - VENUE: Found 'Murray Bridge'. Clicking.
+2025-06-21 02:17:43,072 - DEBUG - bsp_finder - scrape_and_enrich_csv - 279 - VENUE: Waiting for spinner post-click 'MURRAY BRIDGE'.
+2025-06-21 02:17:48,465 - DEBUG - bsp_finder - scrape_and_enrich_csv - 281 - VENUE: Spinner not detected/timed out for 'MURRAY BRIDGE'.
+2025-06-21 02:17:48,546 - INFO - bsp_finder - scrape_and_enrich_csv - 285 - VENUE SELECTED: 'MURRAY BRIDGE'.
+2025-06-21 02:17:48,547 - DEBUG - bsp_finder - scrape_and_enrich_csv - 313 - Venue 'MURRAY BRIDGE': Processing 3 race number(s).
+2025-06-21 02:17:48,547 - INFO - bsp_finder - _fetch_bsp_for_race_runners - 130 - Race R5 (MURRAY BRIDGE): Processing 7 task(s).
+2025-06-21 02:17:48,547 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 133 - Race R5: Locating Tab XPath: .//div[contains(@class, 'race-tab') and div[@class='race-number' and normalize-space(text())='5']]
+2025-06-21 02:17:48,595 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 136 - Race R5: Tab not active. Clicking.
+2025-06-21 02:17:51,009 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 141 - Race R5: Locating runners XPath: .//div[@class='races']/div[contains(@class, 'betfair-url') and not(contains(@style,'display: none'))]//div[@class='runners']
+2025-06-21 02:17:51,046 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 147 -   Runner 1 ('PAW SHAYNA') in R5: Scraping BSP.
+2025-06-21 02:17:51,100 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 153 -   Runner 1 ('PAW SHAYNA') in R5: SUCCESS. BSP Win: '3.4', Place: '1.73'.
+2025-06-21 02:17:51,101 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 147 -   Runner 1 ('PAW SHAYNA') in R5: Scraping BSP.
+2025-06-21 02:17:51,149 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 153 -   Runner 1 ('PAW SHAYNA') in R5: SUCCESS. BSP Win: '3.4', Place: '1.73'.
+2025-06-21 02:17:51,150 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 147 -   Runner 1 ('PAW SHAYNA') in R5: Scraping BSP.
+2025-06-21 02:17:51,206 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 153 -   Runner 1 ('PAW SHAYNA') in R5: SUCCESS. BSP Win: '3.4', Place: '1.73'.
+2025-06-21 02:17:51,207 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 147 -   Runner 2 ('LALA BUFFY') in R5: Scraping BSP.
+2025-06-21 02:17:51,256 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 153 -   Runner 2 ('LALA BUFFY') in R5: SUCCESS. BSP Win: '3.85', Place: '2.08'.
+2025-06-21 02:17:51,257 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 147 -   Runner 2 ('LALA BUFFY') in R5: Scraping BSP.
+2025-06-21 02:17:51,319 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 153 -   Runner 2 ('LALA BUFFY') in R5: SUCCESS. BSP Win: '3.85', Place: '2.08'.
+2025-06-21 02:17:51,320 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 147 -   Runner 2 ('LALA BUFFY') in R5: Scraping BSP.
+2025-06-21 02:17:51,367 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 153 -   Runner 2 ('LALA BUFFY') in R5: SUCCESS. BSP Win: '3.85', Place: '2.08'.
+2025-06-21 02:17:51,369 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 147 -   Runner 2 ('LALA BUFFY') in R5: Scraping BSP.
+2025-06-21 02:17:51,417 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 153 -   Runner 2 ('LALA BUFFY') in R5: SUCCESS. BSP Win: '3.85', Place: '2.08'.
+2025-06-21 02:17:51,420 - INFO - bsp_finder - _fetch_bsp_for_race_runners - 163 - Race R5 (MURRAY BRIDGE): Processed 7/7 tasks successfully.
+2025-06-21 02:17:51,420 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 174 - Race R5: Finished. Returning 7 tasks.
+2025-06-21 02:17:51,420 - INFO - bsp_finder - _fetch_bsp_for_race_runners - 130 - Race R4 (MURRAY BRIDGE): Processing 6 task(s).
+2025-06-21 02:17:51,421 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 133 - Race R4: Locating Tab XPath: .//div[contains(@class, 'race-tab') and div[@class='race-number' and normalize-space(text())='4']]
+2025-06-21 02:17:51,480 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 136 - Race R4: Tab not active. Clicking.
+2025-06-21 02:17:53,852 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 141 - Race R4: Locating runners XPath: .//div[@class='races']/div[contains(@class, 'betfair-url') and not(contains(@style,'display: none'))]//div[@class='runners']
+2025-06-21 02:17:53,912 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 147 -   Runner 8 ('LITTLEFOOT') in R4: Scraping BSP.
+2025-06-21 02:17:53,963 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 153 -   Runner 8 ('LITTLEFOOT') in R4: SUCCESS. BSP Win: '3.85', Place: '2.34'.
+2025-06-21 02:17:53,964 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 147 -   Runner 3 ('LADY NOVA') in R4: Scraping BSP.
+2025-06-21 02:17:54,049 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 153 -   Runner 3 ('LADY NOVA') in R4: SUCCESS. BSP Win: '4.59', Place: '2.36'.
+2025-06-21 02:17:54,052 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 147 -   Runner 3 ('LADY NOVA') in R4: Scraping BSP.
+2025-06-21 02:17:54,104 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 153 -   Runner 3 ('LADY NOVA') in R4: SUCCESS. BSP Win: '4.59', Place: '2.36'.
+2025-06-21 02:17:54,106 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 147 -   Runner 3 ('LADY NOVA') in R4: Scraping BSP.
+2025-06-21 02:17:54,153 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 153 -   Runner 3 ('LADY NOVA') in R4: SUCCESS. BSP Win: '4.59', Place: '2.36'.
+2025-06-21 02:17:54,155 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 147 -   Runner 3 ('LADY NOVA') in R4: Scraping BSP.
+2025-06-21 02:17:54,199 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 153 -   Runner 3 ('LADY NOVA') in R4: SUCCESS. BSP Win: '4.59', Place: '2.36'.
+2025-06-21 02:17:54,201 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 147 -   Runner 8 ('LITTLEFOOT') in R4: Scraping BSP.
+2025-06-21 02:17:54,241 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 153 -   Runner 8 ('LITTLEFOOT') in R4: SUCCESS. BSP Win: '3.85', Place: '2.34'.
+2025-06-21 02:17:54,242 - INFO - bsp_finder - _fetch_bsp_for_race_runners - 163 - Race R4 (MURRAY BRIDGE): Processed 6/6 tasks successfully.
+2025-06-21 02:17:54,242 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 174 - Race R4: Finished. Returning 6 tasks.
+2025-06-21 02:17:54,242 - INFO - bsp_finder - _fetch_bsp_for_race_runners - 130 - Race R3 (MURRAY BRIDGE): Processing 4 task(s).
+2025-06-21 02:17:54,243 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 133 - Race R3: Locating Tab XPath: .//div[contains(@class, 'race-tab') and div[@class='race-number' and normalize-space(text())='3']]
+2025-06-21 02:17:54,291 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 136 - Race R3: Tab not active. Clicking.
+2025-06-21 02:17:56,610 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 141 - Race R3: Locating runners XPath: .//div[@class='races']/div[contains(@class, 'betfair-url') and not(contains(@style,'display: none'))]//div[@class='runners']
+2025-06-21 02:17:56,661 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 147 -   Runner 2 ('BUZZ THE HUSTLER') in R3: Scraping BSP.
+2025-06-21 02:17:56,727 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 153 -   Runner 2 ('BUZZ THE HUSTLER') in R3: SUCCESS. BSP Win: '2.3', Place: '1.42'.
+2025-06-21 02:17:56,728 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 147 -   Runner 2 ('BUZZ THE HUSTLER') in R3: Scraping BSP.
+2025-06-21 02:17:56,778 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 153 -   Runner 2 ('BUZZ THE HUSTLER') in R3: SUCCESS. BSP Win: '2.3', Place: '1.42'.
+2025-06-21 02:17:56,779 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 147 -   Runner 2 ('BUZZ THE HUSTLER') in R3: Scraping BSP.
+2025-06-21 02:17:56,828 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 153 -   Runner 2 ('BUZZ THE HUSTLER') in R3: SUCCESS. BSP Win: '2.3', Place: '1.42'.
+2025-06-21 02:17:56,830 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 147 -   Runner 2 ('BUZZ THE HUSTLER') in R3: Scraping BSP.
+2025-06-21 02:17:56,881 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 153 -   Runner 2 ('BUZZ THE HUSTLER') in R3: SUCCESS. BSP Win: '2.3', Place: '1.42'.
+2025-06-21 02:17:56,882 - INFO - bsp_finder - _fetch_bsp_for_race_runners - 163 - Race R3 (MURRAY BRIDGE): Processed 4/4 tasks successfully.
+2025-06-21 02:17:56,882 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 174 - Race R3: Finished. Returning 4 tasks.
+2025-06-21 02:17:56,882 - INFO - bsp_finder - scrape_and_enrich_csv - 213 - Processing Group: Date='13/06/2025', Code='GREYHOUNDS', Venue='GOULBURN' (7 tasks)
+2025-06-21 02:17:56,883 - INFO - bsp_finder - scrape_and_enrich_csv - 261 - VENUE CHANGE: Current='MURRAY BRIDGE', Target='GOULBURN'.
+2025-06-21 02:17:56,883 - DEBUG - bsp_finder - scrape_and_enrich_csv - 264 - VENUE: Locating filters with CSS: div.filters-list div.filter:not([style*='display: none'])
+2025-06-21 02:17:57,032 - DEBUG - bsp_finder - scrape_and_enrich_csv - 267 - VENUE: Found 14 filters for code 'greyhound'. Searching for 'GOULBURN'.
+2025-06-21 02:17:57,074 - DEBUG - bsp_finder - scrape_and_enrich_csv - 274 - VENUE: Found 'Goulburn'. Clicking.
+2025-06-21 02:17:57,763 - DEBUG - bsp_finder - scrape_and_enrich_csv - 279 - VENUE: Waiting for spinner post-click 'GOULBURN'.
+2025-06-21 02:18:02,772 - DEBUG - bsp_finder - scrape_and_enrich_csv - 281 - VENUE: Spinner not detected/timed out for 'GOULBURN'.
+2025-06-21 02:18:02,816 - INFO - bsp_finder - scrape_and_enrich_csv - 285 - VENUE SELECTED: 'GOULBURN'.
+2025-06-21 02:18:02,817 - DEBUG - bsp_finder - scrape_and_enrich_csv - 313 - Venue 'GOULBURN': Processing 3 race number(s).
+2025-06-21 02:18:02,819 - INFO - bsp_finder - _fetch_bsp_for_race_runners - 130 - Race R11 (GOULBURN): Processing 1 task(s).
+2025-06-21 02:18:02,819 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 133 - Race R11: Locating Tab XPath: .//div[contains(@class, 'race-tab') and div[@class='race-number' and normalize-space(text())='11']]
+2025-06-21 02:18:02,875 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 136 - Race R11: Tab not active. Clicking.
+2025-06-21 02:18:05,236 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 141 - Race R11: Locating runners XPath: .//div[@class='races']/div[contains(@class, 'betfair-url') and not(contains(@style,'display: none'))]//div[@class='runners']
+2025-06-21 02:18:05,271 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 147 -   Runner 2 ('FOXTROT ETHICS') in R11: Scraping BSP.
+2025-06-21 02:18:05,322 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 153 -   Runner 2 ('FOXTROT ETHICS') in R11: SUCCESS. BSP Win: '4.3', Place: '2.72'.
+2025-06-21 02:18:05,323 - INFO - bsp_finder - _fetch_bsp_for_race_runners - 163 - Race R11 (GOULBURN): Processed 1/1 tasks successfully.
+2025-06-21 02:18:05,323 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 174 - Race R11: Finished. Returning 1 tasks.
+2025-06-21 02:18:05,324 - INFO - bsp_finder - _fetch_bsp_for_race_runners - 130 - Race R6 (GOULBURN): Processing 4 task(s).
+2025-06-21 02:18:05,324 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 133 - Race R6: Locating Tab XPath: .//div[contains(@class, 'race-tab') and div[@class='race-number' and normalize-space(text())='6']]
+2025-06-21 02:18:05,430 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 136 - Race R6: Tab not active. Clicking.
+2025-06-21 02:18:07,787 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 141 - Race R6: Locating runners XPath: .//div[@class='races']/div[contains(@class, 'betfair-url') and not(contains(@style,'display: none'))]//div[@class='runners']
+2025-06-21 02:18:07,827 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 147 -   Runner 5 ('ROMAIKA') in R6: Scraping BSP.
+2025-06-21 02:18:07,881 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 153 -   Runner 5 ('ROMAIKA') in R6: SUCCESS. BSP Win: '2.67', Place: '1.7'.
+2025-06-21 02:18:07,882 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 147 -   Runner 5 ('ROMAIKA') in R6: Scraping BSP.
+2025-06-21 02:18:07,933 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 153 -   Runner 5 ('ROMAIKA') in R6: SUCCESS. BSP Win: '2.67', Place: '1.7'.
+2025-06-21 02:18:07,934 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 147 -   Runner 5 ('ROMAIKA') in R6: Scraping BSP.
+2025-06-21 02:18:07,994 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 153 -   Runner 5 ('ROMAIKA') in R6: SUCCESS. BSP Win: '2.67', Place: '1.7'.
+2025-06-21 02:18:07,996 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 147 -   Runner 5 ('ROMAIKA') in R6: Scraping BSP.
+2025-06-21 02:18:08,042 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 153 -   Runner 5 ('ROMAIKA') in R6: SUCCESS. BSP Win: '2.67', Place: '1.7'.
+2025-06-21 02:18:08,043 - INFO - bsp_finder - _fetch_bsp_for_race_runners - 163 - Race R6 (GOULBURN): Processed 4/4 tasks successfully.
+2025-06-21 02:18:08,043 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 174 - Race R6: Finished. Returning 4 tasks.
+2025-06-21 02:18:08,043 - INFO - bsp_finder - _fetch_bsp_for_race_runners - 130 - Race R4 (GOULBURN): Processing 2 task(s).
+2025-06-21 02:18:08,044 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 133 - Race R4: Locating Tab XPath: .//div[contains(@class, 'race-tab') and div[@class='race-number' and normalize-space(text())='4']]
+2025-06-21 02:18:08,091 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 136 - Race R4: Tab not active. Clicking.
+2025-06-21 02:18:10,427 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 141 - Race R4: Locating runners XPath: .//div[@class='races']/div[contains(@class, 'betfair-url') and not(contains(@style,'display: none'))]//div[@class='runners']
+2025-06-21 02:18:10,474 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 147 -   Runner 7 ('ORSON JIMMY') in R4: Scraping BSP.
+2025-06-21 02:18:10,529 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 153 -   Runner 7 ('ORSON JIMMY') in R4: SUCCESS. BSP Win: '2.18', Place: '1.32'.
+2025-06-21 02:18:10,530 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 147 -   Runner 7 ('ORSON JIMMY') in R4: Scraping BSP.
+2025-06-21 02:18:10,583 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 153 -   Runner 7 ('ORSON JIMMY') in R4: SUCCESS. BSP Win: '2.18', Place: '1.32'.
+2025-06-21 02:18:10,585 - INFO - bsp_finder - _fetch_bsp_for_race_runners - 163 - Race R4 (GOULBURN): Processed 2/2 tasks successfully.
+2025-06-21 02:18:10,585 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 174 - Race R4: Finished. Returning 2 tasks.
+2025-06-21 02:18:10,586 - INFO - bsp_finder - scrape_and_enrich_csv - 213 - Processing Group: Date='13/06/2025', Code='GREYHOUNDS', Venue='TOWNSVILLE' (26 tasks)
+2025-06-21 02:18:10,586 - INFO - bsp_finder - scrape_and_enrich_csv - 261 - VENUE CHANGE: Current='GOULBURN', Target='TOWNSVILLE'.
+2025-06-21 02:18:10,586 - DEBUG - bsp_finder - scrape_and_enrich_csv - 264 - VENUE: Locating filters with CSS: div.filters-list div.filter:not([style*='display: none'])
+2025-06-21 02:18:10,722 - DEBUG - bsp_finder - scrape_and_enrich_csv - 267 - VENUE: Found 14 filters for code 'greyhound'. Searching for 'TOWNSVILLE'.
+2025-06-21 02:18:10,835 - DEBUG - bsp_finder - scrape_and_enrich_csv - 274 - VENUE: Found 'Townsville'. Clicking.
+2025-06-21 02:18:11,544 - DEBUG - bsp_finder - scrape_and_enrich_csv - 279 - VENUE: Waiting for spinner post-click 'TOWNSVILLE'.
+2025-06-21 02:18:16,998 - DEBUG - bsp_finder - scrape_and_enrich_csv - 281 - VENUE: Spinner not detected/timed out for 'TOWNSVILLE'.
+2025-06-21 02:18:17,041 - INFO - bsp_finder - scrape_and_enrich_csv - 285 - VENUE SELECTED: 'TOWNSVILLE'.
+2025-06-21 02:18:17,042 - DEBUG - bsp_finder - scrape_and_enrich_csv - 313 - Venue 'TOWNSVILLE': Processing 6 race number(s).
+2025-06-21 02:18:17,043 - INFO - bsp_finder - _fetch_bsp_for_race_runners - 130 - Race R12 (TOWNSVILLE): Processing 4 task(s).
+2025-06-21 02:18:17,043 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 133 - Race R12: Locating Tab XPath: .//div[contains(@class, 'race-tab') and div[@class='race-number' and normalize-space(text())='12']]
+2025-06-21 02:18:17,096 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 136 - Race R12: Tab not active. Clicking.
+2025-06-21 02:18:19,432 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 141 - Race R12: Locating runners XPath: .//div[@class='races']/div[contains(@class, 'betfair-url') and not(contains(@style,'display: none'))]//div[@class='runners']
+2025-06-21 02:18:19,493 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 147 -   Runner 2 ('ASTON ATKINS') in R12: Scraping BSP.
+2025-06-21 02:18:19,620 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 153 -   Runner 2 ('ASTON ATKINS') in R12: SUCCESS. BSP Win: '7.58', Place: '2.42'.
+2025-06-21 02:18:19,623 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 147 -   Runner 2 ('ASTON ATKINS') in R12: Scraping BSP.
+2025-06-21 02:18:19,672 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 153 -   Runner 2 ('ASTON ATKINS') in R12: SUCCESS. BSP Win: '7.58', Place: '2.42'.
+2025-06-21 02:18:19,673 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 147 -   Runner 2 ('ASTON ATKINS') in R12: Scraping BSP.
+2025-06-21 02:18:19,715 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 153 -   Runner 2 ('ASTON ATKINS') in R12: SUCCESS. BSP Win: '7.58', Place: '2.42'.
+2025-06-21 02:18:19,716 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 147 -   Runner 2 ('ASTON ATKINS') in R12: Scraping BSP.
+2025-06-21 02:18:19,761 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 153 -   Runner 2 ('ASTON ATKINS') in R12: SUCCESS. BSP Win: '7.58', Place: '2.42'.
+2025-06-21 02:18:19,762 - INFO - bsp_finder - _fetch_bsp_for_race_runners - 163 - Race R12 (TOWNSVILLE): Processed 4/4 tasks successfully.
+2025-06-21 02:18:19,763 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 174 - Race R12: Finished. Returning 4 tasks.
+2025-06-21 02:18:19,763 - INFO - bsp_finder - _fetch_bsp_for_race_runners - 130 - Race R11 (TOWNSVILLE): Processing 7 task(s).
+2025-06-21 02:18:19,763 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 133 - Race R11: Locating Tab XPath: .//div[contains(@class, 'race-tab') and div[@class='race-number' and normalize-space(text())='11']]
+2025-06-21 02:18:19,806 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 136 - Race R11: Tab not active. Clicking.
+2025-06-21 02:18:22,149 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 141 - Race R11: Locating runners XPath: .//div[@class='races']/div[contains(@class, 'betfair-url') and not(contains(@style,'display: none'))]//div[@class='runners']
+2025-06-21 02:18:22,209 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 147 -   Runner 5 ('GIFTED JASPER') in R11: Scraping BSP.
+2025-06-21 02:18:22,300 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 153 -   Runner 5 ('GIFTED JASPER') in R11: SUCCESS. BSP Win: '36', Place: '5.6'.
+2025-06-21 02:18:22,301 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 147 -   Runner 7 ('MOVE LIGHTLY') in R11: Scraping BSP.
+2025-06-21 02:18:22,351 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 153 -   Runner 7 ('MOVE LIGHTLY') in R11: SUCCESS. BSP Win: '12.5', Place: '4.29'.
+2025-06-21 02:18:22,353 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 147 -   Runner 7 ('MOVE LIGHTLY') in R11: Scraping BSP.
+2025-06-21 02:18:22,403 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 153 -   Runner 7 ('MOVE LIGHTLY') in R11: SUCCESS. BSP Win: '12.5', Place: '4.29'.
+2025-06-21 02:18:22,404 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 147 -   Runner 7 ('MOVE LIGHTLY') in R11: Scraping BSP.
+2025-06-21 02:18:22,455 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 153 -   Runner 7 ('MOVE LIGHTLY') in R11: SUCCESS. BSP Win: '12.5', Place: '4.29'.
+2025-06-21 02:18:22,456 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 147 -   Runner 3 ('DRINK TIA') in R11: Scraping BSP.
+2025-06-21 02:18:22,505 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 153 -   Runner 3 ('DRINK TIA') in R11: SUCCESS. BSP Win: '9.4', Place: '2.8'.
+2025-06-21 02:18:22,506 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 147 -   Runner 3 ('DRINK TIA') in R11: Scraping BSP.
+2025-06-21 02:18:22,556 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 153 -   Runner 3 ('DRINK TIA') in R11: SUCCESS. BSP Win: '9.4', Place: '2.8'.
+2025-06-21 02:18:22,557 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 147 -   Runner 3 ('DRINK TIA') in R11: Scraping BSP.
+2025-06-21 02:18:22,610 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 153 -   Runner 3 ('DRINK TIA') in R11: SUCCESS. BSP Win: '9.4', Place: '2.8'.
+2025-06-21 02:18:22,612 - INFO - bsp_finder - _fetch_bsp_for_race_runners - 163 - Race R11 (TOWNSVILLE): Processed 7/7 tasks successfully.
+2025-06-21 02:18:22,612 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 174 - Race R11: Finished. Returning 7 tasks.
+2025-06-21 02:18:22,613 - INFO - bsp_finder - _fetch_bsp_for_race_runners - 130 - Race R10 (TOWNSVILLE): Processing 2 task(s).
+2025-06-21 02:18:22,613 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 133 - Race R10: Locating Tab XPath: .//div[contains(@class, 'race-tab') and div[@class='race-number' and normalize-space(text())='10']]
+2025-06-21 02:18:22,664 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 136 - Race R10: Tab not active. Clicking.
+2025-06-21 02:18:25,028 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 141 - Race R10: Locating runners XPath: .//div[@class='races']/div[contains(@class, 'betfair-url') and not(contains(@style,'display: none'))]//div[@class='runners']
+2025-06-21 02:18:25,114 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 147 -   Runner 7 ('FANCY GIFT') in R10: Scraping BSP.
+2025-06-21 02:18:25,161 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 153 -   Runner 7 ('FANCY GIFT') in R10: SUCCESS. BSP Win: '21.73', Place: '3.5'.
+2025-06-21 02:18:25,163 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 147 -   Runner 7 ('FANCY GIFT') in R10: Scraping BSP.
+2025-06-21 02:18:25,209 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 153 -   Runner 7 ('FANCY GIFT') in R10: SUCCESS. BSP Win: '21.73', Place: '3.5'.
+2025-06-21 02:18:25,210 - INFO - bsp_finder - _fetch_bsp_for_race_runners - 163 - Race R10 (TOWNSVILLE): Processed 2/2 tasks successfully.
+2025-06-21 02:18:25,211 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 174 - Race R10: Finished. Returning 2 tasks.
+2025-06-21 02:18:25,211 - INFO - bsp_finder - _fetch_bsp_for_race_runners - 130 - Race R8 (TOWNSVILLE): Processing 3 task(s).
+2025-06-21 02:18:25,211 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 133 - Race R8: Locating Tab XPath: .//div[contains(@class, 'race-tab') and div[@class='race-number' and normalize-space(text())='8']]
+2025-06-21 02:18:25,260 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 136 - Race R8: Tab not active. Clicking.
+2025-06-21 02:18:27,607 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 141 - Race R8: Locating runners XPath: .//div[@class='races']/div[contains(@class, 'betfair-url') and not(contains(@style,'display: none'))]//div[@class='runners']
+2025-06-21 02:18:27,639 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 147 -   Runner 1 ('LOTS OF BUGS') in R8: Scraping BSP.
+2025-06-21 02:18:27,694 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 153 -   Runner 1 ('LOTS OF BUGS') in R8: SUCCESS. BSP Win: '4.55', Place: '1.71'.
+2025-06-21 02:18:27,695 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 147 -   Runner 1 ('LOTS OF BUGS') in R8: Scraping BSP.
+2025-06-21 02:18:27,748 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 153 -   Runner 1 ('LOTS OF BUGS') in R8: SUCCESS. BSP Win: '4.55', Place: '1.71'.
+2025-06-21 02:18:27,749 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 147 -   Runner 1 ('LOTS OF BUGS') in R8: Scraping BSP.
+2025-06-21 02:18:27,794 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 153 -   Runner 1 ('LOTS OF BUGS') in R8: SUCCESS. BSP Win: '4.55', Place: '1.71'.
+2025-06-21 02:18:27,795 - INFO - bsp_finder - _fetch_bsp_for_race_runners - 163 - Race R8 (TOWNSVILLE): Processed 3/3 tasks successfully.
+2025-06-21 02:18:27,795 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 174 - Race R8: Finished. Returning 3 tasks.
+2025-06-21 02:18:27,795 - INFO - bsp_finder - _fetch_bsp_for_race_runners - 130 - Race R6 (TOWNSVILLE): Processing 4 task(s).
+2025-06-21 02:18:27,796 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 133 - Race R6: Locating Tab XPath: .//div[contains(@class, 'race-tab') and div[@class='race-number' and normalize-space(text())='6']]
+2025-06-21 02:18:27,847 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 136 - Race R6: Tab not active. Clicking.
+2025-06-21 02:18:30,216 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 141 - Race R6: Locating runners XPath: .//div[@class='races']/div[contains(@class, 'betfair-url') and not(contains(@style,'display: none'))]//div[@class='runners']
+2025-06-21 02:18:30,261 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 147 -   Runner 7 ('TOP NOTCH SCOTCH') in R6: Scraping BSP.
+2025-06-21 02:18:30,314 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 153 -   Runner 7 ('TOP NOTCH SCOTCH') in R6: SUCCESS. BSP Win: '25', Place: '3.42'.
+2025-06-21 02:18:30,315 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 147 -   Runner 7 ('TOP NOTCH SCOTCH') in R6: Scraping BSP.
+2025-06-21 02:18:30,371 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 153 -   Runner 7 ('TOP NOTCH SCOTCH') in R6: SUCCESS. BSP Win: '25', Place: '3.42'.
+2025-06-21 02:18:30,374 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 147 -   Runner 2 ('HERBIE JENKINS') in R6: Scraping BSP.
+2025-06-21 02:18:30,429 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 153 -   Runner 2 ('HERBIE JENKINS') in R6: SUCCESS. BSP Win: '9.79', Place: '2.48'.
+2025-06-21 02:18:30,430 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 147 -   Runner 2 ('HERBIE JENKINS') in R6: Scraping BSP.
+2025-06-21 02:18:30,482 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 153 -   Runner 2 ('HERBIE JENKINS') in R6: SUCCESS. BSP Win: '9.79', Place: '2.48'.
+2025-06-21 02:18:30,484 - INFO - bsp_finder - _fetch_bsp_for_race_runners - 163 - Race R6 (TOWNSVILLE): Processed 4/4 tasks successfully.
+2025-06-21 02:18:30,485 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 174 - Race R6: Finished. Returning 4 tasks.
+2025-06-21 02:18:30,485 - INFO - bsp_finder - _fetch_bsp_for_race_runners - 130 - Race R3 (TOWNSVILLE): Processing 6 task(s).
+2025-06-21 02:18:30,485 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 133 - Race R3: Locating Tab XPath: .//div[contains(@class, 'race-tab') and div[@class='race-number' and normalize-space(text())='3']]
+2025-06-21 02:18:30,596 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 136 - Race R3: Tab not active. Clicking.
+2025-06-21 02:18:32,956 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 141 - Race R3: Locating runners XPath: .//div[@class='races']/div[contains(@class, 'betfair-url') and not(contains(@style,'display: none'))]//div[@class='runners']
+2025-06-21 02:18:33,006 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 147 -   Runner 7 ('VELOCITY RADIATE') in R3: Scraping BSP.
+2025-06-21 02:18:33,061 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 153 -   Runner 7 ('VELOCITY RADIATE') in R3: SUCCESS. BSP Win: '1.99', Place: '1.41'.
+2025-06-21 02:18:33,062 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 147 -   Runner 7 ('VELOCITY RADIATE') in R3: Scraping BSP.
+2025-06-21 02:18:33,110 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 153 -   Runner 7 ('VELOCITY RADIATE') in R3: SUCCESS. BSP Win: '1.99', Place: '1.41'.
+2025-06-21 02:18:33,111 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 147 -   Runner 7 ('VELOCITY RADIATE') in R3: Scraping BSP.
+2025-06-21 02:18:33,159 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 153 -   Runner 7 ('VELOCITY RADIATE') in R3: SUCCESS. BSP Win: '1.99', Place: '1.41'.
+2025-06-21 02:18:33,160 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 147 -   Runner 3 ('FIELD PISTOL') in R3: Scraping BSP.
+2025-06-21 02:18:33,209 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 153 -   Runner 3 ('FIELD PISTOL') in R3: SUCCESS. BSP Win: '42.42', Place: '4.2'.
+2025-06-21 02:18:33,210 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 147 -   Runner 3 ('FIELD PISTOL') in R3: Scraping BSP.
+2025-06-21 02:18:33,262 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 153 -   Runner 3 ('FIELD PISTOL') in R3: SUCCESS. BSP Win: '42.42', Place: '4.2'.
+2025-06-21 02:18:33,263 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 147 -   Runner 3 ('FIELD PISTOL') in R3: Scraping BSP.
+2025-06-21 02:18:33,316 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 153 -   Runner 3 ('FIELD PISTOL') in R3: SUCCESS. BSP Win: '42.42', Place: '4.2'.
+2025-06-21 02:18:33,318 - INFO - bsp_finder - _fetch_bsp_for_race_runners - 163 - Race R3 (TOWNSVILLE): Processed 6/6 tasks successfully.
+2025-06-21 02:18:33,318 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 174 - Race R3: Finished. Returning 6 tasks.
+2025-06-21 02:18:33,318 - INFO - bsp_finder - scrape_and_enrich_csv - 213 - Processing Group: Date='13/06/2025', Code='GREYHOUNDS', Venue='HEALESVILLE' (16 tasks)
+2025-06-21 02:18:33,319 - INFO - bsp_finder - scrape_and_enrich_csv - 261 - VENUE CHANGE: Current='TOWNSVILLE', Target='HEALESVILLE'.
+2025-06-21 02:18:33,319 - DEBUG - bsp_finder - scrape_and_enrich_csv - 264 - VENUE: Locating filters with CSS: div.filters-list div.filter:not([style*='display: none'])
+2025-06-21 02:18:33,462 - DEBUG - bsp_finder - scrape_and_enrich_csv - 267 - VENUE: Found 14 filters for code 'greyhound'. Searching for 'HEALESVILLE'.
+2025-06-21 02:18:33,513 - DEBUG - bsp_finder - scrape_and_enrich_csv - 274 - VENUE: Found 'Healesville'. Clicking.
+2025-06-21 02:18:34,263 - DEBUG - bsp_finder - scrape_and_enrich_csv - 279 - VENUE: Waiting for spinner post-click 'HEALESVILLE'.
+2025-06-21 02:18:39,729 - DEBUG - bsp_finder - scrape_and_enrich_csv - 281 - VENUE: Spinner not detected/timed out for 'HEALESVILLE'.
+2025-06-21 02:18:39,776 - INFO - bsp_finder - scrape_and_enrich_csv - 285 - VENUE SELECTED: 'HEALESVILLE'.
+2025-06-21 02:18:39,777 - DEBUG - bsp_finder - scrape_and_enrich_csv - 313 - Venue 'HEALESVILLE': Processing 5 race number(s).
+2025-06-21 02:18:39,778 - INFO - bsp_finder - _fetch_bsp_for_race_runners - 130 - Race R12 (HEALESVILLE): Processing 1 task(s).
+2025-06-21 02:18:39,778 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 133 - Race R12: Locating Tab XPath: .//div[contains(@class, 'race-tab') and div[@class='race-number' and normalize-space(text())='12']]
+2025-06-21 02:18:39,828 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 136 - Race R12: Tab not active. Clicking.
+2025-06-21 02:18:42,183 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 141 - Race R12: Locating runners XPath: .//div[@class='races']/div[contains(@class, 'betfair-url') and not(contains(@style,'display: none'))]//div[@class='runners']
+2025-06-21 02:18:42,234 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 147 -   Runner 6 ('WHAT'S THAT') in R12: Scraping BSP.
+2025-06-21 02:18:42,339 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 153 -   Runner 6 ('WHAT'S THAT') in R12: SUCCESS. BSP Win: '20', Place: '4.26'.
+2025-06-21 02:18:42,340 - INFO - bsp_finder - _fetch_bsp_for_race_runners - 163 - Race R12 (HEALESVILLE): Processed 1/1 tasks successfully.
+2025-06-21 02:18:42,341 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 174 - Race R12: Finished. Returning 1 tasks.
+2025-06-21 02:18:42,341 - INFO - bsp_finder - _fetch_bsp_for_race_runners - 130 - Race R10 (HEALESVILLE): Processing 5 task(s).
+2025-06-21 02:18:42,341 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 133 - Race R10: Locating Tab XPath: .//div[contains(@class, 'race-tab') and div[@class='race-number' and normalize-space(text())='10']]
+2025-06-21 02:18:42,392 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 136 - Race R10: Tab not active. Clicking.
+2025-06-21 02:18:44,745 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 141 - Race R10: Locating runners XPath: .//div[@class='races']/div[contains(@class, 'betfair-url') and not(contains(@style,'display: none'))]//div[@class='runners']
+2025-06-21 02:18:44,800 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 147 -   Runner 2 ('ONE KNEE NONI') in R10: Scraping BSP.
+2025-06-21 02:18:44,862 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 153 -   Runner 2 ('ONE KNEE NONI') in R10: SUCCESS. BSP Win: '4.5', Place: '1.52'.
+2025-06-21 02:18:44,863 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 147 -   Runner 8 ('AUDACIOUS IVY') in R10: Scraping BSP.
+2025-06-21 02:18:44,916 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 153 -   Runner 8 ('AUDACIOUS IVY') in R10: SUCCESS. BSP Win: '21', Place: '6.2'.
+2025-06-21 02:18:44,918 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 147 -   Runner 8 ('AUDACIOUS IVY') in R10: Scraping BSP.
+2025-06-21 02:18:44,964 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 153 -   Runner 8 ('AUDACIOUS IVY') in R10: SUCCESS. BSP Win: '21', Place: '6.2'.
+2025-06-21 02:18:44,966 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 147 -   Runner 8 ('AUDACIOUS IVY') in R10: Scraping BSP.
+2025-06-21 02:18:45,018 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 153 -   Runner 8 ('AUDACIOUS IVY') in R10: SUCCESS. BSP Win: '21', Place: '6.2'.
+2025-06-21 02:18:45,021 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 147 -   Runner 8 ('AUDACIOUS IVY') in R10: Scraping BSP.
+2025-06-21 02:18:45,076 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 153 -   Runner 8 ('AUDACIOUS IVY') in R10: SUCCESS. BSP Win: '21', Place: '6.2'.
+2025-06-21 02:18:45,077 - INFO - bsp_finder - _fetch_bsp_for_race_runners - 163 - Race R10 (HEALESVILLE): Processed 5/5 tasks successfully.
+2025-06-21 02:18:45,077 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 174 - Race R10: Finished. Returning 5 tasks.
+2025-06-21 02:18:45,077 - INFO - bsp_finder - _fetch_bsp_for_race_runners - 130 - Race R8 (HEALESVILLE): Processing 4 task(s).
+2025-06-21 02:18:45,077 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 133 - Race R8: Locating Tab XPath: .//div[contains(@class, 'race-tab') and div[@class='race-number' and normalize-space(text())='8']]
+2025-06-21 02:18:45,126 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 136 - Race R8: Tab not active. Clicking.
+2025-06-21 02:18:47,493 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 141 - Race R8: Locating runners XPath: .//div[@class='races']/div[contains(@class, 'betfair-url') and not(contains(@style,'display: none'))]//div[@class='runners']
+2025-06-21 02:18:47,526 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 147 -   Runner 6 ('BLAME ESMERALDA') in R8: Scraping BSP.
+2025-06-21 02:18:47,576 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 153 -   Runner 6 ('BLAME ESMERALDA') in R8: SUCCESS. BSP Win: '41.52', Place: '6.59'.
+2025-06-21 02:18:47,577 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 147 -   Runner 7 ('WE ARE ONE') in R8: Scraping BSP.
+2025-06-21 02:18:47,626 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 153 -   Runner 7 ('WE ARE ONE') in R8: SUCCESS. BSP Win: '14.58', Place: '2.7'.
+2025-06-21 02:18:47,627 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 147 -   Runner 7 ('WE ARE ONE') in R8: Scraping BSP.
+2025-06-21 02:18:47,675 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 153 -   Runner 7 ('WE ARE ONE') in R8: SUCCESS. BSP Win: '14.58', Place: '2.7'.
+2025-06-21 02:18:47,676 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 147 -   Runner 7 ('WE ARE ONE') in R8: Scraping BSP.
+2025-06-21 02:18:47,726 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 153 -   Runner 7 ('WE ARE ONE') in R8: SUCCESS. BSP Win: '14.58', Place: '2.7'.
+2025-06-21 02:18:47,727 - INFO - bsp_finder - _fetch_bsp_for_race_runners - 163 - Race R8 (HEALESVILLE): Processed 4/4 tasks successfully.
+2025-06-21 02:18:47,728 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 174 - Race R8: Finished. Returning 4 tasks.
+2025-06-21 02:18:47,728 - INFO - bsp_finder - _fetch_bsp_for_race_runners - 130 - Race R7 (HEALESVILLE): Processing 5 task(s).
+2025-06-21 02:18:47,728 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 133 - Race R7: Locating Tab XPath: .//div[contains(@class, 'race-tab') and div[@class='race-number' and normalize-space(text())='7']]
+2025-06-21 02:18:47,779 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 136 - Race R7: Tab not active. Clicking.
+2025-06-21 02:18:50,131 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 141 - Race R7: Locating runners XPath: .//div[@class='races']/div[contains(@class, 'betfair-url') and not(contains(@style,'display: none'))]//div[@class='runners']
+2025-06-21 02:18:50,178 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 147 -   Runner 2 ('PUT IT TOGETHER') in R7: Scraping BSP.
+2025-06-21 02:18:50,232 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 153 -   Runner 2 ('PUT IT TOGETHER') in R7: SUCCESS. BSP Win: '14.62', Place: '3.8'.
+2025-06-21 02:18:50,234 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 147 -   Runner 2 ('PUT IT TOGETHER') in R7: Scraping BSP.
+2025-06-21 02:18:50,286 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 153 -   Runner 2 ('PUT IT TOGETHER') in R7: SUCCESS. BSP Win: '14.62', Place: '3.8'.
+2025-06-21 02:18:50,288 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 147 -   Runner 2 ('PUT IT TOGETHER') in R7: Scraping BSP.
+2025-06-21 02:18:50,338 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 153 -   Runner 2 ('PUT IT TOGETHER') in R7: SUCCESS. BSP Win: '14.62', Place: '3.8'.
+2025-06-21 02:18:50,339 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 147 -   Runner 7 ('MOBILE LAD') in R7: Scraping BSP.
+2025-06-21 02:18:50,388 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 153 -   Runner 7 ('MOBILE LAD') in R7: SUCCESS. BSP Win: '31.27', Place: '4.6'.
+2025-06-21 02:18:50,389 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 147 -   Runner 7 ('MOBILE LAD') in R7: Scraping BSP.
+2025-06-21 02:18:50,441 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 153 -   Runner 7 ('MOBILE LAD') in R7: SUCCESS. BSP Win: '31.27', Place: '4.6'.
+2025-06-21 02:18:50,442 - INFO - bsp_finder - _fetch_bsp_for_race_runners - 163 - Race R7 (HEALESVILLE): Processed 5/5 tasks successfully.
+2025-06-21 02:18:50,443 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 174 - Race R7: Finished. Returning 5 tasks.
+2025-06-21 02:18:50,443 - INFO - bsp_finder - _fetch_bsp_for_race_runners - 130 - Race R6 (HEALESVILLE): Processing 1 task(s).
+2025-06-21 02:18:50,443 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 133 - Race R6: Locating Tab XPath: .//div[contains(@class, 'race-tab') and div[@class='race-number' and normalize-space(text())='6']]
+2025-06-21 02:18:50,496 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 136 - Race R6: Tab not active. Clicking.
+2025-06-21 02:18:52,850 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 141 - Race R6: Locating runners XPath: .//div[@class='races']/div[contains(@class, 'betfair-url') and not(contains(@style,'display: none'))]//div[@class='runners']
+2025-06-21 02:18:52,912 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 147 -   Runner 5 ('SLIGHTLY SISSY') in R6: Scraping BSP.
+2025-06-21 02:18:52,975 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 153 -   Runner 5 ('SLIGHTLY SISSY') in R6: SUCCESS. BSP Win: '19.63', Place: '4.1'.
+2025-06-21 02:18:52,976 - INFO - bsp_finder - _fetch_bsp_for_race_runners - 163 - Race R6 (HEALESVILLE): Processed 1/1 tasks successfully.
+2025-06-21 02:18:52,976 - DEBUG - bsp_finder - _fetch_bsp_for_race_runners - 174 - Race R6: Finished. Returning 1 tasks.
+2025-06-21 02:18:52,976 - INFO - bsp_finder - scrape_and_enrich_csv - 213 - Processing Group: Date='12/06/2025', Code='GREYHOUNDS', Venue='DAPTO' (5 tasks)
+2025-06-21 02:18:52,977 - INFO - bsp_finder - scrape_and_enrich_csv - 221 - DATE CHANGE: Current='13/06/2025', Target='12/06/2025'.
+2025-06-21 02:18:52,977 - INFO - bsp_finder - select_date_on_calendar - 66 - Calendar: Selecting date: '12/06/2025'.
+2025-06-21 02:18:52,977 - DEBUG - bsp_finder - select_date_on_calendar - 71 - Calendar: Clicking icon.
+2025-06-21 02:18:53,113 - DEBUG - bsp_finder - select_date_on_calendar - 72 - Calendar: Widget visible.
+2025-06-21 02:18:53,157 - DEBUG - bsp_finder - select_date_on_calendar - 77 - Calendar: Display: June 2025. Target: June 2025.
+2025-06-21 02:18:53,157 - DEBUG - bsp_finder - select_date_on_calendar - 78 - Calendar: Correct month/year.
+2025-06-21 02:18:53,157 - DEBUG - bsp_finder - select_date_on_calendar - 86 - Calendar: Clicking day XPath: //span[contains(@class, 'flatpickr-day') and not(contains(@class, 'prevMonthDay')) and not(contains(@class, 'nextMonthDay')) and normalize-space()='12']
+2025-06-21 02:18:53,270 - INFO - bsp_finder - select_date_on_calendar - 87 - Calendar: Day '12' selected.
+2025-06-21 02:18:53,271 - DEBUG - bsp_finder - select_date_on_calendar - 89 - Calendar: Waiting for spinner post-date selection (up to 120s)...
+2025-06-21 02:18:53,846 - DEBUG - bsp_finder - select_date_on_calendar - 91 - Calendar: Spinner detected. Waiting for invisibility.
+2025-06-21 02:18:53,878 - INFO - bsp_finder - select_date_on_calendar - 92 - Calendar: Date selection complete, spinner gone.
+2025-06-21 02:18:53,879 - INFO - bsp_finder - scrape_and_enrich_csv - 229 - DATE '12/06/2025' selected. Verifying data panel (up to 2 mins)...
+2025-06-21 02:18:53,974 - DEBUG - bsp_finder - scrape_and_enrich_csv - 231 - Filter panel present for 12/06/2025.
+2025-06-21 02:20:54,074 - ERROR - bsp_finder - scrape_and_enrich_csv - 236 - DATE DATA LOAD FAILURE for '12/06/2025': . Skipping date.
+2025-06-21 02:20:54,087 - INFO - bsp_finder - scrape_and_enrich_csv - 213 - Processing Group: Date='12/06/2025', Code='GREYHOUNDS', Venue='Q2 PARKLANDS' (14 tasks)
+2025-06-21 02:20:54,087 - WARNING - bsp_finder - scrape_and_enrich_csv - 216 - Date 12/06/2025 in bad_dates_set. Skipping 14 tasks for this group.
+2025-06-21 02:20:54,112 - INFO - bsp_finder - scrape_and_enrich_csv - 213 - Processing Group: Date='12/06/2025', Code='GREYHOUNDS', Venue='HOBART' (10 tasks)
+2025-06-21 02:20:54,113 - WARNING - bsp_finder - scrape_and_enrich_csv - 216 - Date 12/06/2025 in bad_dates_set. Skipping 10 tasks for this group.
+2025-06-21 02:20:54,143 - INFO - bsp_finder - scrape_and_enrich_csv - 213 - Processing Group: Date='12/06/2025', Code='GREYHOUNDS', Venue='MANDURAH' (1 tasks)
+2025-06-21 02:20:54,144 - WARNING - bsp_finder - scrape_and_enrich_csv - 216 - Date 12/06/2025 in bad_dates_set. Skipping 1 tasks for this group.
+2025-06-21 02:20:54,145 - INFO - bsp_finder - scrape_and_enrich_csv - 213 - Processing Group: Date='12/06/2025', Code='GREYHOUNDS', Venue='WARRNAMBOOL' (7 tasks)
+2025-06-21 02:20:54,145 - WARNING - bsp_finder - scrape_and_enrich_csv - 216 - Date 12/06/2025 in bad_dates_set. Skipping 7 tasks for this group.
+2025-06-21 02:20:54,159 - INFO - bsp_finder - scrape_and_enrich_csv - 213 - Processing Group: Date='12/06/2025', Code='HARNESS', Venue='PENRITH' (6 tasks)
+2025-06-21 02:20:54,159 - WARNING - bsp_finder - scrape_and_enrich_csv - 216 - Date 12/06/2025 in bad_dates_set. Skipping 6 tasks for this group.
+2025-06-21 02:20:54,164 - INFO - bsp_finder - scrape_and_enrich_csv - 213 - Processing Group: Date='12/06/2025', Code='HARNESS', Venue='BALLARAT' (24 tasks)
+2025-06-21 02:20:54,164 - WARNING - bsp_finder - scrape_and_enrich_csv - 216 - Date 12/06/2025 in bad_dates_set. Skipping 24 tasks for this group.
+2025-06-21 02:20:54,210 - INFO - bsp_finder - scrape_and_enrich_csv - 213 - Processing Group: Date='12/06/2025', Code='GREYHOUNDS', Venue='WENTWORTH PARK' (3 tasks)
+2025-06-21 02:20:54,211 - WARNING - bsp_finder - scrape_and_enrich_csv - 216 - Date 12/06/2025 in bad_dates_set. Skipping 3 tasks for this group.
+2025-06-21 02:20:54,213 - INFO - bsp_finder - scrape_and_enrich_csv - 213 - Processing Group: Date='12/06/2025', Code='GREYHOUNDS', Venue='ANGLE PARK' (9 tasks)
+2025-06-21 02:20:54,214 - WARNING - bsp_finder - scrape_and_enrich_csv - 216 - Date 12/06/2025 in bad_dates_set. Skipping 9 tasks for this group.
+2025-06-21 02:20:54,228 - INFO - bsp_finder - scrape_and_enrich_csv - 213 - Processing Group: Date='12/06/2025', Code='GREYHOUNDS', Venue='CASINO' (19 tasks)
+2025-06-21 02:20:54,228 - WARNING - bsp_finder - scrape_and_enrich_csv - 216 - Date 12/06/2025 in bad_dates_set. Skipping 19 tasks for this group.
+2025-06-21 02:20:54,263 - INFO - bsp_finder - scrape_and_enrich_csv - 213 - Processing Group: Date='12/06/2025', Code='HARNESS', Venue='REDCLIFFE' (28 tasks)
+2025-06-21 02:20:54,263 - WARNING - bsp_finder - scrape_and_enrich_csv - 216 - Date 12/06/2025 in bad_dates_set. Skipping 28 tasks for this group.
+2025-06-21 02:20:54,309 - INFO - bsp_finder - scrape_and_enrich_csv - 213 - Processing Group: Date='12/06/2025', Code='GREYHOUNDS', Venue='WARRAGUL' (3 tasks)
+2025-06-21 02:20:54,309 - WARNING - bsp_finder - scrape_and_enrich_csv - 216 - Date 12/06/2025 in bad_dates_set. Skipping 3 tasks for this group.
+2025-06-21 02:20:54,311 - INFO - bsp_finder - scrape_and_enrich_csv - 213 - Processing Group: Date='12/06/2025', Code='HARNESS', Venue='TAMWORTH' (24 tasks)
+2025-06-21 02:20:54,312 - WARNING - bsp_finder - scrape_and_enrich_csv - 216 - Date 12/06/2025 in bad_dates_set. Skipping 24 tasks for this group.
+2025-06-21 02:20:54,405 - INFO - bsp_finder - scrape_and_enrich_csv - 213 - Processing Group: Date='12/06/2025', Code='GREYHOUNDS', Venue='RICHMOND STRAIGHT' (11 tasks)
+2025-06-21 02:20:54,457 - WARNING - bsp_finder - scrape_and_enrich_csv - 216 - Date 12/06/2025 in bad_dates_set. Skipping 11 tasks for this group.
+2025-06-21 02:20:54,530 - INFO - bsp_finder - scrape_and_enrich_csv - 213 - Processing Group: Date='12/06/2025', Code='GREYHOUNDS', Venue='Q1 LAKESIDE' (19 tasks)
+2025-06-21 02:20:54,531 - WARNING - bsp_finder - scrape_and_enrich_csv - 216 - Date 12/06/2025 in bad_dates_set. Skipping 19 tasks for this group.
+2025-06-21 02:20:54,571 - INFO - bsp_finder - scrape_and_enrich_csv - 213 - Processing Group: Date='12/06/2025', Code='GREYHOUNDS', Venue='SHEPPARTON' (7 tasks)
+2025-06-21 02:20:54,571 - WARNING - bsp_finder - scrape_and_enrich_csv - 216 - Date 12/06/2025 in bad_dates_set. Skipping 7 tasks for this group.
+2025-06-21 02:20:54,578 - INFO - bsp_finder - scrape_and_enrich_csv - 213 - Processing Group: Date='11/06/2025', Code='GREYHOUNDS', Venue='THE MEADOWS' (12 tasks)
+2025-06-21 02:20:54,578 - INFO - bsp_finder - scrape_and_enrich_csv - 221 - DATE CHANGE: Current='13/06/2025', Target='11/06/2025'.
+2025-06-21 02:20:54,579 - INFO - bsp_finder - select_date_on_calendar - 66 - Calendar: Selecting date: '11/06/2025'.
+2025-06-21 02:20:54,579 - DEBUG - bsp_finder - select_date_on_calendar - 71 - Calendar: Clicking icon.
+2025-06-21 02:20:54,728 - DEBUG - bsp_finder - select_date_on_calendar - 72 - Calendar: Widget visible.
+2025-06-21 02:20:54,773 - DEBUG - bsp_finder - select_date_on_calendar - 77 - Calendar: Display: June 2025. Target: June 2025.
+2025-06-21 02:20:54,773 - DEBUG - bsp_finder - select_date_on_calendar - 78 - Calendar: Correct month/year.
+2025-06-21 02:20:54,773 - DEBUG - bsp_finder - select_date_on_calendar - 86 - Calendar: Clicking day XPath: //span[contains(@class, 'flatpickr-day') and not(contains(@class, 'prevMonthDay')) and not(contains(@class, 'nextMonthDay')) and normalize-space()='11']
+2025-06-21 02:20:55,011 - INFO - bsp_finder - select_date_on_calendar - 87 - Calendar: Day '11' selected.
+2025-06-21 02:20:55,012 - DEBUG - bsp_finder - select_date_on_calendar - 89 - Calendar: Waiting for spinner post-date selection (up to 120s)...
+2025-06-21 02:20:55,059 - DEBUG - bsp_finder - select_date_on_calendar - 91 - Calendar: Spinner detected. Waiting for invisibility.
+2025-06-21 02:20:57,262 - INFO - bsp_finder - select_date_on_calendar - 92 - Calendar: Date selection complete, spinner gone.
+2025-06-21 02:20:57,262 - INFO - bsp_finder - scrape_and_enrich_csv - 229 - DATE '11/06/2025' selected. Verifying data panel (up to 2 mins)...
+2025-06-21 02:20:57,277 - DEBUG - bsp_finder - scrape_and_enrich_csv - 231 - Filter panel present for 11/06/2025.
+2025-06-21 02:22:57,449 - ERROR - bsp_finder - scrape_and_enrich_csv - 236 - DATE DATA LOAD FAILURE for '11/06/2025': . Skipping date.
+2025-06-21 02:22:57,468 - INFO - bsp_finder - scrape_and_enrich_csv - 213 - Processing Group: Date='11/06/2025', Code='GREYHOUNDS', Venue='CANNINGTON' (41 tasks)
+2025-06-21 02:22:57,469 - WARNING - bsp_finder - scrape_and_enrich_csv - 216 - Date 11/06/2025 in bad_dates_set. Skipping 41 tasks for this group.
+2025-06-21 02:22:57,501 - INFO - bsp_finder - scrape_and_enrich_csv - 213 - Processing Group: Date='11/06/2025', Code='HARNESS', Venue='REDCLIFFE' (59 tasks)
+2025-06-21 02:22:57,502 - WARNING - bsp_finder - scrape_and_enrich_csv - 216 - Date 11/06/2025 in bad_dates_set. Skipping 59 tasks for this group.
+2025-06-21 02:22:57,552 - INFO - bsp_finder - scrape_and_enrich_csv - 213 - Processing Group: Date='11/06/2025', Code='GREYHOUNDS', Venue='RICHMOND STRAIGHT' (28 tasks)
+2025-06-21 02:22:57,552 - WARNING - bsp_finder - scrape_and_enrich_csv - 216 - Date 11/06/2025 in bad_dates_set. Skipping 28 tasks for this group.
+2025-06-21 02:22:57,585 - INFO - bsp_finder - scrape_and_enrich_csv - 213 - Processing Group: Date='11/06/2025', Code='GREYHOUNDS', Venue='BALLARAT' (23 tasks)
+2025-06-21 02:22:57,585 - WARNING - bsp_finder - scrape_and_enrich_csv - 216 - Date 11/06/2025 in bad_dates_set. Skipping 23 tasks for this group.
+2025-06-21 02:22:57,611 - INFO - bsp_finder - scrape_and_enrich_csv - 213 - Processing Group: Date='11/06/2025', Code='HARNESS', Venue='BENDIGO' (81 tasks)
+2025-06-21 02:22:57,612 - WARNING - bsp_finder - scrape_and_enrich_csv - 216 - Date 11/06/2025 in bad_dates_set. Skipping 81 tasks for this group.
+2025-06-21 02:22:57,698 - INFO - bsp_finder - scrape_and_enrich_csv - 213 - Processing Group: Date='11/06/2025', Code='GREYHOUNDS', Venue='ROCKHAMPTON' (17 tasks)
+2025-06-21 02:22:57,699 - WARNING - bsp_finder - scrape_and_enrich_csv - 216 - Date 11/06/2025 in bad_dates_set. Skipping 17 tasks for this group.
+2025-06-21 02:22:57,721 - INFO - bsp_finder - scrape_and_enrich_csv - 213 - Processing Group: Date='11/06/2025', Code='HARNESS', Venue='BATHURST' (46 tasks)
+2025-06-21 02:22:57,722 - WARNING - bsp_finder - scrape_and_enrich_csv - 216 - Date 11/06/2025 in bad_dates_set. Skipping 46 tasks for this group.
+2025-06-21 02:22:57,783 - INFO - bsp_finder - scrape_and_enrich_csv - 213 - Processing Group: Date='11/06/2025', Code='GREYHOUNDS', Venue='THE GARDENS' (14 tasks)
+2025-06-21 02:22:57,784 - WARNING - bsp_finder - scrape_and_enrich_csv - 216 - Date 11/06/2025 in bad_dates_set. Skipping 14 tasks for this group.
+2025-06-21 02:22:57,797 - INFO - bsp_finder - scrape_and_enrich_csv - 213 - Processing Group: Date='11/06/2025', Code='GREYHOUNDS', Venue='DARWIN' (13 tasks)
+2025-06-21 02:22:57,797 - WARNING - bsp_finder - scrape_and_enrich_csv - 216 - Date 11/06/2025 in bad_dates_set. Skipping 13 tasks for this group.
+2025-06-21 02:22:57,815 - INFO - bsp_finder - scrape_and_enrich_csv - 213 - Processing Group: Date='11/06/2025', Code='GREYHOUNDS', Venue='ALBION PARK' (41 tasks)
+2025-06-21 02:22:57,816 - WARNING - bsp_finder - scrape_and_enrich_csv - 216 - Date 11/06/2025 in bad_dates_set. Skipping 41 tasks for this group.
+2025-06-21 02:22:57,860 - INFO - bsp_finder - scrape_and_enrich_csv - 213 - Processing Group: Date='11/06/2025', Code='GREYHOUNDS', Venue='GUNNEDAH' (25 tasks)
+2025-06-21 02:22:57,861 - WARNING - bsp_finder - scrape_and_enrich_csv - 216 - Date 11/06/2025 in bad_dates_set. Skipping 25 tasks for this group.
+2025-06-21 02:22:57,898 - INFO - bsp_finder - scrape_and_enrich_csv - 213 - Processing Group: Date='11/06/2025', Code='GREYHOUNDS', Venue='BENDIGO' (30 tasks)
+2025-06-21 02:22:57,898 - WARNING - bsp_finder - scrape_and_enrich_csv - 216 - Date 11/06/2025 in bad_dates_set. Skipping 30 tasks for this group.
+2025-06-21 02:22:57,925 - INFO - bsp_finder - scrape_and_enrich_csv - 213 - Processing Group: Date='11/06/2025', Code='HARNESS', Venue='HORSHAM' (26 tasks)
+2025-06-21 02:22:57,925 - WARNING - bsp_finder - scrape_and_enrich_csv - 216 - Date 11/06/2025 in bad_dates_set. Skipping 26 tasks for this group.
+2025-06-21 02:22:57,953 - INFO - bsp_finder - scrape_and_enrich_csv - 213 - Processing Group: Date='11/06/2025', Code='GREYHOUNDS', Venue='CAPALABA' (24 tasks)
+2025-06-21 02:22:57,954 - WARNING - bsp_finder - scrape_and_enrich_csv - 216 - Date 11/06/2025 in bad_dates_set. Skipping 24 tasks for this group.
+2025-06-21 02:22:57,975 - INFO - bsp_finder - scrape_and_enrich_csv - 213 - Processing Group: Date='11/06/2025', Code='GREYHOUNDS', Venue='TEMORA' (22 tasks)
+2025-06-21 02:22:57,975 - WARNING - bsp_finder - scrape_and_enrich_csv - 216 - Date 11/06/2025 in bad_dates_set. Skipping 22 tasks for this group.
+2025-06-21 02:22:57,998 - INFO - bsp_finder - scrape_and_enrich_csv - 213 - Processing Group: Date='11/06/2025', Code='GREYHOUNDS', Venue='SALE' (13 tasks)
+2025-06-21 02:22:57,998 - WARNING - bsp_finder - scrape_and_enrich_csv - 216 - Date 11/06/2025 in bad_dates_set. Skipping 13 tasks for this group.
+2025-06-21 02:22:58,015 - INFO - bsp_finder - scrape_and_enrich_csv - 213 - Processing Group: Date='11/06/2025', Code='GREYHOUNDS', Venue='GAWLER' (10 tasks)
+2025-06-21 02:22:58,016 - WARNING - bsp_finder - scrape_and_enrich_csv - 216 - Date 11/06/2025 in bad_dates_set. Skipping 10 tasks for this group.
+2025-06-21 02:22:58,023 - INFO - bsp_finder - scrape_and_enrich_csv - 213 - Processing Group: Date='10/06/2025', Code='GREYHOUNDS', Venue='MANDURAH' (8 tasks)
+2025-06-21 02:22:58,024 - INFO - bsp_finder - scrape_and_enrich_csv - 221 - DATE CHANGE: Current='13/06/2025', Target='10/06/2025'.
+2025-06-21 02:22:58,024 - INFO - bsp_finder - select_date_on_calendar - 66 - Calendar: Selecting date: '10/06/2025'.
+2025-06-21 02:22:58,024 - DEBUG - bsp_finder - select_date_on_calendar - 71 - Calendar: Clicking icon.
+2025-06-21 02:22:58,188 - DEBUG - bsp_finder - select_date_on_calendar - 72 - Calendar: Widget visible.
+2025-06-21 02:22:58,223 - DEBUG - bsp_finder - select_date_on_calendar - 77 - Calendar: Display: June 2025. Target: June 2025.
+2025-06-21 02:22:58,224 - DEBUG - bsp_finder - select_date_on_calendar - 78 - Calendar: Correct month/year.
+2025-06-21 02:22:58,224 - DEBUG - bsp_finder - select_date_on_calendar - 86 - Calendar: Clicking day XPath: //span[contains(@class, 'flatpickr-day') and not(contains(@class, 'prevMonthDay')) and not(contains(@class, 'nextMonthDay')) and normalize-space()='10']
+2025-06-21 02:22:58,341 - INFO - bsp_finder - select_date_on_calendar - 87 - Calendar: Day '10' selected.
+2025-06-21 02:22:58,341 - DEBUG - bsp_finder - select_date_on_calendar - 89 - Calendar: Waiting for spinner post-date selection (up to 120s)...
+2025-06-21 02:22:58,911 - DEBUG - bsp_finder - select_date_on_calendar - 91 - Calendar: Spinner detected. Waiting for invisibility.
+2025-06-21 02:24:58,946 - WARNING - bsp_finder - select_date_on_calendar - 93 - Calendar: Spinner NOT detected or timed out (120s). Proceeding.
+2025-06-21 02:24:58,950 - INFO - bsp_finder - scrape_and_enrich_csv - 229 - DATE '10/06/2025' selected. Verifying data panel (up to 2 mins)...
+2025-06-21 02:24:58,958 - DEBUG - bsp_finder - scrape_and_enrich_csv - 231 - Filter panel present for 10/06/2025.
+2025-06-21 02:26:59,449 - ERROR - bsp_finder - scrape_and_enrich_csv - 236 - DATE DATA LOAD FAILURE for '10/06/2025': . Skipping date.
+2025-06-21 02:26:59,458 - INFO - bsp_finder - scrape_and_enrich_csv - 213 - Processing Group: Date='10/06/2025', Code='GREYHOUNDS', Venue='WARRAGUL' (35 tasks)
+2025-06-21 02:26:59,458 - WARNING - bsp_finder - scrape_and_enrich_csv - 216 - Date 10/06/2025 in bad_dates_set. Skipping 35 tasks for this group.
+2025-06-21 02:26:59,524 - INFO - bsp_finder - scrape_and_enrich_csv - 213 - Processing Group: Date='10/06/2025', Code='HARNESS', Venue='GLOUCESTER PARK' (49 tasks)
+2025-06-21 02:26:59,524 - WARNING - bsp_finder - scrape_and_enrich_csv - 216 - Date 10/06/2025 in bad_dates_set. Skipping 49 tasks for this group.
+2025-06-21 02:26:59,589 - INFO - bsp_finder - scrape_and_enrich_csv - 213 - Processing Group: Date='10/06/2025', Code='HARNESS', Venue='GLOBE DERBY' (34 tasks)
+2025-06-21 02:26:59,590 - WARNING - bsp_finder - scrape_and_enrich_csv - 216 - Date 10/06/2025 in bad_dates_set. Skipping 34 tasks for this group.
+2025-06-21 02:26:59,637 - INFO - bsp_finder - scrape_and_enrich_csv - 213 - Processing Group: Date='10/06/2025', Code='GREYHOUNDS', Venue='GOSFORD' (12 tasks)
+2025-06-21 02:26:59,637 - WARNING - bsp_finder - scrape_and_enrich_csv - 216 - Date 10/06/2025 in bad_dates_set. Skipping 12 tasks for this group.
+2025-06-21 02:26:59,655 - INFO - bsp_finder - scrape_and_enrich_csv - 213 - Processing Group: Date='10/06/2025', Code='GREYHOUNDS', Venue='TOWNSVILLE' (15 tasks)
+2025-06-21 02:26:59,655 - WARNING - bsp_finder - scrape_and_enrich_csv - 216 - Date 10/06/2025 in bad_dates_set. Skipping 15 tasks for this group.
+2025-06-21 02:26:59,672 - INFO - bsp_finder - scrape_and_enrich_csv - 213 - Processing Group: Date='10/06/2025', Code='HARNESS', Venue='WAGGA' (18 tasks)
+2025-06-21 02:26:59,673 - WARNING - bsp_finder - scrape_and_enrich_csv - 216 - Date 10/06/2025 in bad_dates_set. Skipping 18 tasks for this group.
+2025-06-21 02:26:59,703 - INFO - bsp_finder - scrape_and_enrich_csv - 213 - Processing Group: Date='10/06/2025', Code='GREYHOUNDS', Venue='BULLI' (9 tasks)
+2025-06-21 02:26:59,703 - WARNING - bsp_finder - scrape_and_enrich_csv - 216 - Date 10/06/2025 in bad_dates_set. Skipping 9 tasks for this group.
+2025-06-21 02:26:59,715 - INFO - bsp_finder - scrape_and_enrich_csv - 213 - Processing Group: Date='10/06/2025', Code='HARNESS', Venue='ECHUCA' (33 tasks)
+2025-06-21 02:26:59,716 - WARNING - bsp_finder - scrape_and_enrich_csv - 216 - Date 10/06/2025 in bad_dates_set. Skipping 33 tasks for this group.
+2025-06-21 02:26:59,759 - INFO - bsp_finder - scrape_and_enrich_csv - 213 - Processing Group: Date='10/06/2025', Code='GREYHOUNDS', Venue='ANGLE PARK' (5 tasks)
+2025-06-21 02:26:59,759 - WARNING - bsp_finder - scrape_and_enrich_csv - 216 - Date 10/06/2025 in bad_dates_set. Skipping 5 tasks for this group.
+2025-06-21 02:26:59,771 - INFO - bsp_finder - scrape_and_enrich_csv - 213 - Processing Group: Date='10/06/2025', Code='GREYHOUNDS', Venue='GRAFTON' (19 tasks)
+2025-06-21 02:26:59,771 - WARNING - bsp_finder - scrape_and_enrich_csv - 216 - Date 10/06/2025 in bad_dates_set. Skipping 19 tasks for this group.
+2025-06-21 02:26:59,793 - INFO - bsp_finder - scrape_and_enrich_csv - 213 - Processing Group: Date='10/06/2025', Code='GREYHOUNDS', Venue='GEELONG' (5 tasks)
+2025-06-21 02:26:59,793 - WARNING - bsp_finder - scrape_and_enrich_csv - 216 - Date 10/06/2025 in bad_dates_set. Skipping 5 tasks for this group.
+2025-06-21 02:26:59,806 - INFO - bsp_finder - scrape_and_enrich_csv - 213 - Processing Group: Date='10/06/2025', Code='GREYHOUNDS', Venue='Q1 LAKESIDE' (31 tasks)
+2025-06-21 02:26:59,806 - WARNING - bsp_finder - scrape_and_enrich_csv - 216 - Date 10/06/2025 in bad_dates_set. Skipping 31 tasks for this group.
+2025-06-21 02:26:59,855 - INFO - bsp_finder - scrape_and_enrich_csv - 213 - Processing Group: Date='10/06/2025', Code='HARNESS', Venue='ALBION PARK' (39 tasks)
+2025-06-21 02:26:59,856 - WARNING - bsp_finder - scrape_and_enrich_csv - 216 - Date 10/06/2025 in bad_dates_set. Skipping 39 tasks for this group.
+2025-06-21 02:26:59,908 - INFO - bsp_finder - scrape_and_enrich_csv - 213 - Processing Group: Date='10/06/2025', Code='HARNESS', Venue='MENANGLE' (21 tasks)
+2025-06-21 02:26:59,908 - WARNING - bsp_finder - scrape_and_enrich_csv - 216 - Date 10/06/2025 in bad_dates_set. Skipping 21 tasks for this group.
+2025-06-21 02:26:59,938 - INFO - bsp_finder - scrape_and_enrich_csv - 213 - Processing Group: Date='10/06/2025', Code='GREYHOUNDS', Venue='HORSHAM' (15 tasks)
+2025-06-21 02:26:59,939 - WARNING - bsp_finder - scrape_and_enrich_csv - 216 - Date 10/06/2025 in bad_dates_set. Skipping 15 tasks for this group.
+2025-06-21 02:26:59,959 - INFO - bsp_finder - scrape_and_enrich_csv - 213 - Processing Group: Date='10/06/2025', Code='GREYHOUNDS', Venue='LAUNCESTON' (19 tasks)
+2025-06-21 02:26:59,960 - WARNING - bsp_finder - scrape_and_enrich_csv - 216 - Date 10/06/2025 in bad_dates_set. Skipping 19 tasks for this group.
+2025-06-21 02:26:59,992 - INFO - bsp_finder - scrape_and_enrich_csv - 213 - Processing Group: Date='10/06/2025', Code='GREYHOUNDS', Venue='MURRAY BRIDGE' (15 tasks)
+2025-06-21 02:26:59,992 - WARNING - bsp_finder - scrape_and_enrich_csv - 216 - Date 10/06/2025 in bad_dates_set. Skipping 15 tasks for this group.
+2025-06-21 02:27:00,073 - INFO - bsp_finder - scrape_and_enrich_csv - 213 - Processing Group: Date='09/06/2025', Code='GREYHOUNDS', Venue='MAITLAND' (15 tasks)
+2025-06-21 02:27:00,073 - INFO - bsp_finder - scrape_and_enrich_csv - 221 - DATE CHANGE: Current='13/06/2025', Target='09/06/2025'.
+2025-06-21 02:27:00,073 - INFO - bsp_finder - select_date_on_calendar - 66 - Calendar: Selecting date: '09/06/2025'.
+2025-06-21 02:27:00,073 - DEBUG - bsp_finder - select_date_on_calendar - 71 - Calendar: Clicking icon.
+2025-06-21 02:27:00,772 - DEBUG - bsp_finder - select_date_on_calendar - 72 - Calendar: Widget visible.
+2025-06-21 02:27:00,816 - DEBUG - bsp_finder - select_date_on_calendar - 77 - Calendar: Display: June 2025. Target: June 2025.
+2025-06-21 02:27:00,817 - DEBUG - bsp_finder - select_date_on_calendar - 78 - Calendar: Correct month/year.
+2025-06-21 02:27:00,817 - DEBUG - bsp_finder - select_date_on_calendar - 86 - Calendar: Clicking day XPath: //span[contains(@class, 'flatpickr-day') and not(contains(@class, 'prevMonthDay')) and not(contains(@class, 'nextMonthDay')) and normalize-space()='9']
+2025-06-21 02:27:01,989 - ERROR - bsp_finder - select_date_on_calendar - 95 - Calendar: Error selecting date '09/06/2025': Message: element click intercepted: Element <span class="flatpickr-day " aria-label="June ..., 2025" tabindex="-1">9</span> is not clickable at point (1477, 551). Other element would receive the click: <img alt="Betfair" src="https://feedback.inmoment.com.au/websurvey/servlet/BlobServlet?s2=6467e63e-a4e4-4ce9-9f41-70b0ee68b277-12&amp;v=0&amp;type=0&amp;t=betfairLogo">
+  (Session info: chrome=137.0.7151.105)
+Stacktrace:
+	GetHandleVerifier [0x0xd13b03+62899]
+	GetHandleVerifier [0x0xd13b44+62964]
+	(No symbol) [0x0xb410f3]
+	(No symbol) [0x0xb8fb30]
+	(No symbol) [0x0xb8deea]
+	(No symbol) [0x0xb8ba67]
+	(No symbol) [0x0xb8ad37]
+	(No symbol) [0x0xb7f3e5]
+	(No symbol) [0x0xbae50c]
+	(No symbol) [0x0xb7ee74]
+	(No symbol) [0x0xbae784]
+	(No symbol) [0x0xbcfd81]
+	(No symbol) [0x0xbae306]
+	(No symbol) [0x0xb7d670]
+	(No symbol) [0x0xb7e4e4]
+	GetHandleVerifier [0x0xf74793+2556483]
+	GetHandleVerifier [0x0xf6fd02+2537394]
+	GetHandleVerifier [0x0xd3a2fa+220586]
+	GetHandleVerifier [0x0xd2aae8+157080]
+	GetHandleVerifier [0x0xd3141d+184013]
+	GetHandleVerifier [0x0xd1ba68+95512]
+	GetHandleVerifier [0x0xd1bc10+95936]
+	GetHandleVerifier [0x0xd06b5a+9738]
+	BaseThreadInitThunk [0x0x76987ba9+25]
+	RtlInitializeExceptionChain [0x0x77d7c3ab+107]
+	RtlClearBits [0x0x77d7c32f+191]
+Traceback (most recent call last):
+  File "D:\my_project_starty\JACOB-main\jacob\bsp_finder.py", line 86, in select_date_on_calendar
+    logger.debug(f"Calendar: Clicking day XPath: {day_xpath}"); date_wait.until(EC.element_to_be_clickable((By.XPATH, day_xpath))).click()
+  File "C:\Users\Admin\AppData\Local\Programs\Python\Python310\lib\site-packages\selenium\webdriver\remote\webelement.py", line 119, in click
+    self._execute(Command.CLICK_ELEMENT)
+  File "C:\Users\Admin\AppData\Local\Programs\Python\Python310\lib\site-packages\selenium\webdriver\remote\webelement.py", line 572, in _execute
+    return self._parent.execute(command, params)
+  File "C:\Users\Admin\AppData\Local\Programs\Python\Python310\lib\site-packages\selenium\webdriver\remote\webdriver.py", line 429, in execute
+    self.error_handler.check_response(response)
+  File "C:\Users\Admin\AppData\Local\Programs\Python\Python310\lib\site-packages\selenium\webdriver\remote\errorhandler.py", line 232, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.ElementClickInterceptedException: Message: element click intercepted: Element <span class="flatpickr-day " aria-label="June ..., 2025" tabindex="-1">9</span> is not clickable at point (1477, 551). Other element would receive the click: <img alt="Betfair" src="https://feedback.inmoment.com.au/websurvey/servlet/BlobServlet?s2=6467e63e-a4e4-4ce9-9f41-70b0ee68b277-12&amp;v=0&amp;type=0&amp;t=betfairLogo">
+  (Session info: chrome=137.0.7151.105)
+Stacktrace:
+	GetHandleVerifier [0x0xd13b03+62899]
+	GetHandleVerifier [0x0xd13b44+62964]
+	(No symbol) [0x0xb410f3]
+	(No symbol) [0x0xb8fb30]
+	(No symbol) [0x0xb8deea]
+	(No symbol) [0x0xb8ba67]
+	(No symbol) [0x0xb8ad37]
+	(No symbol) [0x0xb7f3e5]
+	(No symbol) [0x0xbae50c]
+	(No symbol) [0x0xb7ee74]
+	(No symbol) [0x0xbae784]
+	(No symbol) [0x0xbcfd81]
+	(No symbol) [0x0xbae306]
+	(No symbol) [0x0xb7d670]
+	(No symbol) [0x0xb7e4e4]
+	GetHandleVerifier [0x0xf74793+2556483]
+	GetHandleVerifier [0x0xf6fd02+2537394]
+	GetHandleVerifier [0x0xd3a2fa+220586]
+	GetHandleVerifier [0x0xd2aae8+157080]
+	GetHandleVerifier [0x0xd3141d+184013]
+	GetHandleVerifier [0x0xd1ba68+95512]
+	GetHandleVerifier [0x0xd1bc10+95936]
+	GetHandleVerifier [0x0xd06b5a+9738]
+	BaseThreadInitThunk [0x0x76987ba9+25]
+	RtlInitializeExceptionChain [0x0x77d7c3ab+107]
+	RtlClearBits [0x0x77d7c32f+191]
+
+2025-06-21 02:27:02,003 - ERROR - bsp_finder - scrape_and_enrich_csv - 224 - DATE FAILURE: Calendar selection failed for '09/06/2025'. Skipping date.
+2025-06-21 02:27:02,042 - INFO - bsp_finder - scrape_and_enrich_csv - 213 - Processing Group: Date='09/06/2025', Code='GREYHOUNDS', Venue='LAUNCESTON' (17 tasks)
+2025-06-21 02:27:02,042 - WARNING - bsp_finder - scrape_and_enrich_csv - 216 - Date 09/06/2025 in bad_dates_set. Skipping 17 tasks for this group.
+2025-06-21 02:27:02,123 - INFO - bsp_finder - scrape_and_enrich_csv - 213 - Processing Group: Date='09/06/2025', Code='HARNESS', Venue='CANBERRA' (51 tasks)
+2025-06-21 02:27:02,123 - WARNING - bsp_finder - scrape_and_enrich_csv - 216 - Date 09/06/2025 in bad_dates_set. Skipping 51 tasks for this group.
+2025-06-21 02:27:02,205 - INFO - bsp_finder - scrape_and_enrich_csv - 213 - Processing Group: Date='09/06/2025', Code='GREYHOUNDS', Venue='Q2 PARKLANDS' (27 tasks)
+2025-06-21 02:27:02,205 - WARNING - bsp_finder - scrape_and_enrich_csv - 216 - Date 09/06/2025 in bad_dates_set. Skipping 27 tasks for this group.
+2025-06-21 02:27:02,326 - INFO - bsp_finder - scrape_and_enrich_csv - 213 - Processing Group: Date='09/06/2025', Code='GREYHOUNDS', Venue='NOWRA' (8 tasks)
+2025-06-21 02:27:02,326 - WARNING - bsp_finder - scrape_and_enrich_csv - 216 - Date 09/06/2025 in bad_dates_set. Skipping 8 tasks for this group.
+2025-06-21 02:27:02,375 - INFO - bsp_finder - scrape_and_enrich_csv - 213 - Processing Group: Date='09/06/2025', Code='GREYHOUNDS', Venue='ANGLE PARK' (13 tasks)
+2025-06-21 02:27:02,401 - WARNING - bsp_finder - scrape_and_enrich_csv - 216 - Date 09/06/2025 in bad_dates_set. Skipping 13 tasks for this group.
+2025-06-21 02:27:02,486 - INFO - bsp_finder - scrape_and_enrich_csv - 213 - Processing Group: Date='09/06/2025', Code='GREYHOUNDS', Venue='NORTHAM' (13 tasks)
+2025-06-21 02:27:02,486 - WARNING - bsp_finder - scrape_and_enrich_csv - 216 - Date 09/06/2025 in bad_dates_set. Skipping 13 tasks for this group.
+2025-06-21 02:27:02,505 - INFO - bsp_finder - scrape_and_enrich_csv - 213 - Processing Group: Date='09/06/2025', Code='HARNESS', Venue='PINJARRA' (51 tasks)
+2025-06-21 02:27:02,505 - WARNING - bsp_finder - scrape_and_enrich_csv - 216 - Date 09/06/2025 in bad_dates_set. Skipping 51 tasks for this group.
+2025-06-21 02:27:02,577 - INFO - bsp_finder - scrape_and_enrich_csv - 213 - Processing Group: Date='09/06/2025', Code='GREYHOUNDS', Venue='SHEPPARTON' (23 tasks)
+2025-06-21 02:27:02,577 - WARNING - bsp_finder - scrape_and_enrich_csv - 216 - Date 09/06/2025 in bad_dates_set. Skipping 23 tasks for this group.
+2025-06-21 02:27:02,623 - INFO - bsp_finder - scrape_and_enrich_csv - 213 - Processing Group: Date='09/06/2025', Code='GREYHOUNDS', Venue='WAGGA' (22 tasks)
+2025-06-21 02:27:02,623 - WARNING - bsp_finder - scrape_and_enrich_csv - 216 - Date 09/06/2025 in bad_dates_set. Skipping 22 tasks for this group.
+2025-06-21 02:27:02,657 - INFO - bsp_finder - scrape_and_enrich_csv - 213 - Processing Group: Date='09/06/2025', Code='GREYHOUNDS', Venue='WARRNAMBOOL' (13 tasks)
+2025-06-21 02:27:02,657 - WARNING - bsp_finder - scrape_and_enrich_csv - 216 - Date 09/06/2025 in bad_dates_set. Skipping 13 tasks for this group.
+2025-06-21 02:27:02,676 - INFO - bsp_finder - scrape_and_enrich_csv - 213 - Processing Group: Date='09/06/2025', Code='HARNESS', Venue='WARRAGUL' (38 tasks)
+2025-06-21 02:27:02,677 - WARNING - bsp_finder - scrape_and_enrich_csv - 216 - Date 09/06/2025 in bad_dates_set. Skipping 38 tasks for this group.
+2025-06-21 02:27:02,735 - INFO - bsp_finder - scrape_and_enrich_csv - 213 - Processing Group: Date='09/06/2025', Code='HARNESS', Venue='PENRITH' (27 tasks)
+2025-06-21 02:27:02,736 - WARNING - bsp_finder - scrape_and_enrich_csv - 216 - Date 09/06/2025 in bad_dates_set. Skipping 27 tasks for this group.
+2025-06-21 02:27:02,773 - INFO - bsp_finder - scrape_and_enrich_csv - 213 - Processing Group: Date='09/06/2025', Code='GREYHOUNDS', Venue='BALLARAT' (2 tasks)
+2025-06-21 02:27:02,773 - WARNING - bsp_finder - scrape_and_enrich_csv - 216 - Date 09/06/2025 in bad_dates_set. Skipping 2 tasks for this group.
+2025-06-21 02:27:02,775 - INFO - bsp_finder - scrape_and_enrich_csv - 213 - Processing Group: Date='08/06/2025', Code='GREYHOUNDS', Venue='Q1 LAKESIDE' (23 tasks)
+2025-06-21 02:27:02,776 - INFO - bsp_finder - scrape_and_enrich_csv - 221 - DATE CHANGE: Current='Error', Target='08/06/2025'.
+2025-06-21 02:27:02,776 - INFO - bsp_finder - select_date_on_calendar - 66 - Calendar: Selecting date: '08/06/2025'.
+2025-06-21 02:27:02,776 - DEBUG - bsp_finder - select_date_on_calendar - 71 - Calendar: Clicking icon.
+2025-06-21 02:29:03,134 - ERROR - bsp_finder - select_date_on_calendar - 95 - Calendar: Error selecting date '08/06/2025': Message: 
+Traceback (most recent call last):
+  File "D:\my_project_starty\JACOB-main\jacob\bsp_finder.py", line 72, in select_date_on_calendar
+    calendar_widget = date_wait.until(EC.visibility_of_element_located((By.CLASS_NAME, "flatpickr-calendar"))); logger.debug("Calendar: Widget visible.")
+  File "C:\Users\Admin\AppData\Local\Programs\Python\Python310\lib\site-packages\selenium\webdriver\support\wait.py", line 146, in until
+    raise TimeoutException(message, screen, stacktrace)
+selenium.common.exceptions.TimeoutException: Message: 
+
+2025-06-21 02:29:03,138 - ERROR - bsp_finder - scrape_and_enrich_csv - 224 - DATE FAILURE: Calendar selection failed for '08/06/2025'. Skipping date.
+2025-06-21 02:29:03,187 - INFO - bsp_finder - scrape_and_enrich_csv - 213 - Processing Group: Date='08/06/2025', Code='HARNESS', Venue='LAUNCESTON' (49 tasks)
+2025-06-21 02:29:03,188 - WARNING - bsp_finder - scrape_and_enrich_csv - 216 - Date 08/06/2025 in bad_dates_set. Skipping 49 tasks for this group.
+2025-06-21 02:29:03,263 - INFO - bsp_finder - scrape_and_enrich_csv - 213 - Processing Group: Date='08/06/2025', Code='GREYHOUNDS', Venue='ROCKHAMPTON' (15 tasks)
+2025-06-21 02:29:03,264 - WARNING - bsp_finder - scrape_and_enrich_csv - 216 - Date 08/06/2025 in bad_dates_set. Skipping 15 tasks for this group.
+2025-06-21 02:29:03,285 - INFO - bsp_finder - scrape_and_enrich_csv - 213 - Processing Group: Date='08/06/2025', Code='GREYHOUNDS', Venue='GRAFTON' (31 tasks)
+2025-06-21 02:29:03,286 - WARNING - bsp_finder - scrape_and_enrich_csv - 216 - Date 08/06/2025 in bad_dates_set. Skipping 31 tasks for this group.
+2025-06-21 02:29:03,336 - INFO - bsp_finder - scrape_and_enrich_csv - 213 - Processing Group: Date='08/06/2025', Code='GREYHOUNDS', Venue='SALE' (17 tasks)
+2025-06-21 02:29:03,336 - WARNING - bsp_finder - scrape_and_enrich_csv - 216 - Date 08/06/2025 in bad_dates_set. Skipping 17 tasks for this group.
+2025-06-21 02:29:03,357 - INFO - bsp_finder - scrape_and_enrich_csv - 213 - Processing Group: Date='08/06/2025', Code='GREYHOUNDS', Venue='RICHMOND STRAIGHT' (19 tasks)
+2025-06-21 02:29:03,358 - WARNING - bsp_finder - scrape_and_enrich_csv - 216 - Date 08/06/2025 in bad_dates_set. Skipping 19 tasks for this group.
+2025-06-21 02:29:03,391 - INFO - bsp_finder - scrape_and_enrich_csv - 213 - Processing Group: Date='08/06/2025', Code='GREYHOUNDS', Venue='GUNNEDAH' (14 tasks)
+2025-06-21 02:29:03,392 - WARNING - bsp_finder - scrape_and_enrich_csv - 216 - Date 08/06/2025 in bad_dates_set. Skipping 14 tasks for this group.
+2025-06-21 02:29:03,421 - INFO - bsp_finder - scrape_and_enrich_csv - 213 - Processing Group: Date='08/06/2025', Code='GREYHOUNDS', Venue='MURRAY BRIDGE' (16 tasks)
+2025-06-21 02:29:03,422 - WARNING - bsp_finder - scrape_and_enrich_csv - 216 - Date 08/06/2025 in bad_dates_set. Skipping 16 tasks for this group.
+2025-06-21 02:29:03,456 - INFO - bsp_finder - scrape_and_enrich_csv - 213 - Processing Group: Date='08/06/2025', Code='HARNESS', Venue='KELLERBERRIN' (43 tasks)
+2025-06-21 02:29:03,456 - WARNING - bsp_finder - scrape_and_enrich_csv - 216 - Date 08/06/2025 in bad_dates_set. Skipping 43 tasks for this group.
+2025-06-21 02:29:03,522 - INFO - bsp_finder - scrape_and_enrich_csv - 213 - Processing Group: Date='08/06/2025', Code='HARNESS', Venue='MARBURG' (22 tasks)
+2025-06-21 02:29:03,522 - WARNING - bsp_finder - scrape_and_enrich_csv - 216 - Date 08/06/2025 in bad_dates_set. Skipping 22 tasks for this group.
+2025-06-21 02:29:03,559 - INFO - bsp_finder - scrape_and_enrich_csv - 213 - Processing Group: Date='08/06/2025', Code='GREYHOUNDS', Venue='MOUNT GAMBIER' (38 tasks)
+2025-06-21 02:29:03,559 - WARNING - bsp_finder - scrape_and_enrich_csv - 216 - Date 08/06/2025 in bad_dates_set. Skipping 38 tasks for this group.
+2025-06-21 02:29:03,625 - INFO - bsp_finder - scrape_and_enrich_csv - 213 - Processing Group: Date='08/06/2025', Code='HARNESS', Venue='NARRABRI' (22 tasks)
+2025-06-21 02:29:03,625 - WARNING - bsp_finder - scrape_and_enrich_csv - 216 - Date 08/06/2025 in bad_dates_set. Skipping 22 tasks for this group.
+2025-06-21 02:29:03,670 - INFO - bsp_finder - scrape_and_enrich_csv - 213 - Processing Group: Date='08/06/2025', Code='GREYHOUNDS', Venue='CAPALABA' (27 tasks)
+2025-06-21 02:29:03,670 - WARNING - bsp_finder - scrape_and_enrich_csv - 216 - Date 08/06/2025 in bad_dates_set. Skipping 27 tasks for this group.
+2025-06-21 02:29:03,709 - INFO - bsp_finder - scrape_and_enrich_csv - 213 - Processing Group: Date='08/06/2025', Code='GREYHOUNDS', Venue='HEALESVILLE' (4 tasks)
+2025-06-21 02:29:03,709 - WARNING - bsp_finder - scrape_and_enrich_csv - 216 - Date 08/06/2025 in bad_dates_set. Skipping 4 tasks for this group.
+2025-06-21 02:29:03,723 - INFO - bsp_finder - scrape_and_enrich_csv - 213 - Processing Group: Date='07/06/2025', Code='GREYHOUNDS', Venue='WENTWORTH PARK' (20 tasks)
+2025-06-21 02:29:03,723 - INFO - bsp_finder - scrape_and_enrich_csv - 221 - DATE CHANGE: Current='Error', Target='07/06/2025'.
+2025-06-21 02:29:03,724 - INFO - bsp_finder - select_date_on_calendar - 66 - Calendar: Selecting date: '07/06/2025'.
+2025-06-21 02:29:03,724 - DEBUG - bsp_finder - select_date_on_calendar - 71 - Calendar: Clicking icon.
+2025-06-21 02:29:04,417 - DEBUG - bsp_finder - select_date_on_calendar - 72 - Calendar: Widget visible.
+2025-06-21 02:29:04,456 - DEBUG - bsp_finder - select_date_on_calendar - 77 - Calendar: Display: June 2025. Target: June 2025.
+2025-06-21 02:29:04,456 - DEBUG - bsp_finder - select_date_on_calendar - 78 - Calendar: Correct month/year.
+2025-06-21 02:29:04,456 - DEBUG - bsp_finder - select_date_on_calendar - 86 - Calendar: Clicking day XPath: //span[contains(@class, 'flatpickr-day') and not(contains(@class, 'prevMonthDay')) and not(contains(@class, 'nextMonthDay')) and normalize-space()='7']
+2025-06-21 02:29:04,584 - INFO - bsp_finder - select_date_on_calendar - 87 - Calendar: Day '7' selected.
+2025-06-21 02:29:04,585 - DEBUG - bsp_finder - select_date_on_calendar - 89 - Calendar: Waiting for spinner post-date selection (up to 120s)...
+2025-06-21 02:29:04,603 - DEBUG - bsp_finder - select_date_on_calendar - 91 - Calendar: Spinner detected. Waiting for invisibility.
+2025-06-21 02:29:05,201 - INFO - bsp_finder - select_date_on_calendar - 92 - Calendar: Date selection complete, spinner gone.
+2025-06-21 02:29:05,201 - INFO - bsp_finder - scrape_and_enrich_csv - 229 - DATE '07/06/2025' selected. Verifying data panel (up to 2 mins)...
+2025-06-21 02:29:05,207 - DEBUG - bsp_finder - scrape_and_enrich_csv - 231 - Filter panel present for 07/06/2025.
+2025-06-21 02:31:05,407 - ERROR - bsp_finder - scrape_and_enrich_csv - 236 - DATE DATA LOAD FAILURE for '07/06/2025': . Skipping date.
+2025-06-21 02:31:05,462 - INFO - bsp_finder - scrape_and_enrich_csv - 213 - Processing Group: Date='07/06/2025', Code='GREYHOUNDS', Venue='CANNINGTON' (5 tasks)
+2025-06-21 02:31:05,468 - WARNING - bsp_finder - scrape_and_enrich_csv - 216 - Date 07/06/2025 in bad_dates_set. Skipping 5 tasks for this group.
+2025-06-21 02:31:05,473 - INFO - bsp_finder - scrape_and_enrich_csv - 213 - Processing Group: Date='07/06/2025', Code='HARNESS', Venue='BUNBURY' (16 tasks)
+2025-06-21 02:31:05,474 - WARNING - bsp_finder - scrape_and_enrich_csv - 216 - Date 07/06/2025 in bad_dates_set. Skipping 16 tasks for this group.
+2025-06-21 02:31:05,507 - INFO - bsp_finder - scrape_and_enrich_csv - 213 - Processing Group: Date='07/06/2025', Code='GREYHOUNDS', Venue='Q2 PARKLANDS' (18 tasks)
+2025-06-21 02:31:05,507 - WARNING - bsp_finder - scrape_and_enrich_csv - 216 - Date 07/06/2025 in bad_dates_set. Skipping 18 tasks for this group.
+2025-06-21 02:31:05,550 - INFO - bsp_finder - scrape_and_enrich_csv - 213 - Processing Group: Date='07/06/2025', Code='HARNESS', Venue='MELTON' (20 tasks)
+2025-06-21 02:31:05,552 - WARNING - bsp_finder - scrape_and_enrich_csv - 216 - Date 07/06/2025 in bad_dates_set. Skipping 20 tasks for this group.
+2025-06-21 02:31:05,606 - INFO - bsp_finder - scrape_and_enrich_csv - 213 - Processing Group: Date='07/06/2025', Code='GREYHOUNDS', Venue='THE MEADOWS' (9 tasks)
+2025-06-21 02:31:05,606 - WARNING - bsp_finder - scrape_and_enrich_csv - 216 - Date 07/06/2025 in bad_dates_set. Skipping 9 tasks for this group.
+2025-06-21 02:31:05,619 - INFO - bsp_finder - scrape_and_enrich_csv - 213 - Processing Group: Date='07/06/2025', Code='HARNESS', Venue='MENANGLE' (17 tasks)
+2025-06-21 02:31:05,620 - WARNING - bsp_finder - scrape_and_enrich_csv - 216 - Date 07/06/2025 in bad_dates_set. Skipping 17 tasks for this group.
+2025-06-21 02:31:05,652 - INFO - bsp_finder - scrape_and_enrich_csv - 213 - Processing Group: Date='07/06/2025', Code='GREYHOUNDS', Venue='THE GARDENS' (16 tasks)
+2025-06-21 02:31:05,653 - WARNING - bsp_finder - scrape_and_enrich_csv - 216 - Date 07/06/2025 in bad_dates_set. Skipping 16 tasks for this group.
+2025-06-21 02:31:05,674 - INFO - bsp_finder - scrape_and_enrich_csv - 213 - Processing Group: Date='07/06/2025', Code='HARNESS', Venue='ALBION PARK' (18 tasks)
+2025-06-21 02:31:05,675 - WARNING - bsp_finder - scrape_and_enrich_csv - 216 - Date 07/06/2025 in bad_dates_set. Skipping 18 tasks for this group.
+2025-06-21 02:31:05,723 - INFO - bsp_finder - scrape_and_enrich_csv - 213 - Processing Group: Date='07/06/2025', Code='HARNESS', Venue='GLOBE DERBY' (9 tasks)
+2025-06-21 02:31:05,724 - WARNING - bsp_finder - scrape_and_enrich_csv - 216 - Date 07/06/2025 in bad_dates_set. Skipping 9 tasks for this group.
+2025-06-21 02:31:05,738 - INFO - bsp_finder - scrape_and_enrich_csv - 213 - Processing Group: Date='07/06/2025', Code='GREYHOUNDS', Venue='GEELONG' (12 tasks)
+2025-06-21 02:31:05,738 - WARNING - bsp_finder - scrape_and_enrich_csv - 216 - Date 07/06/2025 in bad_dates_set. Skipping 12 tasks for this group.
+2025-06-21 02:31:05,803 - INFO - bsp_finder - scrape_and_enrich_csv - 213 - Processing Group: Date='07/06/2025', Code='GREYHOUNDS', Venue='DUBBO' (4 tasks)
+2025-06-21 02:31:05,811 - WARNING - bsp_finder - scrape_and_enrich_csv - 216 - Date 07/06/2025 in bad_dates_set. Skipping 4 tasks for this group.
+2025-06-21 02:31:05,843 - INFO - bsp_finder - scrape_and_enrich_csv - 213 - Processing Group: Date='06/06/2025', Code='HARNESS', Venue='MELTON' (65 tasks)
+2025-06-21 02:31:05,850 - INFO - bsp_finder - scrape_and_enrich_csv - 221 - DATE CHANGE: Current='Error', Target='06/06/2025'.
+2025-06-21 02:31:05,856 - INFO - bsp_finder - select_date_on_calendar - 66 - Calendar: Selecting date: '06/06/2025'.
+2025-06-21 02:31:05,867 - DEBUG - bsp_finder - select_date_on_calendar - 71 - Calendar: Clicking icon.
+2025-06-21 02:31:06,733 - DEBUG - bsp_finder - select_date_on_calendar - 72 - Calendar: Widget visible.
+2025-06-21 02:31:06,787 - DEBUG - bsp_finder - select_date_on_calendar - 77 - Calendar: Display: June 2025. Target: June 2025.
+2025-06-21 02:31:06,787 - DEBUG - bsp_finder - select_date_on_calendar - 78 - Calendar: Correct month/year.
+2025-06-21 02:31:06,787 - DEBUG - bsp_finder - select_date_on_calendar - 86 - Calendar: Clicking day XPath: //span[contains(@class, 'flatpickr-day') and not(contains(@class, 'prevMonthDay')) and not(contains(@class, 'nextMonthDay')) and normalize-space()='6']
+2025-06-21 02:31:07,015 - INFO - bsp_finder - select_date_on_calendar - 87 - Calendar: Day '6' selected.
+2025-06-21 02:31:07,015 - DEBUG - bsp_finder - select_date_on_calendar - 89 - Calendar: Waiting for spinner post-date selection (up to 120s)...
+2025-06-21 02:33:07,452 - WARNING - bsp_finder - select_date_on_calendar - 93 - Calendar: Spinner NOT detected or timed out (120s). Proceeding.
+2025-06-21 02:33:07,453 - INFO - bsp_finder - scrape_and_enrich_csv - 229 - DATE '06/06/2025' selected. Verifying data panel (up to 2 mins)...
+2025-06-21 02:33:07,470 - DEBUG - bsp_finder - scrape_and_enrich_csv - 231 - Filter panel present for 06/06/2025.
+2025-06-21 02:35:07,512 - ERROR - bsp_finder - scrape_and_enrich_csv - 236 - DATE DATA LOAD FAILURE for '06/06/2025': . Skipping date.
+2025-06-21 02:35:07,618 - INFO - bsp_finder - scrape_and_enrich_csv - 213 - Processing Group: Date='06/06/2025', Code='HARNESS', Venue='PARKES' (91 tasks)
+2025-06-21 02:35:07,618 - WARNING - bsp_finder - scrape_and_enrich_csv - 216 - Date 06/06/2025 in bad_dates_set. Skipping 91 tasks for this group.
+2025-06-21 02:35:07,733 - INFO - bsp_finder - scrape_and_enrich_csv - 213 - Processing Group: Date='06/06/2025', Code='GREYHOUNDS', Venue='RICHMOND STRAIGHT' (14 tasks)
+2025-06-21 02:35:07,734 - WARNING - bsp_finder - scrape_and_enrich_csv - 216 - Date 06/06/2025 in bad_dates_set. Skipping 14 tasks for this group.
+2025-06-21 02:35:07,750 - INFO - bsp_finder - scrape_and_enrich_csv - 213 - Processing Group: Date='06/06/2025', Code='HARNESS', Venue='GLOUCESTER PARK' (38 tasks)
+2025-06-21 02:35:07,750 - WARNING - bsp_finder - scrape_and_enrich_csv - 216 - Date 06/06/2025 in bad_dates_set. Skipping 38 tasks for this group.
+2025-06-21 02:35:07,801 - INFO - bsp_finder - scrape_and_enrich_csv - 213 - Processing Group: Date='06/06/2025', Code='GREYHOUNDS', Venue='BENDIGO' (12 tasks)
+2025-06-21 02:35:07,802 - WARNING - bsp_finder - scrape_and_enrich_csv - 216 - Date 06/06/2025 in bad_dates_set. Skipping 12 tasks for this group.
+2025-06-21 02:35:07,828 - INFO - bsp_finder - scrape_and_enrich_csv - 213 - Processing Group: Date='06/06/2025', Code='GREYHOUNDS', Venue='GEELONG' (20 tasks)
+2025-06-21 02:35:07,828 - WARNING - bsp_finder - scrape_and_enrich_csv - 216 - Date 06/06/2025 in bad_dates_set. Skipping 20 tasks for this group.
+2025-06-21 02:35:07,853 - INFO - bsp_finder - scrape_and_enrich_csv - 213 - Processing Group: Date='06/06/2025', Code='GREYHOUNDS', Venue='MANDURAH' (1 tasks)
+2025-06-21 02:35:07,853 - WARNING - bsp_finder - scrape_and_enrich_csv - 216 - Date 06/06/2025 in bad_dates_set. Skipping 1 tasks for this group.
+2025-06-21 02:35:07,855 - INFO - bsp_finder - scrape_and_enrich_csv - 213 - Processing Group: Date='06/06/2025', Code='HARNESS', Venue='ALBION PARK' (82 tasks)
+2025-06-21 02:35:07,855 - WARNING - bsp_finder - scrape_and_enrich_csv - 216 - Date 06/06/2025 in bad_dates_set. Skipping 82 tasks for this group.
+2025-06-21 02:35:07,999 - INFO - bsp_finder - scrape_and_enrich_csv - 213 - Processing Group: Date='06/06/2025', Code='HARNESS', Venue='NEWCASTLE' (61 tasks)
+2025-06-21 02:35:07,999 - WARNING - bsp_finder - scrape_and_enrich_csv - 216 - Date 06/06/2025 in bad_dates_set. Skipping 61 tasks for this group.
+2025-06-21 02:35:08,084 - INFO - bsp_finder - scrape_and_enrich_csv - 213 - Processing Group: Date='06/06/2025', Code='GREYHOUNDS', Venue='WAGGA' (17 tasks)
+2025-06-21 02:35:08,084 - WARNING - bsp_finder - scrape_and_enrich_csv - 216 - Date 06/06/2025 in bad_dates_set. Skipping 17 tasks for this group.
+2025-06-21 02:35:08,102 - INFO - bsp_finder - scrape_and_enrich_csv - 213 - Processing Group: Date='06/06/2025', Code='GREYHOUNDS', Venue='WARRAGUL' (13 tasks)
+2025-06-21 02:35:08,102 - WARNING - bsp_finder - scrape_and_enrich_csv - 216 - Date 06/06/2025 in bad_dates_set. Skipping 13 tasks for this group.
+2025-06-21 02:35:08,118 - INFO - bsp_finder - scrape_and_enrich_csv - 213 - Processing Group: Date='06/06/2025', Code='GREYHOUNDS', Venue='Q1 LAKESIDE' (34 tasks)
+2025-06-21 02:35:08,118 - WARNING - bsp_finder - scrape_and_enrich_csv - 216 - Date 06/06/2025 in bad_dates_set. Skipping 34 tasks for this group.
+2025-06-21 02:35:08,171 - INFO - bsp_finder - scrape_and_enrich_csv - 213 - Processing Group: Date='06/06/2025', Code='GREYHOUNDS', Venue='GAWLER' (8 tasks)
+2025-06-21 02:35:08,171 - WARNING - bsp_finder - scrape_and_enrich_csv - 216 - Date 06/06/2025 in bad_dates_set. Skipping 8 tasks for this group.
+2025-06-21 02:35:08,184 - INFO - bsp_finder - scrape_and_enrich_csv - 213 - Processing Group: Date='06/06/2025', Code='GREYHOUNDS', Venue='THE GARDENS' (16 tasks)
+2025-06-21 02:35:08,185 - WARNING - bsp_finder - scrape_and_enrich_csv - 216 - Date 06/06/2025 in bad_dates_set. Skipping 16 tasks for this group.
+2025-06-21 02:35:08,216 - INFO - bsp_finder - scrape_and_enrich_csv - 213 - Processing Group: Date='06/06/2025', Code='HARNESS', Venue='WAGGA' (35 tasks)
+2025-06-21 02:35:08,216 - WARNING - bsp_finder - scrape_and_enrich_csv - 216 - Date 06/06/2025 in bad_dates_set. Skipping 35 tasks for this group.
+2025-06-21 02:35:08,264 - INFO - bsp_finder - scrape_and_enrich_csv - 213 - Processing Group: Date='06/06/2025', Code='HARNESS', Venue='MILDURA' (34 tasks)
+2025-06-21 02:35:08,264 - WARNING - bsp_finder - scrape_and_enrich_csv - 216 - Date 06/06/2025 in bad_dates_set. Skipping 34 tasks for this group.
+2025-06-21 02:35:08,303 - INFO - bsp_finder - scrape_and_enrich_csv - 213 - Processing Group: Date='06/06/2025', Code='GREYHOUNDS', Venue='GOULBURN' (14 tasks)
+2025-06-21 02:35:08,304 - WARNING - bsp_finder - scrape_and_enrich_csv - 216 - Date 06/06/2025 in bad_dates_set. Skipping 14 tasks for this group.
+2025-06-21 02:35:08,321 - INFO - bsp_finder - scrape_and_enrich_csv - 213 - Processing Group: Date='06/06/2025', Code='GREYHOUNDS', Venue='TOWNSVILLE' (24 tasks)
+2025-06-21 02:35:08,322 - WARNING - bsp_finder - scrape_and_enrich_csv - 216 - Date 06/06/2025 in bad_dates_set. Skipping 24 tasks for this group.
+2025-06-21 02:35:08,367 - INFO - bsp_finder - scrape_and_enrich_csv - 213 - Processing Group: Date='06/06/2025', Code='GREYHOUNDS', Venue='HEALESVILLE' (7 tasks)
+2025-06-21 02:35:08,367 - WARNING - bsp_finder - scrape_and_enrich_csv - 216 - Date 06/06/2025 in bad_dates_set. Skipping 7 tasks for this group.
+2025-06-21 02:35:08,381 - INFO - bsp_finder - scrape_and_enrich_csv - 213 - Processing Group: Date='05/06/2025', Code='GREYHOUNDS', Venue='WENTWORTH PARK' (5 tasks)
+2025-06-21 02:35:08,381 - INFO - bsp_finder - scrape_and_enrich_csv - 221 - DATE CHANGE: Current='Error', Target='05/06/2025'.
+2025-06-21 02:35:08,381 - INFO - bsp_finder - select_date_on_calendar - 66 - Calendar: Selecting date: '05/06/2025'.
+2025-06-21 02:35:08,381 - DEBUG - bsp_finder - select_date_on_calendar - 71 - Calendar: Clicking icon.
+2025-06-21 02:35:08,519 - DEBUG - bsp_finder - select_date_on_calendar - 72 - Calendar: Widget visible.
+2025-06-21 02:35:08,772 - DEBUG - bsp_finder - select_date_on_calendar - 77 - Calendar: Display: June 2025. Target: June 2025.
+2025-06-21 02:35:08,773 - DEBUG - bsp_finder - select_date_on_calendar - 78 - Calendar: Correct month/year.
+2025-06-21 02:35:08,773 - DEBUG - bsp_finder - select_date_on_calendar - 86 - Calendar: Clicking day XPath: //span[contains(@class, 'flatpickr-day') and not(contains(@class, 'prevMonthDay')) and not(contains(@class, 'nextMonthDay')) and normalize-space()='5']
+2025-06-21 02:35:08,967 - INFO - bsp_finder - select_date_on_calendar - 87 - Calendar: Day '5' selected.
+2025-06-21 02:35:08,967 - DEBUG - bsp_finder - select_date_on_calendar - 89 - Calendar: Waiting for spinner post-date selection (up to 120s)...
+2025-06-21 02:35:09,000 - DEBUG - bsp_finder - select_date_on_calendar - 91 - Calendar: Spinner detected. Waiting for invisibility.
+2025-06-21 02:36:50,780 - ERROR - bsp_finder - select_date_on_calendar - 95 - Calendar: Error selecting date '05/06/2025': Message: invalid session id: session deleted as the browser has closed the connection
+from disconnected: not connected to DevTools
+  (Session info: chrome=137.0.7151.105)
+Stacktrace:
+	GetHandleVerifier [0x0xd13b03+62899]
+	GetHandleVerifier [0x0xd13b44+62964]
+	(No symbol) [0x0xb410f3]
+	(No symbol) [0x0xb308c0]
+	(No symbol) [0x0xb4e87f]
+	(No symbol) [0x0xbb514c]
+	(No symbol) [0x0xbcf6a9]
+	(No symbol) [0x0xbae306]
+	(No symbol) [0x0xb7d670]
+	(No symbol) [0x0xb7e4e4]
+	GetHandleVerifier [0x0xf74793+2556483]
+	GetHandleVerifier [0x0xf6fd02+2537394]
+	GetHandleVerifier [0x0xd3a2fa+220586]
+	GetHandleVerifier [0x0xd2aae8+157080]
+	GetHandleVerifier [0x0xd3141d+184013]
+	GetHandleVerifier [0x0xd1ba68+95512]
+	GetHandleVerifier [0x0xd1bc10+95936]
+	GetHandleVerifier [0x0xd06b5a+9738]
+	BaseThreadInitThunk [0x0x76987ba9+25]
+	RtlInitializeExceptionChain [0x0x77d7c3ab+107]
+	RtlClearBits [0x0x77d7c32f+191]
+Traceback (most recent call last):
+  File "D:\my_project_starty\JACOB-main\jacob\bsp_finder.py", line 92, in select_date_on_calendar
+    date_wait.until(EC.invisibility_of_element_located((By.CSS_SELECTOR, "img.loading"))); logger.info("Calendar: Date selection complete, spinner gone.")
+  File "C:\Users\Admin\AppData\Local\Programs\Python\Python310\lib\site-packages\selenium\webdriver\support\wait.py", line 137, in until
+    value = method(self._driver)
+  File "C:\Users\Admin\AppData\Local\Programs\Python\Python310\lib\site-packages\selenium\webdriver\support\expected_conditions.py", line 565, in _predicate
+    target = driver.find_element(*target)
+  File "C:\Users\Admin\AppData\Local\Programs\Python\Python310\lib\site-packages\selenium\webdriver\remote\webdriver.py", line 898, in find_element
+    return self.execute(Command.FIND_ELEMENT, {"using": by, "value": value})["value"]
+  File "C:\Users\Admin\AppData\Local\Programs\Python\Python310\lib\site-packages\selenium\webdriver\remote\webdriver.py", line 429, in execute
+    self.error_handler.check_response(response)
+  File "C:\Users\Admin\AppData\Local\Programs\Python\Python310\lib\site-packages\selenium\webdriver\remote\errorhandler.py", line 232, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.InvalidSessionIdException: Message: invalid session id: session deleted as the browser has closed the connection
+from disconnected: not connected to DevTools
+  (Session info: chrome=137.0.7151.105)
+Stacktrace:
+	GetHandleVerifier [0x0xd13b03+62899]
+	GetHandleVerifier [0x0xd13b44+62964]
+	(No symbol) [0x0xb410f3]
+	(No symbol) [0x0xb308c0]
+	(No symbol) [0x0xb4e87f]
+	(No symbol) [0x0xbb514c]
+	(No symbol) [0x0xbcf6a9]
+	(No symbol) [0x0xbae306]
+	(No symbol) [0x0xb7d670]
+	(No symbol) [0x0xb7e4e4]
+	GetHandleVerifier [0x0xf74793+2556483]
+	GetHandleVerifier [0x0xf6fd02+2537394]
+	GetHandleVerifier [0x0xd3a2fa+220586]
+	GetHandleVerifier [0x0xd2aae8+157080]
+	GetHandleVerifier [0x0xd3141d+184013]
+	GetHandleVerifier [0x0xd1ba68+95512]
+	GetHandleVerifier [0x0xd1bc10+95936]
+	GetHandleVerifier [0x0xd06b5a+9738]
+	BaseThreadInitThunk [0x0x76987ba9+25]
+	RtlInitializeExceptionChain [0x0x77d7c3ab+107]
+	RtlClearBits [0x0x77d7c32f+191]
+
+2025-06-21 02:36:50,814 - ERROR - bsp_finder - scrape_and_enrich_csv - 224 - DATE FAILURE: Calendar selection failed for '05/06/2025'. Skipping date.
+2025-06-21 02:36:50,834 - INFO - bsp_finder - scrape_and_enrich_csv - 213 - Processing Group: Date='05/06/2025', Code='HARNESS', Venue='PENRITH' (44 tasks)
+2025-06-21 02:36:50,835 - WARNING - bsp_finder - scrape_and_enrich_csv - 216 - Date 05/06/2025 in bad_dates_set. Skipping 44 tasks for this group.
+2025-06-21 02:36:51,000 - INFO - bsp_finder - scrape_and_enrich_csv - 213 - Processing Group: Date='05/06/2025', Code='GREYHOUNDS', Venue='HOBART' (15 tasks)
+2025-06-21 02:36:51,001 - WARNING - bsp_finder - scrape_and_enrich_csv - 216 - Date 05/06/2025 in bad_dates_set. Skipping 15 tasks for this group.
+2025-06-21 02:36:51,053 - INFO - bsp_finder - scrape_and_enrich_csv - 213 - Processing Group: Date='05/06/2025', Code='GREYHOUNDS', Venue='ANGLE PARK' (4 tasks)
+2025-06-21 02:36:51,054 - WARNING - bsp_finder - scrape_and_enrich_csv - 216 - Date 05/06/2025 in bad_dates_set. Skipping 4 tasks for this group.
+2025-06-21 02:36:51,068 - INFO - bsp_finder - scrape_and_enrich_csv - 213 - Processing Group: Date='05/06/2025', Code='GREYHOUNDS', Venue='MANDURAH' (5 tasks)
+2025-06-21 02:36:51,068 - WARNING - bsp_finder - scrape_and_enrich_csv - 216 - Date 05/06/2025 in bad_dates_set. Skipping 5 tasks for this group.
+2025-06-21 02:36:51,086 - INFO - bsp_finder - scrape_and_enrich_csv - 213 - Processing Group: Date='05/06/2025', Code='GREYHOUNDS', Venue='Q1 LAKESIDE' (12 tasks)
+2025-06-21 02:36:51,086 - WARNING - bsp_finder - scrape_and_enrich_csv - 216 - Date 05/06/2025 in bad_dates_set. Skipping 12 tasks for this group.
+2025-06-21 02:36:51,162 - INFO - bsp_finder - scrape_and_enrich_csv - 213 - Processing Group: Date='05/06/2025', Code='GREYHOUNDS', Venue='DAPTO' (13 tasks)
+2025-06-21 02:36:51,162 - WARNING - bsp_finder - scrape_and_enrich_csv - 216 - Date 05/06/2025 in bad_dates_set. Skipping 13 tasks for this group.
+2025-06-21 02:36:51,201 - INFO - bsp_finder - scrape_and_enrich_csv - 213 - Processing Group: Date='05/06/2025', Code='GREYHOUNDS', Venue='BALLARAT' (3 tasks)
+2025-06-21 02:36:51,201 - WARNING - bsp_finder - scrape_and_enrich_csv - 216 - Date 05/06/2025 in bad_dates_set. Skipping 3 tasks for this group.
+2025-06-21 02:36:51,218 - INFO - bsp_finder - scrape_and_enrich_csv - 213 - Processing Group: Date='05/06/2025', Code='HARNESS', Venue='BALLARAT' (20 tasks)
+2025-06-21 02:36:51,218 - WARNING - bsp_finder - scrape_and_enrich_csv - 216 - Date 05/06/2025 in bad_dates_set. Skipping 20 tasks for this group.
+2025-06-21 02:36:51,303 - INFO - bsp_finder - scrape_and_enrich_csv - 213 - Processing Group: Date='05/06/2025', Code='GREYHOUNDS', Venue='CASINO' (9 tasks)
+2025-06-21 02:36:51,303 - WARNING - bsp_finder - scrape_and_enrich_csv - 216 - Date 05/06/2025 in bad_dates_set. Skipping 9 tasks for this group.
+2025-06-21 02:36:51,333 - INFO - bsp_finder - scrape_and_enrich_csv - 213 - Processing Group: Date='05/06/2025', Code='GREYHOUNDS', Venue='SHEPPARTON' (17 tasks)
+2025-06-21 02:36:51,333 - WARNING - bsp_finder - scrape_and_enrich_csv - 216 - Date 05/06/2025 in bad_dates_set. Skipping 17 tasks for this group.
+2025-06-21 02:36:51,416 - INFO - bsp_finder - scrape_and_enrich_csv - 213 - Processing Group: Date='05/06/2025', Code='HARNESS', Venue='REDCLIFFE' (23 tasks)
+2025-06-21 02:36:51,416 - WARNING - bsp_finder - scrape_and_enrich_csv - 216 - Date 05/06/2025 in bad_dates_set. Skipping 23 tasks for this group.
+2025-06-21 02:36:51,498 - INFO - bsp_finder - scrape_and_enrich_csv - 213 - Processing Group: Date='05/06/2025', Code='GREYHOUNDS', Venue='RICHMOND STRAIGHT' (13 tasks)
+2025-06-21 02:36:51,499 - WARNING - bsp_finder - scrape_and_enrich_csv - 216 - Date 05/06/2025 in bad_dates_set. Skipping 13 tasks for this group.
+2025-06-21 02:36:51,537 - INFO - bsp_finder - scrape_and_enrich_csv - 213 - Processing Group: Date='05/06/2025', Code='GREYHOUNDS', Venue='MOUNT GAMBIER' (17 tasks)
+2025-06-21 02:36:51,546 - WARNING - bsp_finder - scrape_and_enrich_csv - 216 - Date 05/06/2025 in bad_dates_set. Skipping 17 tasks for this group.
+2025-06-21 02:36:51,618 - INFO - bsp_finder - scrape_and_enrich_csv - 213 - Processing Group: Date='05/06/2025', Code='GREYHOUNDS', Venue='ALBION PARK' (17 tasks)
+2025-06-21 02:36:51,618 - WARNING - bsp_finder - scrape_and_enrich_csv - 216 - Date 05/06/2025 in bad_dates_set. Skipping 17 tasks for this group.
+2025-06-21 02:36:51,696 - INFO - bsp_finder - scrape_and_enrich_csv - 213 - Processing Group: Date='05/06/2025', Code='GREYHOUNDS', Venue='WARRAGUL' (6 tasks)
+2025-06-21 02:36:51,697 - WARNING - bsp_finder - scrape_and_enrich_csv - 216 - Date 05/06/2025 in bad_dates_set. Skipping 6 tasks for this group.
+2025-06-21 02:36:51,728 - INFO - bsp_finder - scrape_and_enrich_csv - 213 - Processing Group: Date='04/06/2025', Code='HARNESS', Venue='REDCLIFFE' (35 tasks)
+2025-06-21 02:36:51,736 - INFO - bsp_finder - scrape_and_enrich_csv - 221 - DATE CHANGE: Current='Error', Target='04/06/2025'.
+2025-06-21 02:36:51,737 - INFO - bsp_finder - select_date_on_calendar - 66 - Calendar: Selecting date: '04/06/2025'.
+2025-06-21 02:36:51,752 - DEBUG - bsp_finder - select_date_on_calendar - 71 - Calendar: Clicking icon.
+2025-06-21 02:36:52,204 - ERROR - bsp_finder - select_date_on_calendar - 95 - Calendar: Error selecting date '04/06/2025': Message: invalid session id
+Stacktrace:
+	GetHandleVerifier [0x0xd13b03+62899]
+	GetHandleVerifier [0x0xd13b44+62964]
+	(No symbol) [0x0xb40f50]
+	(No symbol) [0x0xb7c938]
+	(No symbol) [0x0xbae3c6]
+	(No symbol) [0x0xba9e72]
+	(No symbol) [0x0xba9406]
+	(No symbol) [0x0xb13a05]
+	(No symbol) [0x0xb13f5e]
+	(No symbol) [0x0xb143fd]
+	GetHandleVerifier [0x0xf74793+2556483]
+	GetHandleVerifier [0x0xf6fd02+2537394]
+	GetHandleVerifier [0x0xd3a2fa+220586]
+	GetHandleVerifier [0x0xd2aae8+157080]
+	GetHandleVerifier [0x0xd3141d+184013]
+	(No symbol) [0x0xb136d0]
+	(No symbol) [0x0xb12f47]
+	GetHandleVerifier [0x0x10aaa2c+3826908]
+	BaseThreadInitThunk [0x0x76987ba9+25]
+	RtlInitializeExceptionChain [0x0x77d7c3ab+107]
+	RtlClearBits [0x0x77d7c32f+191]
+Traceback (most recent call last):
+  File "D:\my_project_starty\JACOB-main\jacob\bsp_finder.py", line 71, in select_date_on_calendar
+    logger.debug("Calendar: Clicking icon."); calendar_icon = date_wait.until(EC.element_to_be_clickable((By.CLASS_NAME, "calendar-image"))); calendar_icon.click()
+  File "C:\Users\Admin\AppData\Local\Programs\Python\Python310\lib\site-packages\selenium\webdriver\support\wait.py", line 137, in until
+    value = method(self._driver)
+  File "C:\Users\Admin\AppData\Local\Programs\Python\Python310\lib\site-packages\selenium\webdriver\support\expected_conditions.py", line 633, in _predicate
+    target = driver.find_element(*target)  # grab element at locator
+  File "C:\Users\Admin\AppData\Local\Programs\Python\Python310\lib\site-packages\selenium\webdriver\remote\webdriver.py", line 898, in find_element
+    return self.execute(Command.FIND_ELEMENT, {"using": by, "value": value})["value"]
+  File "C:\Users\Admin\AppData\Local\Programs\Python\Python310\lib\site-packages\selenium\webdriver\remote\webdriver.py", line 429, in execute
+    self.error_handler.check_response(response)
+  File "C:\Users\Admin\AppData\Local\Programs\Python\Python310\lib\site-packages\selenium\webdriver\remote\errorhandler.py", line 232, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.InvalidSessionIdException: Message: invalid session id
+Stacktrace:
+	GetHandleVerifier [0x0xd13b03+62899]
+	GetHandleVerifier [0x0xd13b44+62964]
+	(No symbol) [0x0xb40f50]
+	(No symbol) [0x0xb7c938]
+	(No symbol) [0x0xbae3c6]
+	(No symbol) [0x0xba9e72]
+	(No symbol) [0x0xba9406]
+	(No symbol) [0x0xb13a05]
+	(No symbol) [0x0xb13f5e]
+	(No symbol) [0x0xb143fd]
+	GetHandleVerifier [0x0xf74793+2556483]
+	GetHandleVerifier [0x0xf6fd02+2537394]
+	GetHandleVerifier [0x0xd3a2fa+220586]
+	GetHandleVerifier [0x0xd2aae8+157080]
+	GetHandleVerifier [0x0xd3141d+184013]
+	(No symbol) [0x0xb136d0]
+	(No symbol) [0x0xb12f47]
+	GetHandleVerifier [0x0x10aaa2c+3826908]
+	BaseThreadInitThunk [0x0x76987ba9+25]
+	RtlInitializeExceptionChain [0x0x77d7c3ab+107]
+	RtlClearBits [0x0x77d7c32f+191]
+
+2025-06-21 02:36:52,217 - ERROR - bsp_finder - scrape_and_enrich_csv - 224 - DATE FAILURE: Calendar selection failed for '04/06/2025'. Skipping date.
+2025-06-21 02:36:52,312 - INFO - bsp_finder - scrape_and_enrich_csv - 213 - Processing Group: Date='04/06/2025', Code='GREYHOUNDS', Venue='ROCKHAMPTON' (23 tasks)
+2025-06-21 02:36:52,312 - WARNING - bsp_finder - scrape_and_enrich_csv - 216 - Date 04/06/2025 in bad_dates_set. Skipping 23 tasks for this group.
+2025-06-21 02:36:52,354 - INFO - bsp_finder - scrape_and_enrich_csv - 213 - Processing Group: Date='04/06/2025', Code='GREYHOUNDS', Venue='CANNINGTON' (15 tasks)
+2025-06-21 02:36:52,362 - WARNING - bsp_finder - scrape_and_enrich_csv - 216 - Date 04/06/2025 in bad_dates_set. Skipping 15 tasks for this group.
+2025-06-21 02:36:52,386 - INFO - bsp_finder - scrape_and_enrich_csv - 213 - Processing Group: Date='04/06/2025', Code='GREYHOUNDS', Venue='THE MEADOWS' (25 tasks)
+2025-06-21 02:36:52,387 - WARNING - bsp_finder - scrape_and_enrich_csv - 216 - Date 04/06/2025 in bad_dates_set. Skipping 25 tasks for this group.
+2025-06-21 02:36:52,450 - INFO - bsp_finder - scrape_and_enrich_csv - 213 - Processing Group: Date='04/06/2025', Code='HARNESS', Venue='BATHURST' (46 tasks)
+2025-06-21 02:36:52,450 - WARNING - bsp_finder - scrape_and_enrich_csv - 216 - Date 04/06/2025 in bad_dates_set. Skipping 46 tasks for this group.
+2025-06-21 02:36:52,533 - INFO - bsp_finder - scrape_and_enrich_csv - 213 - Processing Group: Date='04/06/2025', Code='HARNESS', Venue='BENDIGO' (16 tasks)
+2025-06-21 02:36:52,533 - WARNING - bsp_finder - scrape_and_enrich_csv - 216 - Date 04/06/2025 in bad_dates_set. Skipping 16 tasks for this group.
+2025-06-21 02:36:52,565 - INFO - bsp_finder - scrape_and_enrich_csv - 213 - Processing Group: Date='04/06/2025', Code='GREYHOUNDS', Venue='WARRNAMBOOL' (2 tasks)
+2025-06-21 02:36:52,565 - WARNING - bsp_finder - scrape_and_enrich_csv - 216 - Date 04/06/2025 in bad_dates_set. Skipping 2 tasks for this group.
+2025-06-21 02:36:52,568 - INFO - bsp_finder - scrape_and_enrich_csv - 213 - Processing Group: Date='04/06/2025', Code='GREYHOUNDS', Venue='GUNNEDAH' (26 tasks)
+2025-06-21 02:36:52,568 - WARNING - bsp_finder - scrape_and_enrich_csv - 216 - Date 04/06/2025 in bad_dates_set. Skipping 26 tasks for this group.
+2025-06-21 02:36:52,617 - INFO - bsp_finder - scrape_and_enrich_csv - 213 - Processing Group: Date='04/06/2025', Code='GREYHOUNDS', Venue='RICHMOND STRAIGHT' (3 tasks)
+2025-06-21 02:36:52,619 - WARNING - bsp_finder - scrape_and_enrich_csv - 216 - Date 04/06/2025 in bad_dates_set. Skipping 3 tasks for this group.
+2025-06-21 02:36:52,631 - INFO - bsp_finder - scrape_and_enrich_csv - 213 - Processing Group: Date='04/06/2025', Code='GREYHOUNDS', Venue='ALBION PARK' (13 tasks)
+2025-06-21 02:36:52,631 - WARNING - bsp_finder - scrape_and_enrich_csv - 216 - Date 04/06/2025 in bad_dates_set. Skipping 13 tasks for this group.
+2025-06-21 02:36:52,653 - INFO - bsp_finder - scrape_and_enrich_csv - 213 - Processing Group: Date='04/06/2025', Code='GREYHOUNDS', Venue='TEMORA' (8 tasks)
+2025-06-21 02:36:52,653 - WARNING - bsp_finder - scrape_and_enrich_csv - 216 - Date 04/06/2025 in bad_dates_set. Skipping 8 tasks for this group.
+2025-06-21 02:36:52,678 - INFO - bsp_finder - scrape_and_enrich_csv - 213 - Processing Group: Date='04/06/2025', Code='GREYHOUNDS', Venue='BENDIGO' (16 tasks)
+2025-06-21 02:36:52,679 - WARNING - bsp_finder - scrape_and_enrich_csv - 216 - Date 04/06/2025 in bad_dates_set. Skipping 16 tasks for this group.
+2025-06-21 02:36:52,712 - INFO - bsp_finder - scrape_and_enrich_csv - 213 - Processing Group: Date='04/06/2025', Code='HARNESS', Venue='MARYBOROUGH' (37 tasks)
+2025-06-21 02:36:52,713 - WARNING - bsp_finder - scrape_and_enrich_csv - 216 - Date 04/06/2025 in bad_dates_set. Skipping 37 tasks for this group.
+2025-06-21 02:36:52,785 - INFO - bsp_finder - scrape_and_enrich_csv - 213 - Processing Group: Date='04/06/2025', Code='GREYHOUNDS', Venue='CAPALABA' (6 tasks)
+2025-06-21 02:36:52,785 - WARNING - bsp_finder - scrape_and_enrich_csv - 216 - Date 04/06/2025 in bad_dates_set. Skipping 6 tasks for this group.
+2025-06-21 02:36:52,800 - INFO - bsp_finder - scrape_and_enrich_csv - 213 - Processing Group: Date='04/06/2025', Code='GREYHOUNDS', Venue='SALE' (7 tasks)
+2025-06-21 02:36:52,801 - WARNING - bsp_finder - scrape_and_enrich_csv - 216 - Date 04/06/2025 in bad_dates_set. Skipping 7 tasks for this group.
+2025-06-21 02:36:52,816 - INFO - bsp_finder - scrape_and_enrich_csv - 213 - Processing Group: Date='03/06/2025', Code='HARNESS', Venue='YOUNG' (19 tasks)
+2025-06-21 02:36:52,817 - INFO - bsp_finder - scrape_and_enrich_csv - 221 - DATE CHANGE: Current='Error', Target='03/06/2025'.
+2025-06-21 02:36:52,817 - INFO - bsp_finder - select_date_on_calendar - 66 - Calendar: Selecting date: '03/06/2025'.
+2025-06-21 02:36:52,817 - DEBUG - bsp_finder - select_date_on_calendar - 71 - Calendar: Clicking icon.
+2025-06-21 02:36:52,819 - ERROR - bsp_finder - select_date_on_calendar - 95 - Calendar: Error selecting date '03/06/2025': Message: invalid session id
+Stacktrace:
+	GetHandleVerifier [0x0xd13b03+62899]
+	GetHandleVerifier [0x0xd13b44+62964]
+	(No symbol) [0x0xb40f50]
+	(No symbol) [0x0xb7c938]
+	(No symbol) [0x0xbae3c6]
+	(No symbol) [0x0xba9e72]
+	(No symbol) [0x0xba9406]
+	(No symbol) [0x0xb13a05]
+	(No symbol) [0x0xb13f5e]
+	(No symbol) [0x0xb143fd]
+	GetHandleVerifier [0x0xf74793+2556483]
+	GetHandleVerifier [0x0xf6fd02+2537394]
+	GetHandleVerifier [0x0xd3a2fa+220586]
+	GetHandleVerifier [0x0xd2aae8+157080]
+	GetHandleVerifier [0x0xd3141d+184013]
+	(No symbol) [0x0xb136d0]
+	(No symbol) [0x0xb12f47]
+	GetHandleVerifier [0x0x10aaa2c+3826908]
+	BaseThreadInitThunk [0x0x76987ba9+25]
+	RtlInitializeExceptionChain [0x0x77d7c3ab+107]
+	RtlClearBits [0x0x77d7c32f+191]
+Traceback (most recent call last):
+  File "D:\my_project_starty\JACOB-main\jacob\bsp_finder.py", line 71, in select_date_on_calendar
+    logger.debug("Calendar: Clicking icon."); calendar_icon = date_wait.until(EC.element_to_be_clickable((By.CLASS_NAME, "calendar-image"))); calendar_icon.click()
+  File "C:\Users\Admin\AppData\Local\Programs\Python\Python310\lib\site-packages\selenium\webdriver\support\wait.py", line 137, in until
+    value = method(self._driver)
+  File "C:\Users\Admin\AppData\Local\Programs\Python\Python310\lib\site-packages\selenium\webdriver\support\expected_conditions.py", line 633, in _predicate
+    target = driver.find_element(*target)  # grab element at locator
+  File "C:\Users\Admin\AppData\Local\Programs\Python\Python310\lib\site-packages\selenium\webdriver\remote\webdriver.py", line 898, in find_element
+    return self.execute(Command.FIND_ELEMENT, {"using": by, "value": value})["value"]
+  File "C:\Users\Admin\AppData\Local\Programs\Python\Python310\lib\site-packages\selenium\webdriver\remote\webdriver.py", line 429, in execute
+    self.error_handler.check_response(response)
+  File "C:\Users\Admin\AppData\Local\Programs\Python\Python310\lib\site-packages\selenium\webdriver\remote\errorhandler.py", line 232, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.InvalidSessionIdException: Message: invalid session id
+Stacktrace:
+	GetHandleVerifier [0x0xd13b03+62899]
+	GetHandleVerifier [0x0xd13b44+62964]
+	(No symbol) [0x0xb40f50]
+	(No symbol) [0x0xb7c938]
+	(No symbol) [0x0xbae3c6]
+	(No symbol) [0x0xba9e72]
+	(No symbol) [0x0xba9406]
+	(No symbol) [0x0xb13a05]
+	(No symbol) [0x0xb13f5e]
+	(No symbol) [0x0xb143fd]
+	GetHandleVerifier [0x0xf74793+2556483]
+	GetHandleVerifier [0x0xf6fd02+2537394]
+	GetHandleVerifier [0x0xd3a2fa+220586]
+	GetHandleVerifier [0x0xd2aae8+157080]
+	GetHandleVerifier [0x0xd3141d+184013]
+	(No symbol) [0x0xb136d0]
+	(No symbol) [0x0xb12f47]
+	GetHandleVerifier [0x0x10aaa2c+3826908]
+	BaseThreadInitThunk [0x0x76987ba9+25]
+	RtlInitializeExceptionChain [0x0x77d7c3ab+107]
+	RtlClearBits [0x0x77d7c32f+191]
+
+2025-06-21 02:36:52,831 - ERROR - bsp_finder - scrape_and_enrich_csv - 224 - DATE FAILURE: Calendar selection failed for '03/06/2025'. Skipping date.
+2025-06-21 02:36:52,868 - INFO - bsp_finder - scrape_and_enrich_csv - 213 - Processing Group: Date='03/06/2025', Code='HARNESS', Venue='GLOUCESTER PARK' (18 tasks)
+2025-06-21 02:36:52,869 - WARNING - bsp_finder - scrape_and_enrich_csv - 216 - Date 03/06/2025 in bad_dates_set. Skipping 18 tasks for this group.
+2025-06-21 02:36:52,915 - INFO - bsp_finder - scrape_and_enrich_csv - 213 - Processing Group: Date='03/06/2025', Code='GREYHOUNDS', Venue='WARRAGUL' (1 tasks)
+2025-06-21 02:36:52,915 - WARNING - bsp_finder - scrape_and_enrich_csv - 216 - Date 03/06/2025 in bad_dates_set. Skipping 1 tasks for this group.
+2025-06-21 02:36:52,917 - INFO - bsp_finder - scrape_and_enrich_csv - 213 - Processing Group: Date='03/06/2025', Code='GREYHOUNDS', Venue='GOSFORD' (5 tasks)
+2025-06-21 02:36:52,917 - WARNING - bsp_finder - scrape_and_enrich_csv - 216 - Date 03/06/2025 in bad_dates_set. Skipping 5 tasks for this group.
+2025-06-21 02:36:52,929 - INFO - bsp_finder - scrape_and_enrich_csv - 213 - Processing Group: Date='03/06/2025', Code='GREYHOUNDS', Venue='TOWNSVILLE' (4 tasks)
+2025-06-21 02:36:52,930 - WARNING - bsp_finder - scrape_and_enrich_csv - 216 - Date 03/06/2025 in bad_dates_set. Skipping 4 tasks for this group.
+2025-06-21 02:36:52,934 - INFO - bsp_finder - scrape_and_enrich_csv - 213 - Processing Group: Date='03/06/2025', Code='GREYHOUNDS', Venue='BULLI' (5 tasks)
+2025-06-21 02:36:52,934 - WARNING - bsp_finder - scrape_and_enrich_csv - 216 - Date 03/06/2025 in bad_dates_set. Skipping 5 tasks for this group.
+2025-06-21 02:36:52,950 - INFO - bsp_finder - scrape_and_enrich_csv - 213 - Processing Group: Date='03/06/2025', Code='HARNESS', Venue='MOUNT GAMBIER' (3 tasks)
+2025-06-21 02:36:52,950 - WARNING - bsp_finder - scrape_and_enrich_csv - 216 - Date 03/06/2025 in bad_dates_set. Skipping 3 tasks for this group.
+2025-06-21 02:36:52,954 - INFO - bsp_finder - scrape_and_enrich_csv - 213 - Processing Group: Date='03/06/2025', Code='GREYHOUNDS', Venue='ANGLE PARK' (3 tasks)
+2025-06-21 02:36:52,954 - WARNING - bsp_finder - scrape_and_enrich_csv - 216 - Date 03/06/2025 in bad_dates_set. Skipping 3 tasks for this group.
+2025-06-21 02:36:52,968 - INFO - bsp_finder - scrape_and_enrich_csv - 213 - Processing Group: Date='03/06/2025', Code='HARNESS', Venue='SHEPPARTON' (12 tasks)
+2025-06-21 02:36:52,969 - WARNING - bsp_finder - scrape_and_enrich_csv - 216 - Date 03/06/2025 in bad_dates_set. Skipping 12 tasks for this group.
+2025-06-21 02:36:52,998 - INFO - bsp_finder - scrape_and_enrich_csv - 213 - Processing Group: Date='03/06/2025', Code='GREYHOUNDS', Venue='Q1 LAKESIDE' (15 tasks)
+2025-06-21 02:36:52,998 - WARNING - bsp_finder - scrape_and_enrich_csv - 216 - Date 03/06/2025 in bad_dates_set. Skipping 15 tasks for this group.
+2025-06-21 02:36:53,047 - INFO - bsp_finder - scrape_and_enrich_csv - 213 - Processing Group: Date='03/06/2025', Code='GREYHOUNDS', Venue='HORSHAM' (5 tasks)
+2025-06-21 02:36:53,048 - WARNING - bsp_finder - scrape_and_enrich_csv - 216 - Date 03/06/2025 in bad_dates_set. Skipping 5 tasks for this group.
+2025-06-21 02:36:53,053 - INFO - bsp_finder - scrape_and_enrich_csv - 213 - Processing Group: Date='03/06/2025', Code='HARNESS', Venue='MENANGLE' (35 tasks)
+2025-06-21 02:36:53,053 - WARNING - bsp_finder - scrape_and_enrich_csv - 216 - Date 03/06/2025 in bad_dates_set. Skipping 35 tasks for this group.
+2025-06-21 02:36:53,144 - INFO - bsp_finder - scrape_and_enrich_csv - 213 - Processing Group: Date='03/06/2025', Code='HARNESS', Venue='ALBION PARK' (13 tasks)
+2025-06-21 02:36:53,144 - WARNING - bsp_finder - scrape_and_enrich_csv - 216 - Date 03/06/2025 in bad_dates_set. Skipping 13 tasks for this group.
+2025-06-21 02:36:53,162 - INFO - bsp_finder - scrape_and_enrich_csv - 213 - Processing Group: Date='03/06/2025', Code='GREYHOUNDS', Venue='CASINO' (5 tasks)
+2025-06-21 02:36:53,163 - WARNING - bsp_finder - scrape_and_enrich_csv - 216 - Date 03/06/2025 in bad_dates_set. Skipping 5 tasks for this group.
+2025-06-21 02:36:53,171 - INFO - bsp_finder - scrape_and_enrich_csv - 213 - Processing Group: Date='03/06/2025', Code='GREYHOUNDS', Venue='GEELONG' (4 tasks)
+2025-06-21 02:36:53,176 - WARNING - bsp_finder - scrape_and_enrich_csv - 216 - Date 03/06/2025 in bad_dates_set. Skipping 4 tasks for this group.
+2025-06-21 02:36:53,183 - INFO - bsp_finder - scrape_and_enrich_csv - 213 - Processing Group: Date='03/06/2025', Code='GREYHOUNDS', Venue='MURRAY BRIDGE' (5 tasks)
+2025-06-21 02:36:53,184 - WARNING - bsp_finder - scrape_and_enrich_csv - 216 - Date 03/06/2025 in bad_dates_set. Skipping 5 tasks for this group.
+2025-06-21 02:36:53,197 - INFO - bsp_finder - scrape_and_enrich_csv - 213 - Processing Group: Date='03/06/2025', Code='GREYHOUNDS', Venue='HOBART' (3 tasks)
+2025-06-21 02:36:53,197 - WARNING - bsp_finder - scrape_and_enrich_csv - 216 - Date 03/06/2025 in bad_dates_set. Skipping 3 tasks for this group.
+2025-06-21 02:36:53,200 - INFO - bsp_finder - scrape_and_enrich_csv - 213 - Processing Group: Date='02/06/2025', Code='HARNESS', Venue='CANBERRA' (26 tasks)
+2025-06-21 02:36:53,200 - INFO - bsp_finder - scrape_and_enrich_csv - 221 - DATE CHANGE: Current='Error', Target='02/06/2025'.
+2025-06-21 02:36:53,200 - INFO - bsp_finder - select_date_on_calendar - 66 - Calendar: Selecting date: '02/06/2025'.
+2025-06-21 02:36:53,200 - DEBUG - bsp_finder - select_date_on_calendar - 71 - Calendar: Clicking icon.
+2025-06-21 02:36:53,201 - ERROR - bsp_finder - select_date_on_calendar - 95 - Calendar: Error selecting date '02/06/2025': Message: invalid session id
+Stacktrace:
+	GetHandleVerifier [0x0xd13b03+62899]
+	GetHandleVerifier [0x0xd13b44+62964]
+	(No symbol) [0x0xb40f50]
+	(No symbol) [0x0xb7c938]
+	(No symbol) [0x0xbae3c6]
+	(No symbol) [0x0xba9e72]
+	(No symbol) [0x0xba9406]
+	(No symbol) [0x0xb13a05]
+	(No symbol) [0x0xb13f5e]
+	(No symbol) [0x0xb143fd]
+	GetHandleVerifier [0x0xf74793+2556483]
+	GetHandleVerifier [0x0xf6fd02+2537394]
+	GetHandleVerifier [0x0xd3a2fa+220586]
+	GetHandleVerifier [0x0xd2aae8+157080]
+	GetHandleVerifier [0x0xd3141d+184013]
+	(No symbol) [0x0xb136d0]
+	(No symbol) [0x0xb12f47]
+	GetHandleVerifier [0x0x10aaa2c+3826908]
+	BaseThreadInitThunk [0x0x76987ba9+25]
+	RtlInitializeExceptionChain [0x0x77d7c3ab+107]
+	RtlClearBits [0x0x77d7c32f+191]
+Traceback (most recent call last):
+  File "D:\my_project_starty\JACOB-main\jacob\bsp_finder.py", line 71, in select_date_on_calendar
+    logger.debug("Calendar: Clicking icon."); calendar_icon = date_wait.until(EC.element_to_be_clickable((By.CLASS_NAME, "calendar-image"))); calendar_icon.click()
+  File "C:\Users\Admin\AppData\Local\Programs\Python\Python310\lib\site-packages\selenium\webdriver\support\wait.py", line 137, in until
+    value = method(self._driver)
+  File "C:\Users\Admin\AppData\Local\Programs\Python\Python310\lib\site-packages\selenium\webdriver\support\expected_conditions.py", line 633, in _predicate
+    target = driver.find_element(*target)  # grab element at locator
+  File "C:\Users\Admin\AppData\Local\Programs\Python\Python310\lib\site-packages\selenium\webdriver\remote\webdriver.py", line 898, in find_element
+    return self.execute(Command.FIND_ELEMENT, {"using": by, "value": value})["value"]
+  File "C:\Users\Admin\AppData\Local\Programs\Python\Python310\lib\site-packages\selenium\webdriver\remote\webdriver.py", line 429, in execute
+    self.error_handler.check_response(response)
+  File "C:\Users\Admin\AppData\Local\Programs\Python\Python310\lib\site-packages\selenium\webdriver\remote\errorhandler.py", line 232, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.InvalidSessionIdException: Message: invalid session id
+Stacktrace:
+	GetHandleVerifier [0x0xd13b03+62899]
+	GetHandleVerifier [0x0xd13b44+62964]
+	(No symbol) [0x0xb40f50]
+	(No symbol) [0x0xb7c938]
+	(No symbol) [0x0xbae3c6]
+	(No symbol) [0x0xba9e72]
+	(No symbol) [0x0xba9406]
+	(No symbol) [0x0xb13a05]
+	(No symbol) [0x0xb13f5e]
+	(No symbol) [0x0xb143fd]
+	GetHandleVerifier [0x0xf74793+2556483]
+	GetHandleVerifier [0x0xf6fd02+2537394]
+	GetHandleVerifier [0x0xd3a2fa+220586]
+	GetHandleVerifier [0x0xd2aae8+157080]
+	GetHandleVerifier [0x0xd3141d+184013]
+	(No symbol) [0x0xb136d0]
+	(No symbol) [0x0xb12f47]
+	GetHandleVerifier [0x0x10aaa2c+3826908]
+	BaseThreadInitThunk [0x0x76987ba9+25]
+	RtlInitializeExceptionChain [0x0x77d7c3ab+107]
+	RtlClearBits [0x0x77d7c32f+191]
+
+2025-06-21 02:36:53,204 - ERROR - bsp_finder - scrape_and_enrich_csv - 224 - DATE FAILURE: Calendar selection failed for '02/06/2025'. Skipping date.
+2025-06-21 02:36:53,247 - INFO - bsp_finder - scrape_and_enrich_csv - 213 - Processing Group: Date='02/06/2025', Code='GREYHOUNDS', Venue='ANGLE PARK' (8 tasks)
+2025-06-21 02:36:53,247 - WARNING - bsp_finder - scrape_and_enrich_csv - 216 - Date 02/06/2025 in bad_dates_set. Skipping 8 tasks for this group.
+2025-06-21 02:36:53,253 - INFO - bsp_finder - scrape_and_enrich_csv - 213 - Processing Group: Date='02/06/2025', Code='GREYHOUNDS', Venue='LAUNCESTON' (6 tasks)
+2025-06-21 02:36:53,253 - WARNING - bsp_finder - scrape_and_enrich_csv - 216 - Date 02/06/2025 in bad_dates_set. Skipping 6 tasks for this group.
+2025-06-21 02:36:53,265 - INFO - bsp_finder - scrape_and_enrich_csv - 213 - Processing Group: Date='02/06/2025', Code='GREYHOUNDS', Venue='Q2 PARKLANDS' (14 tasks)
+2025-06-21 02:36:53,265 - WARNING - bsp_finder - scrape_and_enrich_csv - 216 - Date 02/06/2025 in bad_dates_set. Skipping 14 tasks for this group.
+2025-06-21 02:36:53,282 - INFO - bsp_finder - scrape_and_enrich_csv - 213 - Processing Group: Date='02/06/2025', Code='GREYHOUNDS', Venue='NOWRA' (8 tasks)
+2025-06-21 02:36:53,282 - WARNING - bsp_finder - scrape_and_enrich_csv - 216 - Date 02/06/2025 in bad_dates_set. Skipping 8 tasks for this group.
+2025-06-21 02:36:53,287 - INFO - bsp_finder - scrape_and_enrich_csv - 213 - Processing Group: Date='02/06/2025', Code='GREYHOUNDS', Venue='MAITLAND' (5 tasks)
+2025-06-21 02:36:53,291 - WARNING - bsp_finder - scrape_and_enrich_csv - 216 - Date 02/06/2025 in bad_dates_set. Skipping 5 tasks for this group.
+2025-06-21 02:36:53,297 - INFO - bsp_finder - scrape_and_enrich_csv - 213 - Processing Group: Date='02/06/2025', Code='GREYHOUNDS', Venue='NORTHAM' (7 tasks)
+2025-06-21 02:36:53,297 - WARNING - bsp_finder - scrape_and_enrich_csv - 216 - Date 02/06/2025 in bad_dates_set. Skipping 7 tasks for this group.
+2025-06-21 02:36:53,302 - INFO - bsp_finder - scrape_and_enrich_csv - 213 - Processing Group: Date='02/06/2025', Code='GREYHOUNDS', Venue='RICHMOND STRAIGHT' (10 tasks)
+2025-06-21 02:36:53,302 - WARNING - bsp_finder - scrape_and_enrich_csv - 216 - Date 02/06/2025 in bad_dates_set. Skipping 10 tasks for this group.
+2025-06-21 02:36:53,314 - INFO - bsp_finder - scrape_and_enrich_csv - 213 - Processing Group: Date='02/06/2025', Code='HARNESS', Venue='PINJARRA' (39 tasks)
+2025-06-21 02:36:53,315 - WARNING - bsp_finder - scrape_and_enrich_csv - 216 - Date 02/06/2025 in bad_dates_set. Skipping 39 tasks for this group.
+2025-06-21 02:36:53,354 - INFO - bsp_finder - scrape_and_enrich_csv - 213 - Processing Group: Date='02/06/2025', Code='GREYHOUNDS', Venue='WARRNAMBOOL' (22 tasks)
+2025-06-21 02:36:53,358 - WARNING - bsp_finder - scrape_and_enrich_csv - 216 - Date 02/06/2025 in bad_dates_set. Skipping 22 tasks for this group.
+2025-06-21 02:36:53,386 - INFO - bsp_finder - scrape_and_enrich_csv - 213 - Processing Group: Date='02/06/2025', Code='GREYHOUNDS', Venue='SHEPPARTON' (11 tasks)
+2025-06-21 02:36:53,386 - WARNING - bsp_finder - scrape_and_enrich_csv - 216 - Date 02/06/2025 in bad_dates_set. Skipping 11 tasks for this group.
+2025-06-21 02:36:53,403 - INFO - bsp_finder - scrape_and_enrich_csv - 213 - Processing Group: Date='02/06/2025', Code='HARNESS', Venue='NEWCASTLE' (23 tasks)
+2025-06-21 02:36:53,404 - WARNING - bsp_finder - scrape_and_enrich_csv - 216 - Date 02/06/2025 in bad_dates_set. Skipping 23 tasks for this group.
+2025-06-21 02:36:53,447 - INFO - bsp_finder - scrape_and_enrich_csv - 213 - Processing Group: Date='02/06/2025', Code='HARNESS', Venue='CHARLTON' (29 tasks)
+2025-06-21 02:36:53,447 - WARNING - bsp_finder - scrape_and_enrich_csv - 216 - Date 02/06/2025 in bad_dates_set. Skipping 29 tasks for this group.
+2025-06-21 02:36:53,482 - INFO - bsp_finder - scrape_and_enrich_csv - 213 - Processing Group: Date='02/06/2025', Code='GREYHOUNDS', Venue='BALLARAT' (15 tasks)
+2025-06-21 02:36:53,482 - WARNING - bsp_finder - scrape_and_enrich_csv - 216 - Date 02/06/2025 in bad_dates_set. Skipping 15 tasks for this group.
+2025-06-21 02:36:53,501 - INFO - bsp_finder - scrape_and_enrich_csv - 213 - Processing Group: Date='31/05/2025', Code='HARNESS', Venue='NORTHAM' (1 tasks)
+2025-06-21 02:36:53,501 - INFO - bsp_finder - scrape_and_enrich_csv - 221 - DATE CHANGE: Current='Error', Target='31/05/2025'.
+2025-06-21 02:36:53,501 - INFO - bsp_finder - select_date_on_calendar - 66 - Calendar: Selecting date: '31/05/2025'.
+2025-06-21 02:36:53,502 - DEBUG - bsp_finder - select_date_on_calendar - 71 - Calendar: Clicking icon.
+2025-06-21 02:36:53,503 - ERROR - bsp_finder - select_date_on_calendar - 95 - Calendar: Error selecting date '31/05/2025': Message: invalid session id
+Stacktrace:
+	GetHandleVerifier [0x0xd13b03+62899]
+	GetHandleVerifier [0x0xd13b44+62964]
+	(No symbol) [0x0xb40f50]
+	(No symbol) [0x0xb7c938]
+	(No symbol) [0x0xbae3c6]
+	(No symbol) [0x0xba9e72]
+	(No symbol) [0x0xba9406]
+	(No symbol) [0x0xb13a05]
+	(No symbol) [0x0xb13f5e]
+	(No symbol) [0x0xb143fd]
+	GetHandleVerifier [0x0xf74793+2556483]
+	GetHandleVerifier [0x0xf6fd02+2537394]
+	GetHandleVerifier [0x0xd3a2fa+220586]
+	GetHandleVerifier [0x0xd2aae8+157080]
+	GetHandleVerifier [0x0xd3141d+184013]
+	(No symbol) [0x0xb136d0]
+	(No symbol) [0x0xb12f47]
+	GetHandleVerifier [0x0x10aaa2c+3826908]
+	BaseThreadInitThunk [0x0x76987ba9+25]
+	RtlInitializeExceptionChain [0x0x77d7c3ab+107]
+	RtlClearBits [0x0x77d7c32f+191]
+Traceback (most recent call last):
+  File "D:\my_project_starty\JACOB-main\jacob\bsp_finder.py", line 71, in select_date_on_calendar
+    logger.debug("Calendar: Clicking icon."); calendar_icon = date_wait.until(EC.element_to_be_clickable((By.CLASS_NAME, "calendar-image"))); calendar_icon.click()
+  File "C:\Users\Admin\AppData\Local\Programs\Python\Python310\lib\site-packages\selenium\webdriver\support\wait.py", line 137, in until
+    value = method(self._driver)
+  File "C:\Users\Admin\AppData\Local\Programs\Python\Python310\lib\site-packages\selenium\webdriver\support\expected_conditions.py", line 633, in _predicate
+    target = driver.find_element(*target)  # grab element at locator
+  File "C:\Users\Admin\AppData\Local\Programs\Python\Python310\lib\site-packages\selenium\webdriver\remote\webdriver.py", line 898, in find_element
+    return self.execute(Command.FIND_ELEMENT, {"using": by, "value": value})["value"]
+  File "C:\Users\Admin\AppData\Local\Programs\Python\Python310\lib\site-packages\selenium\webdriver\remote\webdriver.py", line 429, in execute
+    self.error_handler.check_response(response)
+  File "C:\Users\Admin\AppData\Local\Programs\Python\Python310\lib\site-packages\selenium\webdriver\remote\errorhandler.py", line 232, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.InvalidSessionIdException: Message: invalid session id
+Stacktrace:
+	GetHandleVerifier [0x0xd13b03+62899]
+	GetHandleVerifier [0x0xd13b44+62964]
+	(No symbol) [0x0xb40f50]
+	(No symbol) [0x0xb7c938]
+	(No symbol) [0x0xbae3c6]
+	(No symbol) [0x0xba9e72]
+	(No symbol) [0x0xba9406]
+	(No symbol) [0x0xb13a05]
+	(No symbol) [0x0xb13f5e]
+	(No symbol) [0x0xb143fd]
+	GetHandleVerifier [0x0xf74793+2556483]
+	GetHandleVerifier [0x0xf6fd02+2537394]
+	GetHandleVerifier [0x0xd3a2fa+220586]
+	GetHandleVerifier [0x0xd2aae8+157080]
+	GetHandleVerifier [0x0xd3141d+184013]
+	(No symbol) [0x0xb136d0]
+	(No symbol) [0x0xb12f47]
+	GetHandleVerifier [0x0x10aaa2c+3826908]
+	BaseThreadInitThunk [0x0x76987ba9+25]
+	RtlInitializeExceptionChain [0x0x77d7c3ab+107]
+	RtlClearBits [0x0x77d7c32f+191]
+
+2025-06-21 02:36:53,513 - ERROR - bsp_finder - scrape_and_enrich_csv - 224 - DATE FAILURE: Calendar selection failed for '31/05/2025'. Skipping date.
+2025-06-21 02:36:53,515 - INFO - bsp_finder - scrape_and_enrich_csv - 213 - Processing Group: Date='31/05/2025', Code='GREYHOUNDS', Venue='CANNINGTON' (1 tasks)
+2025-06-21 02:36:53,515 - WARNING - bsp_finder - scrape_and_enrich_csv - 216 - Date 31/05/2025 in bad_dates_set. Skipping 1 tasks for this group.
+2025-06-21 02:36:53,516 - INFO - bsp_finder - scrape_and_enrich_csv - 320 - Closing WebDriver.
+2025-06-21 02:36:56,552 - INFO - bsp_finder - scrape_and_enrich_csv - 321 - WebDriver closed.
+2025-06-21 02:36:56,949 - INFO - bsp_finder - scrape_and_enrich_csv - 348 - --- SCRAPING SUMMARY ---
+2025-06-21 02:36:56,949 - INFO - bsp_finder - scrape_and_enrich_csv - 349 - Total Input Tasks (after initial date parsing): 3553
+2025-06-21 02:36:56,949 - INFO - bsp_finder - scrape_and_enrich_csv - 350 -   Tasks Processed for BSP: 3553
+2025-06-21 02:36:56,949 - INFO - bsp_finder - scrape_and_enrich_csv - 351 -   Successfully Scraped (BSP found or N/A): 165
+2025-06-21 02:36:56,949 - INFO - bsp_finder - scrape_and_enrich_csv - 352 -   Failed to Scrape (Error or Not Found): 3388
+2025-06-21 02:36:56,950 - INFO - bsp_finder - scrape_and_enrich_csv - 353 - -------------------------
+2025-06-21 02:36:56,950 - INFO - bsp_finder - scrape_and_enrich_csv - 360 - Collected 3553 total rows before final duplicate removal.
+2025-06-21 02:36:56,959 - INFO - bsp_finder - scrape_and_enrich_csv - 368 - Scraping process finished. Returning 3553 unique rows for final formatting.
+2025-06-21 02:36:56,969 - DEBUG - bsp_finder - format_and_save_data - 375 - Preparing to save data to 'final_results.csv'. Ensuring clean save.
+2025-06-21 02:36:56,970 - INFO - bsp_finder - format_and_save_data - 379 - Removed existing output file: 'final_results.csv' for fresh save.
+2025-06-21 02:36:56,970 - INFO - bsp_finder - format_and_save_data - 397 - Formatting 3553 rows for 'final_results.csv'...
+2025-06-21 02:36:56,979 - DEBUG - bsp_finder - format_and_save_data - 414 - Removed internal 'date_only' column before final formatting, if present.
+2025-06-21 02:36:57,127 - INFO - bsp_finder - format_and_save_data - 482 - SUCCESS: Saved 3553 entries to 'final_results.csv'
+2025-06-21 02:36:57,135 - DEBUG - bsp_finder - format_and_save_data - 483 - 
+--- Sample of Final Data (first 5 rows) ---
+              time    venue     code raceno runnerno      runnername  type     market bookie odds       BSP            
+                                                                                                  Price Win Price Place
+0  6/13/2025 17:07  MILDURA  Harness      6        7         CAVALRY  CASH  Fixed Win    TAB  7.5      8.08        2.48
+1  6/13/2025 17:07  MILDURA  Harness      6        7         CAVALRY  CASH  Fixed Win   Betr    8      8.08        2.48
+2  6/13/2025 17:06  MILDURA  Harness      6       10  CRUZ WITH ROME  CASH  Fixed Win   Betr  9.5        11        2.74
+4  6/13/2025 17:05  MILDURA  Harness      6        4  PUNTO CALIENTE  CASH  Fixed Win   Betr   10      12.5        2.74
+5  6/13/2025 17:05  MILDURA  Harness      6       10  CRUZ WITH ROME  CASH  Fixed Win    TAB   11        11        2.74
+2025-06-21 02:36:57,135 - INFO - bsp_finder - <module> - 496 - Script execution finished.
