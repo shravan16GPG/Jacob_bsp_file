@@ -12,3 +12,614 @@ and for retry try logic we will open a new browser to check unloaded to check an
 Last 8 days filter
 A good seperate retry logic with new instance of the sele
 groupby by venue + race type
+
+
+import time
+import pandas as pd
+from datetime import datetime, timedelta
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.common.exceptions import TimeoutException, NoSuchElementException, ElementClickInterceptedException
+from webdriver_manager.chrome import ChromeDriverManager
+import logging
+import os
+import tkinter as tk
+from tkinter import filedialog
+
+# --- Logger Setup ---
+log_formatter_file = logging.Formatter('%(asctime)s - %(levelname)s - %(name)s - %(funcName)s - %(lineno)d - %(message)s')
+log_formatter_console = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
+logger = logging.getLogger('bsp_finder')
+logger.setLevel(logging.DEBUG)
+for handler in logger.handlers[:]: logger.removeHandler(handler)
+log_file_path = 'bsp_scraping_detailed.log'
+if os.path.exists(log_file_path):
+    try: os.remove(log_file_path)
+    except OSError as e: print(f"Error removing old log file '{log_file_path}': {e}")
+file_handler = logging.FileHandler(log_file_path, encoding='utf-8')
+file_handler.setFormatter(log_formatter_file); file_handler.setLevel(logging.DEBUG)
+logger.addHandler(file_handler)
+stream_handler = logging.StreamHandler()
+stream_handler.setFormatter(log_formatter_console); stream_handler.setLevel(logging.INFO)
+logger.addHandler(stream_handler)
+
+# --- Global Configuration & Constants ---
+CODE_TO_ID_MAP = {"harness": "harness", "greyhounds": "greyhound", "thoroughbred": "thoroughbred", "r": "thoroughbred", "g": "greyhound", "h": "harness"}
+DATE_RANGE_DAYS = 8 # Process bets from the last 8 days (today minus 7 full days)
+
+# NEW: Centralized and more granular error strings for consistency and reporting
+ERROR_STATUS_STRINGS = {
+    "AWAITING_RETRY": "Awaiting Retry - Initial Failure",
+    "DATE_SELECTION_ERROR": "Failed Date Selection",
+    "DATE_LOAD_FAILURE": "Date Data Load Timeout",
+    "DATE_RETRY_FAILURE": "Failed Date on Retry",
+    "VENUE_NOT_FOUND": "Venue Not Found on Site",
+    "GROUP_PROCESSING_ERROR": "Site Interaction Error",
+    "GROUP_RETRY_ERROR": "Site Interaction Error (Retry)",
+    "RACE_ERROR": "Race Data Error",
+    "RACE_TIMEOUT": "Race Data Timeout",
+    "RUNNER_NOT_FOUND": "Runner Not Found in Race",
+    "BSP_SCRAPE_ERROR": "BSP Value Not Found/Scrape Error",
+    "INVALID_INPUT": "Invalid Input Data" # For cases like empty runner name
+}
+
+# NEW: Venue Aliases for common mismatches (CSV name: Website name)
+VENUE_ALIASES = {
+    "richmond straight": "richmond", # Example: User's "RICHMOND STRAIGHT" is "Richmond" on site
+    # Add other aliases here if identified:
+    # "moonee valley": "moonee valley harness",
+    # "my venue": "their venue name"
+}
+
+def get_file_path_from_gui():
+    """Launches a Tkinter GUI to select an input file."""
+    root = tk.Tk()
+    root.withdraw()
+    logger.info("GUI: Please select your bet data file (CSV or Excel) in the pop-up window.")
+    file_path = filedialog.askopenfilename(
+        title="Select your Bet Data File",
+        filetypes=(("Supported Files", "*.csv;*.xlsx;*.xls"), ("Excel Files", "*.xlsx;*.xls"), ("CSV Files", "*.csv"), ("All Files", "*.*"))
+    )
+    if not file_path:
+        logger.warning("GUI: No file selected. Script will now exit.")
+        return None
+    logger.info(f"GUI: File selected: {os.path.basename(file_path)}")
+    return file_path
+
+def get_input_data(file_path):
+    """Reads CSV or Excel data, validates, and returns a pandas DataFrame."""
+    if not file_path or not os.path.exists(file_path):
+        logger.critical(f"Input: File not found at path: {file_path}"); return None
+    try:
+        # Read all columns as string to prevent pandas inferring types incorrectly
+        if file_path.lower().endswith('.csv'):
+            df = pd.read_csv(file_path, encoding='utf-8-sig', dtype=str)
+        elif file_path.lower().endswith(('.xlsx', '.xls')):
+            df = pd.read_excel(file_path, dtype=str)
+        else:
+            logger.critical(f"Input: Unsupported file type: {os.path.basename(file_path)}"); return None
+        
+        logger.info(f"Input: Successfully loaded {len(df)} rows from {os.path.basename(file_path)}.")
+        df.columns = [str(c).strip().lower() for c in df.columns]
+        
+        if 'time' not in df.columns and 'date' in df.columns:
+            df.rename(columns={'date': 'time'}, inplace=True)
+        
+        req_cols = ['time', 'venue', 'code', 'raceno', 'runnerno', 'runnername']
+        if any(c not in df.columns for c in req_cols):
+            missing = [c for c in req_cols if c not in df.columns]
+            logger.critical(f"Input: Missing required columns: {missing}"); return None
+        
+        # Replace empty strings or NaN with an indicator if runnername is crucial later
+        df['runnername'] = df['runnername'].replace('', pd.NA).fillna('') # Ensure consistency
+        df['runnerno'] = df['runnerno'].replace('', pd.NA).fillna('') # Ensure consistency
+        df['raceno'] = df['raceno'].replace('', pd.NA).fillna('') # Ensure consistency
+        
+        # Apply venue aliases for mapping client's names to site names
+        df['venue'] = df['venue'].apply(lambda x: VENUE_ALIASES.get(x.lower(), x.lower()))
+        
+        return df
+    except Exception as e:
+        logger.critical(f"Input: Error reading or processing file: {e}", exc_info=True); return None
+
+def setup_driver():
+    """Initializes and returns a configured Selenium Chrome WebDriver."""
+    logger.info("Initializing Chrome WebDriver setup...")
+    options = webdriver.ChromeOptions()
+    options.add_argument('--start-maximized')
+    options.add_argument('--log-level=3')
+    options.add_argument('--disable-gpu'); options.add_argument('--no-sandbox'); options.add_argument('--disable-dev-shm-usage')
+    try:
+        logger.debug("WebDriverManager: Installing/Locating ChromeDriver...")
+        service = Service(ChromeDriverManager().install())
+        driver = webdriver.Chrome(service=service, options=options)
+        logger.info("WebDriver setup successful.")
+        return driver
+    except Exception as e: logger.critical(f"Fatal error during WebDriver setup: {e}", exc_info=True); raise
+
+def handle_popups(driver):
+    """Checks for and closes known popups that can interfere with clicks."""
+    logger.debug("Popup Handler: Checking for known popups...")
+    try:
+        # Check for InMoment feedback survey close button
+        close_button_selector = "div#imClose > button"
+        close_button = WebDriverWait(driver, 3).until(EC.element_to_be_clickable((By.CSS_SELECTOR, close_button_selector)))
+        logger.info("Popup Handler: Found and closing feedback survey popup.")
+        driver.execute_script("arguments[0].click();", close_button); time.sleep(1)
+        return True
+    except TimeoutException:
+        logger.debug("Popup Handler: No specific popups found (or timed out).")
+        return False
+    except Exception as e:
+        logger.warning(f"Popup Handler: Error while trying to close popup: {e}")
+        return False
+
+def select_date_on_calendar(driver, date_wait, target_date_str):
+    """Navigates the calendar widget to select a specific date."""
+    logger.info(f"Calendar: Selecting date: '{target_date_str}'.")
+    try:
+        target_date_obj = datetime.strptime(target_date_str, "%d/%m/%Y")
+        target_day, target_month, target_year = str(target_date_obj.day), target_date_obj.strftime("%B"), str(target_date_obj.year)
+        
+        handle_popups(driver) # Always check for popups before interacting with elements
+        
+        calendar_icon = date_wait.until(EC.element_to_be_clickable((By.CLASS_NAME, "calendar-image"))); calendar_icon.click()
+        calendar_widget = date_wait.until(EC.visibility_of_element_located((By.CLASS_NAME, "flatpickr-calendar"))); logger.debug("Calendar: Widget visible.")
+
+        for _ in range(36): # Max 3 years navigation (12 months * 3)
+            cur_month = calendar_widget.find_element(By.CLASS_NAME, "cur-month").text.strip()
+            cur_year = calendar_widget.find_element(By.CSS_SELECTOR, ".numInput.cur-year").get_attribute("value")
+            logger.debug(f"Calendar: Display: {cur_month} {cur_year}. Target: {target_month} {target_year}.")
+            if cur_month == target_month and cur_year == target_year: logger.debug("Calendar: Correct month/year."); break
+            
+            nav_btn_class = "flatpickr-prev-month" if target_date_obj < datetime(int(cur_year), datetime.strptime(cur_month, "%B").month, 1) else "flatpickr-next-month"
+            calendar_widget.find_element(By.CLASS_NAME, nav_btn_class).click(); time.sleep(0.4)
+            calendar_widget = date_wait.until(EC.visibility_of_element_located((By.CLASS_NAME, "flatpickr-calendar")))
+        else: raise Exception(f"Failed to navigate to {target_month} {target_year}.")
+
+        day_xpath = f"//span[contains(@class, 'flatpickr-day') and not(contains(@class, 'prevMonthDay')) and not(contains(@class, 'nextMonthDay')) and normalize-space()='{target_day}']"
+        try:
+            date_wait.until(EC.element_to_be_clickable((By.XPATH, day_xpath))).click()
+        except ElementClickInterceptedException:
+            logger.warning("Calendar: Click intercepted. Handling popup and retrying date selection.")
+            handle_popups(driver); time.sleep(1) # Give time for popup to disappear
+            date_wait.until(EC.element_to_be_clickable((By.XPATH, day_xpath))).click() # Retry click
+            logger.info("Calendar: Successfully clicked day after handling interception.")
+
+        logger.info(f"Calendar: Day '{target_day}' selected.")
+        
+        # Wait for data spinner after date selection
+        logger.debug("Calendar: Waiting for spinner post-date selection (up to 120s)...")
+        try:
+            WebDriverWait(driver, 120).until(EC.invisibility_of_element_located((By.CSS_SELECTOR, "img.loading")))
+            logger.info("Calendar: Date selection complete, spinner gone.")
+        except TimeoutException: logger.warning("Calendar: Spinner timed out (120s). Proceeding with data load check.")
+        return True
+    except Exception as e:
+        logger.error(f"Calendar: Error selecting date '{target_date_str}': {e}", exc_info=False)
+        return False
+
+def _fetch_bsp_for_race_runners(driver, wait, active_meeting_element, raceno_to_find, tasks_for_this_race, venue_name_for_logging):
+    """Processes all bets for a single race within a venue, extracting BSPs."""
+    processed_tasks = []
+    # Clean up raceno for display (e.g., 6.0 -> 6)
+    str_raceno = str(raceno_to_find).replace('.0', '')
+    logger.info(f"Race R{str_raceno} ({venue_name_for_logging}): Processing {len(tasks_for_this_race)} task(s).")
+    try:
+        # Find and click the correct race tab
+        tab_xpath = f".//div[contains(@class, 'race-tab') and div[@class='race-number' and normalize-space(text())='{str_raceno}']]"
+        tab = wait.until(EC.element_to_be_clickable(active_meeting_element.find_element(By.XPATH, tab_xpath)))
+        if "active-grad" not in tab.get_attribute("class"):
+            driver.execute_script("arguments[0].scrollIntoView({block:'center'});", tab); time.sleep(0.3)
+            driver.execute_script("arguments[0].click();", tab); time.sleep(2.0) # Static wait for runners to load via JS
+        
+        runners_xpath = f".//div[@class='races']/div[contains(@class, 'betfair-url') and not(contains(@style,'display: none'))]//div[@class='runners']"
+        runners_container = wait.until(EC.visibility_of_element_located((By.XPATH, runners_xpath)))
+        
+        for _, task in tasks_for_this_race.iterrows():
+            task_copy = task.copy()
+            # Clean up runner number (e.g., 10.0 -> 10)
+            runner_no = str(task['runnerno']).replace('.0', '')
+            runner_name = task['runnername'].strip() # Ensure no leading/trailing whitespace
+            
+            log_prefix = f"  R{str_raceno}, Runner {runner_no} ('{runner_name}'):"
+            
+            if not runner_no or not runner_name: # Handle blank runner number or name in input
+                logger.warning(f"{log_prefix} Skipped due to blank runner number or name in input.")
+                task_copy['BSP Price Win'], task_copy['BSP Price Place'] = ERROR_STATUS_STRINGS['INVALID_INPUT'], ERROR_STATUS_STRINGS['INVALID_INPUT']
+                processed_tasks.append(task_copy)
+                continue
+            
+            try:
+                # Find the specific runner's row by runner number
+                runner_row_xpath = f".//div[@class='runner-info' and .//div[@class='number' and normalize-space(text())='{runner_no}']]/ancestor::div[@class='runner']"
+                runner_row = runners_container.find_element(By.XPATH, runner_row_xpath)
+                
+                win_p = runner_row.find_element(By.CSS_SELECTOR, "div.price.win").text.strip()
+                place_p = runner_row.find_element(By.CSS_SELECTOR, "div.price.place").text.strip()
+                
+                task_copy['BSP Price Win'], task_copy['BSP Price Place'] = win_p or "N/A", place_p or "N/A"
+                logger.debug(f"{log_prefix} Success. BSP Win: '{win_p}', Place: '{place_p}'.")
+            except NoSuchElementException:
+                logger.warning(f"{log_prefix} FAILED. Runner not found on page with number '{runner_no}'.")
+                task_copy['BSP Price Win'], task_copy['BSP Price Place'] = ERROR_STATUS_STRINGS['RUNNER_NOT_FOUND'], ERROR_STATUS_STRINGS['RUNNER_NOT_FOUND']
+            except Exception as e:
+                logger.warning(f"{log_prefix} FAILED. Error scraping BSP values: {e}", exc_info=False)
+                task_copy['BSP Price Win'], task_copy['BSP Price Place'] = ERROR_STATUS_STRINGS['BSP_SCRAPE_ERROR'], ERROR_STATUS_STRINGS['BSP_SCRAPE_ERROR']
+            finally:
+                processed_tasks.append(task_copy)
+    except Exception as e_race:
+        # If anything at the race level (tab click, runners container) fails
+        error_msg = ERROR_STATUS_STRINGS['RACE_TIMEOUT'] if isinstance(e_race, TimeoutException) else ERROR_STATUS_STRINGS['RACE_ERROR']
+        logger.error(f"Race R{str_raceno} ({venue_name_for_logging}): FAILED at race level. Reason: {error_msg}")
+        for _, task in tasks_for_this_race.iterrows():
+            task_copy = task.copy(); task_copy['BSP Price Win'], task_copy['BSP Price Place'] = error_msg, error_msg
+            processed_tasks.append(task_copy)
+    return processed_tasks
+
+def _process_venue_group(driver, waits, current_state, group_info, is_retry=False):
+    """
+    Modularized function to process a single (Code, Venue) group for a given date.
+    Returns processed rows, updated state, and success status.
+    """
+    wait, wait_short = waits
+    cur_code, cur_venue, active_meeting_el = current_state
+    csv_code, csv_venue, venue_group_tasks = group_info
+    log_prefix = "RETRY" if is_retry else ""
+    
+    try:
+        # --- Code (Race Type) Selection ---
+        target_web_code_id = CODE_TO_ID_MAP.get(csv_code.lower())
+        if not target_web_code_id: raise ValueError(f"Code '{csv_code}' unknown.")
+        if cur_code != target_web_code_id:
+            logger.info(f"{log_prefix} CODE CHANGE: Current='{cur_code or 'None'}', Target='{target_web_code_id}'.")
+            wait.until(EC.element_to_be_clickable((By.ID, target_web_code_id))).click()
+            time.sleep(2.5) # Allow filters to re-render
+            cur_code, cur_venue, active_meeting_el = target_web_code_id, None, None
+        
+        # --- Venue Selection ---
+        # Prioritize exact text match (case-insensitive and trimmed)
+        # Then fallback to a "contains" match for robustness
+        target_venue_display_name = None
+        if cur_venue != csv_venue:
+            logger.info(f"{log_prefix} VENUE CHANGE: Current='{cur_venue or 'None'}', Target='{csv_venue}'.")
+            css_filters = "div.filters-list div.filter:not([style*='display: none'])"
+            wait.until(EC.visibility_of_all_elements_located((By.CSS_SELECTOR, css_filters))) # Ensure filters are visible
+            all_filter_elements = driver.find_elements(By.CSS_SELECTOR, css_filters)
+            
+            found_venue_element = None
+            
+            # 1. Exact match (case-insensitive, trimmed)
+            for el in all_filter_elements:
+                if el.text.strip().lower() == csv_venue.lower():
+                    found_venue_element = el
+                    target_venue_display_name = el.text.strip()
+                    break
+            
+            # 2. Fallback: 'contains' match (more lenient, e.g. "Richmond" for "Richmond Straight")
+            if not found_venue_element:
+                logger.debug(f"{log_prefix} VENUE: Exact match for '{csv_venue}' not found. Trying 'contains' match.")
+                for el in all_filter_elements:
+                    if csv_venue.lower() in el.text.strip().lower():
+                        found_venue_element = el
+                        target_venue_display_name = el.text.strip()
+                        logger.warning(f"{log_prefix} VENUE: Found partial match '{target_venue_display_name}' for '{csv_venue}'.")
+                        break
+
+            if not found_venue_element:
+                raise TimeoutException(ERROR_STATUS_STRINGS['VENUE_NOT_FOUND'])
+            
+            logger.debug(f"{log_prefix} VENUE: Clicking '{target_venue_display_name}'.")
+            driver.execute_script("arguments[0].scrollIntoView({block:'center'});", found_venue_element)
+            time.sleep(0.5)
+            found_venue_element.click()
+
+            try:
+                # Wait for loading spinner after venue selection
+                wait_short.until(EC.visibility_of_element_located((By.CSS_SELECTOR,"img.loading")))
+                wait.until(EC.invisibility_of_element_located((By.CSS_SELECTOR,"img.loading")))
+            except TimeoutException: logger.debug(f"{log_prefix} VENUE: Spinner not detected/timed out for '{target_venue_display_name}'.")
+            
+            # Verify active meeting element appeared
+            active_meeting_xpath = "//div[@class='meetings-list']/div[@class='meeting' and not(contains(@style, 'display: none'))]"
+            active_meeting_el = wait.until(EC.visibility_of_element_located((By.XPATH, active_meeting_xpath)))
+            logger.info(f"{log_prefix} VENUE SELECTED: '{target_venue_display_name}'.")
+            cur_venue = csv_venue # Update internal state with original CSV venue name
+
+        # --- Race and Runner Processing ---
+        processed_rows = []
+        for raceno, race_tasks in venue_group_tasks.groupby('raceno'):
+            processed_rows.extend(_fetch_bsp_for_race_runners(driver, wait, active_meeting_el, raceno, race_tasks, csv_venue))
+        
+        return processed_rows, (cur_code, cur_venue, active_meeting_el), True # Success
+    except Exception as e:
+        error_type = ERROR_STATUS_STRINGS['GROUP_RETRY_ERROR'] if is_retry else ERROR_STATUS_STRINGS['GROUP_PROCESSING_ERROR']
+        # Log only the first line of the error message for cleaner logs unless full traceback is explicitly needed.
+        logger.error(f"{error_type} for '{csv_venue}': {str(e).splitlines()[0]}", exc_info=False)
+        error_rows = []
+        for _, task_r in venue_group_tasks.iterrows():
+            task_c = task_r.copy(); task_c['BSP Price Win'], task_c['BSP Price Place'] = error_type, error_type
+            error_rows.append(task_c)
+        return error_rows, (cur_code, "Error", None), False # Failure
+
+def scrape_and_enrich_csv(tasks_df_original):
+    """Main function to orchestrate the scraping process, including date clipping and retries."""
+    logger.info("Starting scraping and enrichment process...")
+    tasks_df = tasks_df_original.copy()
+    
+    # --- Date Preprocessing and Clipping ---
+    try:
+        # Use dayfirst=True for common Australian date formats (dd/mm/yyyy)
+        tasks_df['date_obj'] = pd.to_datetime(tasks_df['time'], errors='coerce', dayfirst=True)
+        tasks_df.dropna(subset=['date_obj'], inplace=True)
+        tasks_df['date_only'] = tasks_df['date_obj'].dt.strftime('%d/%m/%Y')
+        
+        # Clip dates: Keep only dates from today up to DATE_RANGE_DAYS ago.
+        # datetime.now().date() gives YYYY-MM-DD
+        cutoff_date = datetime.now().date() - timedelta(days=DATE_RANGE_DAYS -1) # e.g., if DATE_RANGE_DAYS=8, means today and 7 days prior
+        initial_count = len(tasks_df)
+        tasks_df = tasks_df[tasks_df['date_obj'].dt.date >= cutoff_date]
+        if len(tasks_df) < initial_count:
+            logger.info(f"DATE FILTER: Removed {initial_count - len(tasks_df)} tasks older than {DATE_RANGE_DAYS} days from {cutoff_date.strftime('%d/%m/%Y')}.")
+        if tasks_df.empty:
+            logger.warning("No tasks remain after applying the date filter. Aborting scrape."); return pd.DataFrame()
+    except Exception as e:
+        logger.critical(f"Date parsing/filtering error: {e}. Aborting.", exc_info=True); return pd.DataFrame()
+    
+    driver = setup_driver()
+    if not driver: return pd.DataFrame()
+    
+    all_enriched_rows, bad_dates_set = [], set()
+
+    try:
+        logger.info("--- Starting Phase 1: Main Processing ---")
+        # Group by date, then code, then venue for efficient navigation
+        grouped_tasks_iter = tasks_df.groupby(['date_only', 'code', 'venue'], sort=False)
+        logger.info(f"Processing {len(grouped_tasks_iter.keys())} unique [Date, Code, Venue] groups.")
+        
+        driver.get("https://www.betfair.com.au/hub/racing/horse-racing/racing-results/")
+        waits = (WebDriverWait(driver, 20), WebDriverWait(driver, 5)) # (long_wait, short_wait)
+        date_load_wait = WebDriverWait(driver, 120) # Very generous wait for date data panel to appear
+        time.sleep(2); handle_popups(driver) # Initial check for popups on page load
+        
+        current_web_state = (None, None, None) # (cur_code, cur_venue, active_meeting_element)
+        
+        for (date_str, csv_code, csv_venue), venue_group_tasks in grouped_tasks_iter:
+            logger.info(f"Processing Group: Date='{date_str}', Code='{csv_code.upper()}', Venue='{csv_venue}' ({len(venue_group_tasks)} tasks)")
+            
+            # Skip if date was already deemed unprocessable in previous step
+            if date_str in bad_dates_set:
+                logger.warning(f"Skipping group for {date_str} (Date previously failed).")
+                continue # Skip processing this group in this phase
+
+            # --- Date Handling (select on calendar, verify load) ---
+            date_processed_successfully = False
+            if current_web_state[0] != date_str: # Only re-select date if it's different
+                if not select_date_on_calendar(driver, waits[0], date_str):
+                    logger.error(f"Date '{date_str}' calendar selection failed. Marking for retry.")
+                    bad_dates_set.add(date_str); continue
+                try:
+                    date_load_wait.until(EC.presence_of_all_elements_located((By.CSS_SELECTOR, "div.filters-list div.filter:not([style*='display: none'])")))
+                    logger.info(f"FILTER LIST POPULATED for {date_str}. Date data loaded OK.")
+                    current_web_state = (date_str, None, None) # Reset venue/code for new date
+                    date_processed_successfully = True
+                except TimeoutException:
+                    logger.error(f"Date '{date_str}' data panel did not load. Marking for retry.")
+                    bad_dates_set.add(date_str); continue
+            else: # Date is already selected from a previous group
+                date_processed_successfully = True
+
+            # If date failed selection or loading, skip processing its venue groups in this phase
+            if not date_processed_successfully:
+                continue
+
+            # --- Process venue group using modular function ---
+            # Call the modular function that handles code/venue selection and race scraping
+            # Pass current_web_state as a tuple for immutability, update with returned new_state
+            processed_rows_from_group, new_web_state, group_success = _process_venue_group(
+                driver, waits, current_web_state, (csv_code, csv_venue, venue_group_tasks)
+            )
+            all_enriched_rows.extend(processed_rows_from_group)
+            current_web_state = new_web_state # Update state for next iteration
+
+            if not group_success:
+                # If a group failed, we want to capture its tasks' statuses but not immediately add it to bad_dates_set for retry
+                # The task status itself indicates failure.
+                pass # The error string is already applied by _process_venue_group
+
+        # After Phase 1, collect all tasks belonging to "bad dates" and give them their initial "Awaiting Retry" status
+        for date_str in bad_dates_set:
+            tasks_for_this_date_initial_failure = tasks_df[tasks_df['date_only'] == date_str].copy()
+            if not tasks_for_this_date_initial_failure.empty:
+                tasks_for_this_date_initial_failure['BSP Price Win'] = ERROR_STATUS_STRINGS['AWAITING_RETRY']
+                tasks_for_this_date_initial_failure['BSP Price Place'] = ERROR_STATUS_STRINGS['AWAITING_RETRY']
+                all_enriched_rows.extend(tasks_for_this_date_initial_failure.to_dict('records'))
+
+        # --- PHASE 2: RETRY FAILED DATES ---
+        if bad_dates_set:
+            logger.info("--- Starting Phase 2: Retrying Failed Dates ---")
+            
+            # Remove any tasks from `all_enriched_rows` that are awaiting retry to avoid duplicates
+            all_enriched_rows = [
+                row for row in all_enriched_rows
+                if row.get('BSP Price Win') != ERROR_STATUS_STRINGS['AWAITING_RETRY']
+            ]
+
+            retry_tasks_df = tasks_df[tasks_df['date_only'].isin(bad_dates_set)].copy() # Ensure a mutable copy
+            retry_grouped_by_date = retry_tasks_df.groupby('date_only', sort=False)
+            logger.info(f"Retrying {len(bad_dates_set)} unique dates covering {len(retry_tasks_df)} tasks.")
+            
+            # Reset state for retry phase
+            current_web_state = (None, None, None)
+
+            for date_str, date_group_tasks in retry_grouped_by_date:
+                logger.info(f"RETRYING Date: {date_str} ({len(date_group_tasks)} tasks)")
+                
+                # Re-select the date on calendar
+                if not select_date_on_calendar(driver, waits[0], date_str):
+                    logger.error(f"RETRY FAILED: Calendar selection for '{date_str}' failed AGAIN.")
+                    for _, task_r in date_group_tasks.iterrows():
+                        task_c = task_r.copy(); task_c['BSP Price Win'], task_c['BSP Price Place'] = ERROR_STATUS_STRINGS['DATE_RETRY_FAILURE'], ERROR_STATUS_STRINGS['DATE_RETRY_FAILURE']
+                        all_enriched_rows.append(task_c)
+                    continue
+                
+                # Verify data loads for the selected date on retry
+                try:
+                    date_load_wait.until(EC.presence_of_all_elements_located((By.CSS_SELECTOR, "div.filters-list div.filter:not([style*='display: none'])")))
+                    logger.info(f"RETRY SUCCESS: Filter list populated for {date_str}. Data loaded OK.")
+                    current_web_state = (date_str, None, None) # Reset venue/code for new date
+                except TimeoutException:
+                    logger.error(f"RETRY FAILED: Date '{date_str}' data panel did not load AGAIN.")
+                    for _, task_r in date_group_tasks.iterrows():
+                        task_c = task_r.copy(); task_c['BSP Price Win'], task_c['BSP Price Place'] = ERROR_STATUS_STRINGS['DATE_RETRY_FAILURE'], ERROR_STATUS_STRINGS['DATE_RETRY_FAILURE']
+                        all_enriched_rows.append(task_c)
+                    continue
+
+                # Process all venue groups for this date on retry
+                # The _process_venue_group function will handle its own errors and apply statuses
+                for (code, venue), venue_group in date_group_tasks.groupby(['code', 'venue'], sort=False):
+                    processed_rows_from_group, new_web_state, _ = _process_venue_group(
+                        driver, waits, current_web_state, (code, venue, venue_group), is_retry=True
+                    )
+                    all_enriched_rows.extend(processed_rows_from_group)
+                    current_web_state = new_web_state # Update state
+
+        else:
+            logger.info("--- Phase 2: No failed dates to retry. ---")
+            
+    except Exception as e_main_loop:
+        logger.critical(f"CRITICAL MAIN LOOP ERROR: {e_main_loop}", exc_info=True)
+    finally:
+        if driver: logger.info("Closing WebDriver."); driver.quit()
+
+    if not all_enriched_rows:
+        logger.warning("No data was enriched. Returning empty DataFrame.")
+        return pd.DataFrame()
+
+    # Convert to DataFrame and drop temp column
+    enriched_df = pd.DataFrame(all_enriched_rows).drop(columns=['date_obj', 'date_only'], errors='ignore')
+    
+    # --- Final Summary ---
+    logger.info("--- FINAL SCRAPING SUMMARY ---")
+    
+    # Calculate success/failure counts based on the centralized ERROR_STATUS_STRINGS
+    all_error_values = list(ERROR_STATUS_STRINGS.values())
+    
+    if not enriched_df.empty:
+        # Sum all occurrences where 'BSP Price Win' matches any known error string
+        failed_scrapes_mask = enriched_df['BSP Price Win'].isin(all_error_values)
+        failed_scrapes_count = failed_scrapes_mask.sum()
+        successful_scrapes_count = len(enriched_df) - failed_scrapes_count
+        
+        logger.info(f"Total Input Tasks (after date filtering): {len(tasks_df)}")
+        logger.info(f"  Total Tasks Processed (incl. retries): {len(enriched_df)}") 
+        logger.info(f"  Successfully Scraped (BSP found or 'N/A'): {successful_scrapes_count}")
+        logger.info(f"  Failed to Scrape: {failed_scrapes_count}")
+        
+        # Detailed breakdown of failures
+        if failed_scrapes_count > 0:
+            logger.info("  Breakdown of Failures:")
+            failure_breakdown = enriched_df[failed_scrapes_mask]['BSP Price Win'].value_counts().to_dict()
+            for status, count in failure_breakdown.items():
+                logger.info(f"    - {status}: {count} tasks")
+    else:
+        logger.info("No tasks were processed successfully.")
+    
+    logger.info("------------------------------")
+    
+    # Remove any duplicates that might have arisen from retry or data issues
+    if not enriched_df.empty:
+        original_len = len(enriched_df)
+        enriched_df.drop_duplicates(inplace=True)
+        if len(enriched_df) < original_len:
+            logger.info(f"Removed {original_len - len(enriched_df)} duplicate rows from final data.")
+            
+    return enriched_df
+
+def format_and_save_data(final_df, original_input_path):
+    """Formats the final DataFrame with a MultiIndex header and saves to CSV."""
+    if original_input_path is None: logger.error("Cannot save output file without a valid input path."); return
+    input_dir, input_base = os.path.dirname(original_input_path), os.path.basename(original_input_path)
+    input_name, _ = os.path.splitext(input_base)
+    output_filename = os.path.join(input_dir, f"{input_name}_with_bsp.csv")
+    
+    if os.path.exists(output_filename):
+        try: os.remove(output_filename); logger.info(f"Removed existing output file: '{output_filename}' for fresh save.")
+        except OSError as e: logger.error(f"Could not remove existing '{output_filename}': {e}.")
+
+    if final_df is None or final_df.empty:
+        logger.warning(f"No data to save. '{output_filename}' will not be created.")
+        return
+
+    logger.info(f"Formatting {len(final_df)} rows for '{output_filename}'...")
+    
+    # Reload original file to get original column casing and order
+    original_df_for_headers = None
+    try:
+        if original_input_path.lower().endswith('.csv'):
+            original_df_for_headers = pd.read_csv(original_input_path, dtype=str)
+        else:
+            original_df_for_headers = pd.read_excel(original_input_path, dtype=str)
+    except Exception as e:
+        logger.error(f"Could not re-read original file '{os.path.basename(original_input_path)}' for formatting headers: {e}. Output headers may not perfectly match input casing.", exc_info=False)
+        original_df_for_headers = final_df.copy() # Fallback to using processed columns for headers
+        original_df_for_headers.columns = [c.replace('_', ' ').title() for c in original_df_for_headers.columns] # Simple title case
+
+    out_df = final_df.copy()
+    
+    # Ensure columns from original_df_for_headers are present in out_df to maintain order
+    # And convert column names to their original casing for output
+    final_cols_lower_to_original_casing = {c.lower(): c for c in original_df_for_headers.columns}
+    
+    ordered_cols_for_output = []
+    # Populate ordered_cols_for_output with the original casing from the original file
+    for original_col in original_df_for_headers.columns:
+        if original_col.lower() in out_df.columns:
+            ordered_cols_for_output.append(original_col.lower()) # Use lowercased for lookup in out_df
+            
+    # Add new BSP columns explicitly if they exist
+    if 'bsp price win' in out_df.columns and 'bsp price place' in out_df.columns:
+        # Ensure they are not already in ordered_cols_for_output (they shouldn't be as they're new)
+        if 'bsp price win' not in ordered_cols_for_output: ordered_cols_for_output.append('bsp price win')
+        if 'bsp price place' not in ordered_cols_for_output: ordered_cols_for_output.append('bsp price place')
+
+    # Reorder columns in out_df and map to original casing for the MultiIndex
+    out_df = out_df[[col for col in ordered_cols_for_output if col in out_df.columns]] # Select only columns present
+    
+    header_tuples = []
+    for col_lower in out_df.columns:
+        if col_lower == 'bsp price win': header_tuples.append(('BSP', 'Price Win'))
+        elif col_lower == 'bsp price place': header_tuples.append(('BSP', 'Price Place'))
+        else:
+            # Map back to original casing for top-level header, empty string for second level
+            original_casing = final_cols_lower_to_original_casing.get(col_lower, col_lower)
+            header_tuples.append((original_casing, ''))
+            
+    out_df.columns = pd.MultiIndex.from_tuples(header_tuples)
+    
+    try:
+        out_df.to_csv(output_filename, index=False, encoding='utf-8-sig')
+        logger.info(f"SUCCESS: Saved {len(out_df)} entries to '{output_filename}'")
+    except Exception as e:
+        logger.error(f"Failed to save data to '{output_filename}': {e}", exc_info=True)
+
+
+if __name__ == "__main__":
+    logger.info("Script starting...")
+    input_file_path = get_file_path_from_gui()
+    
+    if input_file_path:
+        # Pass input_file_path to get_input_data for flexible reading
+        df_from_input = get_input_data(input_file_path)
+        
+        if df_from_input is not None and not df_from_input.empty:
+            enriched_dataframe = scrape_and_enrich_csv(df_from_input) 
+            # Pass original_input_path to format_and_save_data to derive output filename
+            format_and_save_data(enriched_dataframe, input_file_path)
+        else:
+            logger.warning("Input file is empty or could not be processed. No tasks to run.")
+            
+    logger.info("Script execution finished.")
