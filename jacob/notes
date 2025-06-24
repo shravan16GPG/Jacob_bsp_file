@@ -1,7 +1,14 @@
 <div id="im_questionWrapper"> 	<div id="imClose"><button onclick="IMI.CustomJS.mods.closeParentSetFatigue(193)">X</button></div>    <div id="customHeader" role="contentinfo" ng-bind-html="customHtml.header|unsafe" class="ng-binding">        <div role="img" class="logoContainer">            <div class="promptArea"> <img alt="Betfair" src="https://feedback.inmoment.com.au/websurvey/servlet/BlobServlet?s2=6467e63e-a4e4-4ce9-9f41-70b0ee68b277-12&amp;v=0&amp;type=0&amp;t=betfairLogo"> </div>        </div>    </div>    <div id="q1">        <div class="questionText">Did you find this article useful?</div>        <div class="answerGroup">            <div class="radioWrapper" style="/* width: 50%; */">                <button class="btn btn-secondary" type="button" id="q1-Yes" aria-label="Yes. Click to tell us why." onclick="IMI.CustomJS.mods.bannerInlineSelection(193, 354, 1);">Yes</button>            </div>            <div class="radioWrapper">                <button class="btn btn-secondary" type="button" id="q1-No" aria-label="No. Click to tell us why." onclick="IMI.CustomJS.mods.bannerInlineSelection(193, 354, 2);">No</button>            </div>        </div>    </div>    <div id="footer" role="contentinfo">        <div id="links" role="region">            <div class="leftLinks"> <span id="privacyPolicy"><a target="_blank" tabindex="999" shape="rect" ng-href="http://www.inmoment.com/privacy-policy/" href="http://www.inmoment.com/privacy-policy/"><span ng-bind="pageMessages.privacyPolicyText" class="ng-binding">Privacy Policy &amp; Data Rights</span></a></span><span class="linkSeparator">&nbsp;|</span>                 <!-- ngIf: pageMessages.contestRulesLink -->                 <!-- ngIf: pageMessages.previousWinnersLink -->                <div id="copyright" class="ng-binding">© 2022 InMoment Inc. </div>            </div>            <div class="rightLinks">                <div id="companyLogo" tabindex="999"> <img src="https://feedback.inmoment.com.au/websurvey/image/powered-by-inmoment-gray.svg" alt="Powered by InMoment (Opens in a new window)"> </div>            </div>        </div>    </div></div>k
 let add a functiom which runs after the  whole data is scrapped successfully it will load all skipped dates again and check for the data if loading or not with wait time of 60 seconds if we get any data here will scrap if not will skip
-
+last 8 dAYS FILTER
 should we have a more better analaysis with dates not found, venue not found and etc information so that its clearly visible what parts are failing and the client can effectively check in his end, if the client notes (our summary name) puts the information out in natural language
 to be update;
 groupby venue, race type.
 and for retry try logic we will open a new browser to check unloaded to check and if lads scrape it.while scraping this data the
+
+
+
+:
+Last 8 days filter
+A good seperate retry logic with new instance of the sele
+groupby by venue + race type
