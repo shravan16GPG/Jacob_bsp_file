@@ -1,3 +1,4 @@
+
 import time
 import pandas as pd
 from datetime import datetime, timedelta
@@ -14,7 +15,7 @@ import csv
 
 # --- Logger Setup ( 그대로 유지 ) ---
 # name is not defined, so let's define it for the logger to work.
-name = __name__ 
+name = __name__
 log_formatter_file = logging.Formatter('%(asctime)s - %(levelname)s - %(module)s - %(funcName)s - %(lineno)d - %(message)s')
 log_formatter_console = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
 logger = logging.getLogger(name)
@@ -33,7 +34,22 @@ CODE_TO_ID_MAP = {
     "r": "thoroughbred", "g": "greyhound", "h": "harness"
 }
 MAX_VENUE_FAILURES_PER_DATE = 2
-
+def handle_popups(driver):
+    """Checks for and closes known popups that can interfere with clicks."""
+    logger.debug("Popup Handler: Checking for known popups...")
+    try:
+        # Check for InMoment feedback survey close button
+        close_button_selector = "div#imClose > button"
+        close_button = WebDriverWait(driver, 3).until(EC.element_to_be_clickable((By.CSS_SELECTOR, close_button_selector)))
+        logger.info("Popup Handler: Found and closing feedback survey popup.")
+        driver.execute_script("arguments[0].click();", close_button); time.sleep(1)
+        return True
+    except TimeoutException:
+        logger.debug("Popup Handler: No specific popups found (or timed out).")
+        return False
+    except Exception as e:
+        logger.warning(f"Popup Handler: Error while trying to close popup: {e}")
+        return False # Changed from 'returN' to 'return False' for consistency
 # --- setup_driver ( 그대로 유지 ) ---
 def setup_driver():
     logger.info("Initializing Chrome WebDriver setup...")
@@ -188,7 +204,7 @@ def _fetch_bsp_for_race_runners(driver, wait, active_meeting_element_initial_ref
         tab_xpath = f".//div[contains(@class, 'race-tab') and div[@class='race-number' and normalize-space(text())='{str_raceno}']]"
         logger.debug(f"Race R{str_raceno}: Locating Tab XPath: {tab_xpath} within active meeting.")
         tab_element = wait.until(EC.element_to_be_clickable(active_meeting_element.find_element(By.XPATH, tab_xpath)))
-        
+
         if "active-grad" not in tab_element.get_attribute("class"):
             logger.debug(f"Race R{str_raceno}: Tab not active. Clicking.")
             driver.execute_script("arguments[0].scrollIntoView({block:'center'});", tab_element); time.sleep(0.3)
@@ -222,7 +238,7 @@ def _fetch_bsp_for_race_runners(driver, wait, active_meeting_element_initial_ref
             except StaleElementReferenceException: logger.warning(f"{log_prefix} FAILED. Stale element."); task_copy['BSP Price Win'], task_copy['BSP Price Place'] = 'Stale Element', 'Stale Element'
             except Exception as e_runner_scrape: logger.warning(f"{log_prefix} FAILED. Scrape error: {e_runner_scrape}", exc_info=False); task_copy['BSP Price Win'], task_copy['BSP Price Place'] = 'Scrape Error', 'Scrape Error'
             finally: processed_tasks_list.append(task_copy)
-        
+
         num_input_tasks_for_race = len(tasks_for_this_race_df)
         successful_scrapes_in_race = sum(1 for t_item in processed_tasks_list if t_item.get('BSP Price Win') not in ['Runner Not Found on Page', 'Stale Element', 'Scrape Error', 'Race Timeout', 'Race Element Missing', 'Race Stale Element', 'Race Error', 'Venue Element Error Mid-Race'])
         logger.info(f"Race R{str_raceno} ({venue_name_for_logging}): Processed {successful_scrapes_in_race}/{num_input_tasks_for_race} tasks for BSP.")
@@ -230,13 +246,13 @@ def _fetch_bsp_for_race_runners(driver, wait, active_meeting_element_initial_ref
     except Exception as e_race_level:
         error_label = 'Race Timeout' if isinstance(e_race_level, TimeoutException) else 'Race Element Missing' if isinstance(e_race_level, NoSuchElementException) else 'Race Stale Element' if isinstance(e_race_level, StaleElementReferenceException) else 'Race Error'
         logger.error(f"Race R{str_raceno} ({venue_name_for_logging}): {error_label.upper()} at race level. Details: {e_race_level}", exc_info=True)
-        processed_tasks_list = [] 
+        processed_tasks_list = []
         for _, task_series in tasks_for_this_race_df.iterrows():
             task_copy = task_series.copy(); task_copy['BSP Price Win'] = error_label; task_copy['BSP Price Place'] = error_label; processed_tasks_list.append(task_copy)
     logger.debug(f"Race R{str_raceno}: Finished BSP fetch. Returning {len(processed_tasks_list)} task results.")
     return processed_tasks_list
 
-# --- [NEW FUNCTION] ---
+# --- _find_and_click_venue ( 그대로 유지 ) ---
 def _find_and_click_venue(driver, wait, csv_venue_group, current_phase_name, fuzzy_venue_matching_enabled=False):
     """
     Finds and clicks a venue filter button on the page.
@@ -267,7 +283,7 @@ def _find_and_click_venue(driver, wait, csv_venue_group, current_phase_name, fuz
             # Re-fetch elements and restart this loop pass
             visible_venue_filters = driver.find_elements(By.CSS_SELECTOR, venue_filters_css)
             continue
-    
+
     # Pass 2: Attempt Fuzzy Match (only if enabled and exact match failed)
     if fuzzy_venue_matching_enabled:
         logger.info(f"[{current_phase_name}] Exact venue '{csv_venue_group}' not found. Attempting fuzzy match.")
@@ -301,7 +317,7 @@ def _find_and_click_venue(driver, wait, csv_venue_group, current_phase_name, fuz
         else:
             logger.error(f"[{current_phase_name}] No exact or fuzzy match found for '{csv_venue_group}'.")
             return False # Failure, no match found
-    
+
     # If we are here, it means exact match failed and fuzzy was not enabled or also failed.
     logger.error(f"[{current_phase_name}] Venue '{csv_venue_group}' NOT FOUND (Exact match failed, fuzzy matching disabled/failed).")
     return False
@@ -341,29 +357,32 @@ def scrape_and_enrich_csv(tasks_df_input, current_phase_name="Phase Default", fu
         logger.critical(f"[{current_phase_name}] Error during 'date_only' preprocessing: {e_date_parse}. Aborting phase.", exc_info=True)
         error_marked_tasks_df = tasks_df_input.copy(); error_marked_tasks_df['BSP Price Win'] = 'Date Parse Error For Grouping'; error_marked_tasks_df['BSP Price Place'] = 'Date Parse Error For Grouping'
         if driver: driver.quit(); return error_marked_tasks_df, pd.DataFrame()
-    
+
     grouped_tasks_iter = tasks_df_processed_in_phase.groupby(['date_only', 'code', 'venue'], sort=False)
     logger.info(f"[{current_phase_name}] Tasks grouped into {len(grouped_tasks_iter)} [Date, Code, Venue] groups.")
-    
+
     try:
         logger.info(f"[{current_phase_name}] Navigating to base URL: {base_url}"); driver.get(base_url)
         wait.until(EC.presence_of_element_located((By.CLASS_NAME, "pb-6"))); logger.info(f"[{current_phase_name}] Page loaded: {base_url}")
         cur_date_on_page, cur_code_on_page, cur_venue_on_page = None, None, None; active_meeting_el_on_page = None; venue_failures_on_current_date_count = 0
-        
+
         for (date_str_group, csv_code_group, csv_venue_group), venue_group_tasks_df in grouped_tasks_iter:
             logger.info(f"[{current_phase_name}] Group: Date='{date_str_group}', Code='{csv_code_group.upper()}', Venue='{csv_venue_group}' ({len(venue_group_tasks_df)} tasks)")
             if date_str_group in bad_dates_set_this_phase:
                 logger.warning(f"[{current_phase_name}] Date {date_str_group} previously failed. Skipping group.")
                 for _, task_series in venue_group_tasks_df.iterrows(): task_copy = task_series.copy(); task_copy['BSP Price Win'], task_copy['BSP Price Place'] = 'Date Previously Failed This Phase', 'Date Previously Failed This Phase'; enriched_rows_collector_list.append(task_copy)
                 continue
-            
+
             if cur_date_on_page != date_str_group:
                 logger.info(f"[{current_phase_name}] DATE CHANGE: Page='{cur_date_on_page or 'None'}', Target='{date_str_group}'."); venue_failures_on_current_date_count = 0
                 if not select_date_on_calendar(driver, date_load_wait, date_str_group):
                     logger.error(f"[{current_phase_name}] DATE FAILURE for '{date_str_group}'."); bad_dates_set_this_phase.add(date_str_group)
                     for _, task_series in venue_group_tasks_df.iterrows(): task_copy = task_series.copy(); task_copy['BSP Price Win'],task_copy['BSP Price Place'] = 'Date Selection Error','Date Selection Error'; enriched_rows_collector_list.append(task_copy)
                     cur_date_on_page = "Error_Date_Selection"; cur_code_on_page = None; cur_venue_on_page = None; active_meeting_el_on_page = None; continue
-                
+
+                # *** MODIFICATION: Call the popup handler after a date change action ***
+                handle_popups(driver)
+
                 logger.info(f"[{current_phase_name}] DATE '{date_str_group}' selected. Verifying data panel (up to {date_load_wait._timeout}s)...")
                 try:
                     wait.until(EC.presence_of_element_located((By.CLASS_NAME, "filter-panel"))); date_load_wait.until(EC.presence_of_all_elements_located((By.CSS_SELECTOR, "div.filters-list div.filter:not([style*='display: none'])")))
@@ -397,26 +416,22 @@ def scrape_and_enrich_csv(tasks_df_input, current_phase_name="Phase Default", fu
                     logger.error(f"[{current_phase_name}] CODE CHANGE ERROR for '{target_web_code_id_str}': {e_code_change}. Skipping.", exc_info=True);
                     for _, task_series in venue_group_tasks_df.iterrows(): task_copy = task_series.copy(); task_copy['BSP Price Win'],task_copy['BSP Price Place']='Code Selection Error','Code Selection Error'; enriched_rows_collector_list.append(task_copy)
                     cur_code_on_page = "Error_Code_Change"; continue
-            
-            # This is a check to see if the DOM/page state has changed, requiring a re-selection of the venue.
+
             if cur_venue_on_page != csv_venue_group or active_meeting_el_on_page is None:
                 logger.info(f"[{current_phase_name}] VENUE CHANGE/VALIDATION: Page='{cur_venue_on_page or 'None'}', Target='{csv_venue_group}'.")
                 try:
-                    # ** MODIFIED SECTION START **
                     venue_found_and_clicked = _find_and_click_venue(driver, wait, csv_venue_group, current_phase_name, fuzzy_venue_matching)
                     if not venue_found_and_clicked:
                         raise TimeoutException(f"Venue '{csv_venue_group}' could not be found or clicked.")
-                    # ** MODIFIED SECTION END **
-                    
+
                     try: spinner_locator = (By.CSS_SELECTOR, "img.loading[style*='display: block'], img.loading:not([style*='display: none'])"); wait_short.until(EC.visibility_of_element_located(spinner_locator)); wait.until(EC.invisibility_of_element_located(spinner_locator))
                     except TimeoutException: logger.debug(f"[{current_phase_name}] Spinner not detected/timed out for venue '{csv_venue_group}'.")
-                    
+
                     active_meeting_xpath_str = "//div[@class='meetings-list']/div[@class='meeting' and not(contains(@style, 'display: none'))]"
                     active_meeting_el_on_page = wait.until(EC.visibility_of_element_located((By.XPATH, active_meeting_xpath_str))); wait.until(EC.presence_of_all_elements_located((By.XPATH, f"{active_meeting_xpath_str}//div[contains(@class, 'race-tab')]")))
                     logger.info(f"[{current_phase_name}] VENUE SELECTED: '{csv_venue_group}'."); cur_venue_on_page = csv_venue_group; venue_failures_on_current_date_count = 0
-                
+
                 except Exception as e_venue_select:
-                    # ** MODIFIED SECTION START **
                     error_msg_type = "Ambiguous Fuzzy Match" if "AMBIGUOUS" in str(e_venue_select) else "Venue Load Error"
                     logger.error(f"[{current_phase_name}] VENUE ERROR for '{csv_venue_group}': {error_msg_type}. Marking tasks.", exc_info=False)
                     venue_failures_on_current_date_count += 1
@@ -424,10 +439,8 @@ def scrape_and_enrich_csv(tasks_df_input, current_phase_name="Phase Default", fu
                         task_copy = task_series.copy()
                         task_copy['BSP Price Win'],task_copy['BSP Price Place'] = error_msg_type, error_msg_type
                         enriched_rows_collector_list.append(task_copy)
-                        # CRITICAL: Add to retry list only if it's a "load error", not an "ambiguous match"
                         if error_msg_type == "Venue Load Error":
                            tasks_for_next_phase_collector_list.append(task_series.copy())
-                    # ** MODIFIED SECTION END **
 
                     if venue_failures_on_current_date_count >= MAX_VENUE_FAILURES_PER_DATE: logger.warning(f"[{current_phase_name}] MAX VENUE FAILURES ({venue_failures_on_current_date_count}) for date '{date_str_group}'. Marking date bad."); bad_dates_set_this_phase.add(date_str_group)
                     cur_venue_on_page, active_meeting_el_on_page = "Error_Venue_Load", None; continue
@@ -458,14 +471,14 @@ def scrape_and_enrich_csv(tasks_df_input, current_phase_name="Phase Default", fu
                 if col_name not in enriched_df_this_phase.columns: enriched_df_this_phase[col_name] = pd.NA
             final_cols_for_enriched_df = [c for c in expected_cols_schema if c in enriched_df_this_phase.columns]
             enriched_df_this_phase = enriched_df_this_phase[final_cols_for_enriched_df]
-        
+
         retry_df_for_next_phase = pd.DataFrame()
         if tasks_for_next_phase_collector_list:
             retry_df_for_next_phase = pd.DataFrame(tasks_for_next_phase_collector_list)
             id_cols_from_original_input = [col for col in tasks_df_input.columns if col in retry_df_for_next_phase.columns and col.lower() not in ['bsp price win', 'bsp price place', 'date_only']]
             if id_cols_from_original_input and not retry_df_for_next_phase.empty: retry_df_for_next_phase.drop_duplicates(subset=id_cols_from_original_input, keep='first', inplace=True)
             if 'date_only' in retry_df_for_next_phase.columns: retry_df_for_next_phase = retry_df_for_next_phase.drop(columns=['date_only'], errors='ignore')
-        
+
         logger.info(f"[{current_phase_name}] Identified {len(retry_df_for_next_phase)} unique tasks for potential retry.")
         logger.info(f"[{current_phase_name}] Scraping finished. Returning {len(enriched_df_this_phase)} processed rows and {len(retry_df_for_next_phase)} tasks for retry.")
         return enriched_df_this_phase, retry_df_for_next_phase
@@ -524,7 +537,7 @@ def format_and_save_data(final_df_to_save, original_input_df_for_headers_ref):
         elif not output_df_final_csv.empty: logger.debug(f"\n--- Sample of Final Data (1 row) ---\n{output_df_final_csv.head(1).to_string()}")
     except Exception as e_final_save: logger.error(f"Failed to save final data to '{output_filename}': {e_final_save}", exc_info=True)
 
-# --- main [MODIFIED] ---
+# --- main ( 그대로 유지 ) ---
 if __name__ == "__main__":
     logger.info("Script execution started.")
     input_tasks_df_raw_schema_ref = get_input_csv()
@@ -534,7 +547,7 @@ if __name__ == "__main__":
         format_and_save_data(pd.DataFrame(), input_tasks_df_raw_schema_ref)
     else:
         logger.info(f"Successfully loaded {len(input_tasks_df_raw_schema_ref)} raw tasks from CSV.")
-        
+
         id_cols_raw_input = [col.lower() for col in ['Time', 'Venue', 'Code', 'RaceNo', 'RunnerNo', 'RunnerName'] if col.lower() in input_tasks_df_raw_schema_ref.columns]
         if id_cols_raw_input:
             initial_count = len(input_tasks_df_raw_schema_ref)
@@ -558,9 +571,9 @@ if __name__ == "__main__":
                 current_phase_name="Phase 1 (Exact Venue)"
             )
             logger.info(f"--- Phase 1 Finished. Processed {len(phase1_enriched_results_df)} task results. Identified {len(phase1_retry_candidates_tasks_df)} for retry. ---")
-            
+
             all_phases_results_list = [phase1_enriched_results_df]
-            
+
             if phase1_retry_candidates_tasks_df is not None and not phase1_retry_candidates_tasks_df.empty:
                 logger.info(f"--- Starting Scraping Phase 2 (Retry & Fuzzy Venue Match for {len(phase1_retry_candidates_tasks_df)} tasks) ---")
                 phase2_enriched_results_df, phase2_still_needs_retry_df = scrape_and_enrich_csv(
@@ -574,10 +587,10 @@ if __name__ == "__main__":
                 all_phases_results_list.append(phase2_enriched_results_df)
             else:
                 logger.info("No tasks identified for Phase 2 retry.")
-            
+
             final_combined_output_df = pd.DataFrame()
             valid_phase_results_dfs = [df for df in all_phases_results_list if df is not None and not df.empty]
-            
+
             if valid_phase_results_dfs:
                 temp_combined_df_all_attempts = pd.concat(valid_phase_results_dfs, ignore_index=True)
                 id_cols_for_deduplication_ref = ['Time', 'Venue', 'Code', 'RaceNo', 'RunnerNo', 'RunnerName']
@@ -587,7 +600,7 @@ if __name__ == "__main__":
                     logger.warning("Fallback ID columns for deduplication, as primary could not be mapped.")
                     standard_id_cols = ['time', 'venue', 'code', 'raceno', 'runnerno', 'runnername']
                     id_cols_for_deduplication_lower = [c for c in standard_id_cols if c in temp_combined_df_all_attempts.columns]
-                
+
                 if id_cols_for_deduplication_lower and not temp_combined_df_all_attempts.empty:
                     logger.info(f"Combining results. Total rows from all attempts: {len(temp_combined_df_all_attempts)}. Deduplicating by {id_cols_for_deduplication_lower}, keeping 'last' attempt.")
                     final_combined_output_df = temp_combined_df_all_attempts.drop_duplicates(subset=id_cols_for_deduplication_lower, keep='last')
@@ -618,7 +631,7 @@ if __name__ == "__main__":
                 else:
                     logger.warning(f"Column '{bsp_win_col_name_lower}' missing from final_combined_output_df. Cannot calculate detailed success/failure stats accurately.")
                     failed_scrapes_count_final = len(final_combined_output_df); successful_scrapes_count_final = 0
-                
+
                 logger.info("--- OVERALL SCRAPING SUMMARY (After All Phases) ---")
                 logger.info(f"Total Input Tasks (for Phase 1, after 8-day & initial dedupe): {len(tasks_for_phase1_input if tasks_for_phase1_input is not None else [])}")
                 logger.info(f"  Total Unique Task Rows in Final Output CSV: {len(final_combined_output_df)}")
@@ -626,6 +639,6 @@ if __name__ == "__main__":
                 logger.info(f"  Failed/Error Rows (Script Error, Not Found, etc.): {failed_scrapes_count_final}")
                 logger.info("----------------------------------------------------")
             else: logger.info("--- OVERALL SCRAPING SUMMARY --- Final combined DataFrame is empty. ---")
-            
+
             format_and_save_data(final_combined_output_df, input_tasks_df_raw_schema_ref)
     logger.info("Script execution finished.")
