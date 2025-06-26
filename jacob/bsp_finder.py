@@ -57,6 +57,9 @@ stream_handler.setLevel(logging.INFO)
 stream_handler.addFilter(context_filter) # Add filter
 logger.addHandler(stream_handler)
 
+# *** FIX: Prevent log duplication by stopping propagation to the root logger ***
+logger.propagate = False
+
 # --- Global Configuration ( 그대로 유지 ) ---
 CODE_TO_ID_MAP = {
     "harness": "harness", "greyhounds": "greyhound", "thoroughbred": "thoroughbred",
@@ -353,7 +356,7 @@ def _find_and_click_venue(driver, wait, csv_venue_group, current_phase_name, fuz
     logger.error(f"[{current_phase_name}] Venue '{csv_venue_group}' NOT FOUND (Exact match failed, fuzzy matching disabled/failed).")
     return False
 
-# --- scrape_and_enrich_csv [MODIFIED] ---
+# --- scrape_and_enrich_csv [ 그대로 유지 ] ---
 def scrape_and_enrich_csv(tasks_df_input, context_filter, current_phase_name="Phase Default", fuzzy_venue_matching=False):
     logger.info(f"[{current_phase_name}] Starting scraping process for {len(tasks_df_input)} tasks... (Fuzzy Venue Matching: {fuzzy_venue_matching})")
     if tasks_df_input.empty: logger.warning(f"[{current_phase_name}] Input DataFrame is empty."); return pd.DataFrame(), pd.DataFrame(), set()
@@ -520,60 +523,71 @@ def scrape_and_enrich_csv(tasks_df_input, context_filter, current_phase_name="Ph
 
 # --- format_and_save_data ( 그대로 유지 ) ---
 def format_and_save_data(final_df_to_save, original_input_df_for_headers_ref):
-    output_filename = "final_results.csv"; logger.debug(f"Preparing to save data to '{output_filename}'.")
+    output_filename = "final_results.csv"
+    logger.debug(f"Preparing to save data to '{output_filename}'.")
+
     if os.path.exists(output_filename):
         try: os.remove(output_filename); logger.info(f"Removed existing output file: '{output_filename}'.")
         except OSError as e: logger.error(f"Could not remove existing '{output_filename}': {e}.")
-    if final_df_to_save is None or final_df_to_save.empty:
-        logger.warning(f"No data to save to '{output_filename}'. Empty file with headers might be created.")
-        if original_input_df_for_headers_ref is not None and not original_input_df_for_headers_ref.empty:
-            header_tuples_for_empty_file = []
-            col_map_for_headers = {'time': ('Time', ''), 'venue': ('Venue', ''), 'code': ('Code', ''), 'raceno': ('RaceNo', ''), 'runnerno': ('RunnerNo', ''), 'runnername': ('RunnerName', ''), 'type': ('Type', ''), 'market': ('Market', ''), 'bookie': ('Bookie', ''), 'odds': ('Odds', '')}
-            for original_col_name in original_input_df_for_headers_ref.columns:
-                col_lower = original_col_name.lower(); second_level = col_map_for_headers.get(col_lower, ('', ''))[1]
-                header_tuples_for_empty_file.append((original_col_name, second_level))
-            header_tuples_for_empty_file.extend([('BSP', 'Price Win'), ('BSP', 'Price Place')])
-            try: pd.DataFrame(columns=pd.MultiIndex.from_tuples(header_tuples_for_empty_file)).to_csv(output_filename, index=False, encoding='utf-8-sig'); logger.info(f"Saved empty '{output_filename}' with expected headers.")
-            except Exception as e_save_empty: logger.error(f"Failed to save empty '{output_filename}': {e_save_empty}", exc_info=True)
-        else:
-            try:
-                with open(output_filename, 'w', newline='', encoding='utf-8-sig') as f_empty: csv_writer = csv.writer(f_empty); csv_writer.writerow(['BSP','BSP']); csv_writer.writerow(['Price Win','Price Place'])
-                logger.info(f"Created minimal empty file '{output_filename}'.")
-            except Exception as e_create_minimal: logger.error(f"Failed to create minimal empty '{output_filename}': {e_create_minimal}", exc_info=True)
-        return
-    logger.info(f"Formatting {len(final_df_to_save)} rows for '{output_filename}'...")
-    df_to_format_internal = final_df_to_save.copy(); df_to_format_internal.columns = [str(c).lower() if pd.notna(c) else f"unnamed_col_{i}" for i, c in enumerate(df_to_format_internal.columns)]
-    col_map_multi_output = {'time': ('Time', ''), 'venue': ('Venue', ''), 'code': ('Code', ''), 'raceno': ('RaceNo', ''), 'runnerno': ('RunnerNo', ''), 'runnername': ('RunnerName', ''), 'type': ('Type', ''), 'market': ('Market', ''), 'bookie': ('Bookie', ''), 'odds': ('Odds', ''), 'bsp price win': ('BSP', 'Price Win'), 'bsp price place': ('BSP', 'Price Place')}
-    output_df_final_csv = pd.DataFrame(); final_multi_index_header_tuples = []
-    if 'date_only' in df_to_format_internal.columns: df_to_format_internal = df_to_format_internal.drop(columns=['date_only'], errors='ignore'); logger.debug("Internal 'date_only' column removed.")
+
+    # Define the final, single-level headers with desired casing
+    final_header_order = []
     if original_input_df_for_headers_ref is not None:
-        for original_col_name_cased_ref in original_input_df_for_headers_ref.columns:
-            original_col_lower_ref = original_col_name_cased_ref.lower()
-            mi_tuple_sub_level = col_map_multi_output.get(original_col_lower_ref, ('', ''))[1]
-            current_mi_tuple = (original_col_name_cased_ref, mi_tuple_sub_level)
-            if original_col_lower_ref in df_to_format_internal: output_df_final_csv[current_mi_tuple] = df_to_format_internal[original_col_lower_ref]
-            else: logger.debug(f"Original column '{original_col_name_cased_ref}' not in processed data. Outputting empty."); output_df_final_csv[current_mi_tuple] = pd.Series([pd.NA] * len(df_to_format_internal), index=df_to_format_internal.index if not df_to_format_internal.empty else None)
-            final_multi_index_header_tuples.append(current_mi_tuple)
-        bsp_win_def_tuple = col_map_multi_output['bsp price win']
-        if bsp_win_def_tuple not in final_multi_index_header_tuples:
-            if 'bsp price win' in df_to_format_internal: output_df_final_csv[bsp_win_def_tuple] = df_to_format_internal['bsp price win']
-            else: output_df_final_csv[bsp_win_def_tuple] = pd.Series([pd.NA] * len(df_to_format_internal), index=df_to_format_internal.index if not df_to_format_internal.empty else None)
-            final_multi_index_header_tuples.append(bsp_win_def_tuple)
-        bsp_place_def_tuple = col_map_multi_output['bsp price place']
-        if bsp_place_def_tuple not in final_multi_index_header_tuples:
-            if 'bsp price place' in df_to_format_internal: output_df_final_csv[bsp_place_def_tuple] = df_to_format_internal['bsp price place']
-            else: output_df_final_csv[bsp_place_def_tuple] = pd.Series([pd.NA] * len(df_to_format_internal), index=df_to_format_internal.index if not df_to_format_internal.empty else None)
-            final_multi_index_header_tuples.append(bsp_place_def_tuple)
-        if not output_df_final_csv.empty: output_df_final_csv.columns = pd.MultiIndex.from_tuples(final_multi_index_header_tuples)
-        elif final_multi_index_header_tuples: output_df_final_csv = pd.DataFrame(columns=pd.MultiIndex.from_tuples(final_multi_index_header_tuples))
+        final_header_order.extend(original_input_df_for_headers_ref.columns.tolist())
+    else: # Fallback in case original_input is None
+        logger.warning("Original input DataFrame for headers is missing. Using a default header list.")
+        final_header_order.extend(['time', 'venue', 'code', 'raceno', 'runnerno', 'runnername'])
+    
+    final_header_order.extend(["BSP Price Win", "BSP Price Place"])
+
+    # Handle case where there is no data to save
+    if final_df_to_save is None or final_df_to_save.empty:
+        logger.warning(f"No data to save to '{output_filename}'. Creating empty file with headers.")
+        # Create an empty DataFrame with the correct headers and save it
+        pd.DataFrame(columns=final_header_order).to_csv(output_filename, index=False, encoding='utf-8-sig')
+        logger.info(f"Saved empty '{output_filename}' with specified headers.")
+        return
+
+    logger.info(f"Formatting {len(final_df_to_save)} rows for '{output_filename}'...")
+
+    # Start with a copy of the final data
+    output_df = final_df_to_save.copy()
+
+    # Create a mapping from lowercase column names to their actual case in the DataFrame
+    col_map = {str(c).lower(): str(c) for c in output_df.columns}
+
+    # Prepare a dictionary for renaming columns to match the desired final header casing
+    rename_dict = {}
+    for desired_header in final_header_order:
+        desired_lower = desired_header.lower()
+        if desired_lower in col_map and col_map[desired_lower] != desired_header:
+            # If a column exists but with different casing, mark it for renaming
+            rename_dict[col_map[desired_lower]] = desired_header
+    
+    if rename_dict:
+        output_df.rename(columns=rename_dict, inplace=True)
+
+    # Add any missing columns (from the desired header list) that weren't in the scraped data
+    for col in final_header_order:
+        if col not in output_df.columns:
+            output_df[col] = pd.NA
+
+    # Reorder columns to match the final desired order and select only these columns
+    output_df = output_df[final_header_order]
+
     try:
-        output_df_final_csv.to_csv(output_filename, index=False, encoding='utf-8-sig'); logger.info(f"SUCCESS: Saved {len(output_df_final_csv)} entries to '{output_filename}'")
-        if not output_df_final_csv.empty and len(output_df_final_csv) > 1 : logger.debug(f"\n--- Sample of Final Data (first 2 rows) ---\n{output_df_final_csv.head(2).to_string()}")
-        elif not output_df_final_csv.empty: logger.debug(f"\n--- Sample of Final Data (1 row) ---\n{output_df_final_csv.head(1).to_string()}")
-    except Exception as e_final_save: logger.error(f"Failed to save final data to '{output_filename}': {e_final_save}", exc_info=True)
+        output_df.to_csv(output_filename, index=False, encoding='utf-8-sig')
+        logger.info(f"SUCCESS: Saved {len(output_df)} entries to '{output_filename}'")
+        if not output_df.empty:
+            sample_df = output_df.head(2).to_string() if len(output_df) > 1 else output_df.head(1).to_string()
+            logger.debug(f"\n--- Sample of Final Data ---\n{sample_df}")
+    except Exception as e_final_save:
+        logger.error(f"Failed to save final data to '{output_filename}': {e_final_save}", exc_info=True)
+
 
 # --- main [MODIFIED] ---
 if __name__ == "__main__":
+    context_filter.current_date = 'Setup'
     logger.info("Script execution started.")
     input_tasks_df_raw_schema_ref = get_input_csv()
 
@@ -586,15 +600,8 @@ if __name__ == "__main__":
         logger.info(f"Successfully loaded {len(input_tasks_df_raw_schema_ref)} raw tasks from CSV.")
         all_failed_venue_date_pairs = set()
 
-        id_cols_raw_input = [col.lower() for col in ['Time', 'Venue', 'Code', 'RaceNo', 'RunnerNo', 'RunnerName'] if col.lower() in input_tasks_df_raw_schema_ref.columns]
-        if id_cols_raw_input:
-            initial_count = len(input_tasks_df_raw_schema_ref)
-            input_tasks_df_raw_schema_ref.drop_duplicates(subset=id_cols_raw_input, keep='first', inplace=True)
-            deduped_count = initial_count - len(input_tasks_df_raw_schema_ref)
-            if deduped_count > 0:
-                logger.info(f"Deduplicated raw input: Removed {deduped_count} identical task rows. {len(input_tasks_df_raw_schema_ref)} tasks remain.")
-        else:
-            logger.warning("Could not determine key ID columns for raw input deduplication.")
+        # Per user request, do not remove duplicates from the input file.
+        # The deduplication block that was here has been removed.
 
         tasks_for_phase1_input = filter_tasks_for_last_n_days(input_tasks_df_raw_schema_ref.copy(), days=8)
 
@@ -635,27 +642,13 @@ if __name__ == "__main__":
             valid_phase_results_dfs = [df for df in all_phases_results_list if df is not None and not df.empty]
 
             if valid_phase_results_dfs:
-                temp_combined_df_all_attempts = pd.concat(valid_phase_results_dfs, ignore_index=True)
-                id_cols_for_deduplication_ref = ['Time', 'Venue', 'Code', 'RaceNo', 'RunnerNo', 'RunnerName']
-                id_cols_for_deduplication_lower = [col.lower() for col in id_cols_for_deduplication_ref if col.lower() in temp_combined_df_all_attempts.columns]
-
-                if not id_cols_for_deduplication_lower:
-                    logger.warning("Fallback ID columns for deduplication, as primary could not be mapped.")
-                    standard_id_cols = ['time', 'venue', 'code', 'raceno', 'runnerno', 'runnername']
-                    id_cols_for_deduplication_lower = [c for c in standard_id_cols if c in temp_combined_df_all_attempts.columns]
-
-                if id_cols_for_deduplication_lower and not temp_combined_df_all_attempts.empty:
-                    logger.info(f"Combining results. Total rows from all attempts: {len(temp_combined_df_all_attempts)}. Deduplicating by {id_cols_for_deduplication_lower}, keeping 'last' attempt.")
-                    final_combined_output_df = temp_combined_df_all_attempts.drop_duplicates(subset=id_cols_for_deduplication_lower, keep='last')
-                    dropped_duplicates_count = len(temp_combined_df_all_attempts) - len(final_combined_output_df)
-                    if dropped_duplicates_count > 0: logger.info(f"Dropped {dropped_duplicates_count} earlier attempts for retried tasks.")
-                else:
-                    logger.error("Could not determine ID columns for combining, or no valid data. Using raw concatenated data (may contain duplicates).")
-                    final_combined_output_df = temp_combined_df_all_attempts
+                # *** FIX: Per user request, combine results without dropping any duplicates. ***
+                logger.info(f"Combining results from all phases. All processed rows will be preserved.")
+                final_combined_output_df = pd.concat(valid_phase_results_dfs, ignore_index=True)
             else:
                 logger.warning("No valid results from any scraping phase.")
 
-            logger.info(f"Total unique task rows after combining all phases: {len(final_combined_output_df)}")
+            logger.info(f"Total rows in final output (includes retries): {len(final_combined_output_df)}")
             if not final_combined_output_df.empty:
                 script_error_values = [
                     'date previously failed this phase', 'date selection error', 'date data not loaded',
@@ -665,14 +658,21 @@ if __name__ == "__main__":
                     'race stale element', 'race error', 'runner not found on page',
                     'stale element', 'scrape error', 'processing incomplete', 'ambiguous fuzzy match'
                 ]
-                bsp_win_col_name_lower = 'bsp price win'
-                if bsp_win_col_name_lower in final_combined_output_df.columns:
-                    error_check_series = final_combined_output_df[bsp_win_col_name_lower].fillna('na_placeholder_for_error_check').astype(str).str.lower()
+
+                # Case-insensitive search for the BSP column to perform the success check
+                bsp_win_col_actual_name = None
+                for col in final_combined_output_df.columns:
+                    if str(col).lower() == 'bsp price win':
+                        bsp_win_col_actual_name = col
+                        break
+                
+                if bsp_win_col_actual_name:
+                    error_check_series = final_combined_output_df[bsp_win_col_actual_name].fillna('na_placeholder_for_error_check').astype(str).str.lower()
                     failed_scrapes_mask_final = error_check_series.isin(script_error_values)
                     failed_scrapes_count_final = failed_scrapes_mask_final.sum()
                     successful_scrapes_count_final = len(final_combined_output_df) - failed_scrapes_count_final
                 else:
-                    logger.warning(f"Column '{bsp_win_col_name_lower}' missing from final_combined_output_df. Cannot calculate detailed success/failure stats accurately.")
+                    logger.warning(f"Column 'BSP Price Win' (case-insensitive) missing from final combined data. Cannot calculate success/failure stats accurately.")
                     failed_scrapes_count_final = len(final_combined_output_df); successful_scrapes_count_final = 0
 
                 logger.info("--- OVERALL SCRAPING SUMMARY ---")
