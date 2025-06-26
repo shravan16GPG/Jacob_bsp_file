@@ -1,0 +1,8 @@
+how much total data was there in total , how much it scraped succeffuly(for check bsp/win,bsp/price column),and how much row it couldnt. 
+and which venue/date is missed which scraping this data should present in consol and logs and plain text format. 
+
+mismatch status  Failed/Error Rows (Script Error, Not Found, etc.): 754 (all of them)
+
+logs ( summary) for the client
+
+
