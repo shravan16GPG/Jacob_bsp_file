@@ -11,6 +11,8 @@ from webdriver_manager.chrome import ChromeDriverManager
 import logging
 import os
 import csv
+# *** NEW: Imports for the file dialog box ***
+from tkinter import filedialog, Tk
 
 # --- New Logging Context Filter ---
 class ContextFilter(logging.Filter):
@@ -60,7 +62,7 @@ logger.addHandler(stream_handler)
 # *** FIX: Prevent log duplication by stopping propagation to the root logger ***
 logger.propagate = False
 
-# --- Global Configuration ( 그대로 유지 ) ---
+# --- Global Configuration & Constants ---
 CODE_TO_ID_MAP = {
     "harness": "harness", "greyhounds": "greyhound", "thoroughbred": "thoroughbred",
     "r": "thoroughbred", "g": "greyhound", "h": "harness"
@@ -84,7 +86,7 @@ def handle_popups(driver):
         logger.warning(f"Popup Handler: Error while trying to close popup: {e}")
         return False
 
-# --- setup_driver ( 그대로 유지 ) ---
+# --- setup_driver  ---
 def setup_driver():
     logger.info("Initializing Chrome WebDriver setup...")
     options = webdriver.ChromeOptions()
@@ -104,7 +106,7 @@ def setup_driver():
     except Exception as e:
         logger.critical(f"Fatal generic error during WebDriver setup: {e}", exc_info=True); raise
 
-# --- select_date_on_calendar ( 그대로 유지 ) ---
+# --- select_date_on_calendar  ---
 def select_date_on_calendar(driver, date_wait, target_date_str):
     logger.info(f"Calendar: Selecting date: '{target_date_str}'.")
     calendar_interaction_wait = WebDriverWait(driver, 20)
@@ -148,46 +150,100 @@ def select_date_on_calendar(driver, date_wait, target_date_str):
         return True
     except Exception as e: logger.error(f"Calendar: Error selecting date '{target_date_str}': {e}", exc_info=True); return False
 
-# --- get_input_csv ( 그대로 유지 ) ---
+# --- get_input_csv [MODIFIED] ---
 def get_input_csv():
-    filename = "bet sample.csv"; logger.info(f"Reading input: '{filename}'")
-    if not os.path.exists(filename): logger.critical(f"CSV: File '{filename}' not found."); return None
-    data = []
+    """Opens a file dialog for the user to select a CSV or Excel file, then reads it into a DataFrame."""
+    # Setup Tkinter root window
+    root = Tk()
+    root.withdraw() # Hide the main window
+
+    # Define allowed file types
+    filetypes = [
+        ('Supported Files', '*.csv *.xlsx *.xls'),
+        ('Excel files', '*.xlsx *.xls'),
+        ('CSV files', '*.csv'),
+        ('All files', '*.*')
+    ]
+    
+    # Open file dialog
+    filename = filedialog.askopenfilename(title="Select an Input File (CSV or Excel)", filetypes=filetypes)
+
+    if not filename:
+        logger.warning("File selection cancelled by user. No file was chosen.")
+        return None
+
+    logger.info(f"User selected file: '{filename}'")
+    
+    df = None
     try:
-        with open(filename, mode='r', encoding='utf-8-sig') as infile:
-            reader = csv.reader(infile); header = [h.strip() for h in next(reader)]; logger.debug(f"CSV: Header: {header}")
-            header_lower = [h.lower() for h in header]
-            try: odds_index = header_lower.index('odds')
-            except ValueError: logger.critical("CSV: 'Odds' header not found."); return None
-            logger.debug(f"CSV: 'Odds' column at index {odds_index}.")
-            for i, row in enumerate(reader):
-                if not any(field.strip() for field in row): logger.debug(f"CSV: Skipping blank row #{i+2}."); continue
-                if len(row) > len(header):
-                    logger.warning(f"CSV: Row #{i+2} has {len(row)} fields (expected {len(header)}). Consolidating 'Odds' based on index {odds_index}: {row}")
-                    num_extra_fields = len(row) - len(header)
-                    std_fields_before_odds = row[:odds_index]
-                    combined_odds_fields = row[odds_index : odds_index + 1 + num_extra_fields]
-                    std_fields_after_odds = row[odds_index + 1 + num_extra_fields:]
-                    combined_odds_value = ''.join(combined_odds_fields)
-                    processed_row = std_fields_before_odds + [combined_odds_value] + std_fields_after_odds
-                    if len(processed_row) == len(header):
-                        logger.debug(f"CSV: Row #{i+2} after Odds consolidation: {processed_row}"); data.append(processed_row)
-                    else: logger.error(f"CSV: Row #{i+2} after 'Odds' consolidation still mismatched. Expected {len(header)}, got {len(processed_row)}. Original: {row}. Skipping."); continue
-                elif len(row) == len(header): data.append(row)
-                else:
-                    logger.warning(f"CSV: Malformed row #{i+2} ({len(row)} fields, expected {len(header)}). Padding with empty strings. Row: {row}")
-                    padded_row = row + [''] * (len(header) - len(row)); data.append(padded_row)
-        df = pd.DataFrame(data, columns=header); df.columns = [c.strip().lower() for c in df.columns]
-        if 'time' not in df.columns and 'date' in df.columns: logger.debug("CSV: Renaming 'date' to 'time'."); df.rename(columns={'date': 'time'}, inplace=True)
+        # Determine the file type and read accordingly
+        _ , extension = os.path.splitext(filename)
+        extension = extension.lower()
+
+        if extension == '.csv':
+            logger.info("Reading as CSV file...")
+            # Using original robust CSV reading logic
+            data = []
+            with open(filename, mode='r', encoding='utf-8-sig') as infile:
+                reader = csv.reader(infile)
+                header = [h.strip() for h in next(reader)]
+                logger.debug(f"CSV: Header: {header}")
+                header_lower = [h.lower() for h in header]
+                try:
+                    odds_index = header_lower.index('odds')
+                except ValueError:
+                    logger.critical("CSV: 'Odds' header not found.")
+                    return None
+                
+                for i, row in enumerate(reader):
+                    if not any(field.strip() for field in row): continue
+                    if len(row) > len(header):
+                        logger.warning(f"CSV: Row #{i+2} has extra fields. Consolidating 'Odds' column.")
+                        num_extra_fields = len(row) - len(header)
+                        std_fields_before_odds = row[:odds_index]
+                        combined_odds_fields = row[odds_index : odds_index + 1 + num_extra_fields]
+                        std_fields_after_odds = row[odds_index + 1 + num_extra_fields:]
+                        combined_odds_value = ''.join(combined_odds_fields)
+                        processed_row = std_fields_before_odds + [combined_odds_value] + std_fields_after_odds
+                        if len(processed_row) == len(header): data.append(processed_row)
+                        else: logger.error(f"CSV: Row #{i+2} consolidation failed. Skipping."); continue
+                    elif len(row) == len(header): data.append(row)
+                    else:
+                        padded_row = row + [''] * (len(header) - len(row)); data.append(padded_row)
+            df = pd.DataFrame(data, columns=header)
+        
+        elif extension in ['.xlsx', '.xls']:
+            logger.info("Reading as Excel file...")
+            df = pd.read_excel(filename, engine='openpyxl')
+        
+        else:
+            logger.error(f"Unsupported file type: '{extension}'. Please select a .csv, .xls, or .xlsx file.")
+            return None
+
+        # --- Common post-processing for both file types ---
+        if df is None or df.empty:
+            logger.warning("File was read but is empty after processing.")
+            return None
+
+        df.columns = [str(c).strip().lower() for c in df.columns]
+        if 'time' not in df.columns and 'date' in df.columns:
+            logger.debug("Renaming 'date' column to 'time'.")
+            df.rename(columns={'date': 'time'}, inplace=True)
+        
         req_cols = ['time', 'venue', 'code', 'raceno', 'runnerno', 'runnername']
         missing_cols = [c for c in req_cols if c not in df.columns]
-        if missing_cols: logger.critical(f"CSV: Missing required columns: {missing_cols}. Found columns: {df.columns.tolist()}"); return None
-        logger.info(f"Loaded {len(df)} tasks from '{filename}'.")
-        if df.empty: logger.warning("CSV: Parsed file is empty after processing.")
+        if missing_cols:
+            logger.critical(f"Input file is missing required columns: {missing_cols}. Found columns: {df.columns.tolist()}")
+            return None
+        
+        logger.info(f"Successfully loaded {len(df)} tasks from the selected file.")
         return df
-    except Exception as e: logger.critical(f"CSV: Error reading/processing '{filename}': {e}", exc_info=True); return None
 
-# --- filter_tasks_for_last_n_days ( 그대로 유지 ) ---
+    except Exception as e:
+        logger.critical(f"Failed to read or process file '{filename}': {e}", exc_info=True)
+        return None
+
+# --- filter_tasks_for_last_n_days  ---
 def filter_tasks_for_last_n_days(df_input, days=8):
     if df_input is None or df_input.empty: logger.info("Date Filter: Input DataFrame is empty or None."); return df_input
     logger.info(f"Date Filter: Starting to filter tasks for the last {days} days (today inclusive).")
@@ -217,7 +273,7 @@ def filter_tasks_for_last_n_days(df_input, days=8):
     df_filtered.drop(columns=['temp_parsed_datetime'], inplace=True, errors='ignore')
     return df_filtered
 
-# --- _fetch_bsp_for_race_runners ( 그대로 유지 ) ---
+# --- _fetch_bsp_for_race_runners  ---
 def _fetch_bsp_for_race_runners(driver, wait, active_meeting_element_initial_ref, raceno_to_find, tasks_for_this_race_df, venue_name_for_logging):
     processed_tasks_list = []
     str_raceno = str(raceno_to_find)
@@ -286,7 +342,7 @@ def _fetch_bsp_for_race_runners(driver, wait, active_meeting_element_initial_ref
     logger.debug(f"Race R{str_raceno}: Finished BSP fetch. Returning {len(processed_tasks_list)} task results.")
     return processed_tasks_list
 
-# --- _find_and_click_venue ( 그대로 유지 ) ---
+# --- _find_and_click_venue  ---
 def _find_and_click_venue(driver, wait, csv_venue_group, current_phase_name, fuzzy_venue_matching_enabled=False):
     """
     Finds and clicks a venue filter button on the page.
@@ -356,7 +412,7 @@ def _find_and_click_venue(driver, wait, csv_venue_group, current_phase_name, fuz
     logger.error(f"[{current_phase_name}] Venue '{csv_venue_group}' NOT FOUND (Exact match failed, fuzzy matching disabled/failed).")
     return False
 
-# --- scrape_and_enrich_csv [ 그대로 유지 ] ---
+# --- scrape_and_enrich_csv  ---
 def scrape_and_enrich_csv(tasks_df_input, context_filter, current_phase_name="Phase Default", fuzzy_venue_matching=False):
     logger.info(f"[{current_phase_name}] Starting scraping process for {len(tasks_df_input)} tasks... (Fuzzy Venue Matching: {fuzzy_venue_matching})")
     if tasks_df_input.empty: logger.warning(f"[{current_phase_name}] Input DataFrame is empty."); return pd.DataFrame(), pd.DataFrame(), set()
@@ -521,7 +577,7 @@ def scrape_and_enrich_csv(tasks_df_input, context_filter, current_phase_name="Ph
         logger.info(f"[{current_phase_name}] Scraping finished. Returning {len(enriched_df_this_phase)} processed rows and {len(retry_df_for_next_phase)} tasks for retry.")
         return enriched_df_this_phase, retry_df_for_next_phase, failed_venue_date_pairs
 
-# --- format_and_save_data ( 그대로 유지 ) ---
+# --- format_and_save_data  ---
 def format_and_save_data(final_df_to_save, original_input_df_for_headers_ref):
     output_filename = "final_results.csv"
     logger.debug(f"Preparing to save data to '{output_filename}'.")
@@ -585,7 +641,7 @@ def format_and_save_data(final_df_to_save, original_input_df_for_headers_ref):
         logger.error(f"Failed to save final data to '{output_filename}': {e_final_save}", exc_info=True)
 
 
-# --- main [MODIFIED] ---
+# --- main  ---
 if __name__ == "__main__":
     context_filter.current_date = 'Setup'
     logger.info("Script execution started.")
@@ -642,7 +698,7 @@ if __name__ == "__main__":
             valid_phase_results_dfs = [df for df in all_phases_results_list if df is not None and not df.empty]
 
             if valid_phase_results_dfs:
-                # *** FIX: Per user request, combine results without dropping any duplicates. ***
+                # Per user request, combine results without dropping any duplicates.
                 logger.info(f"Combining results from all phases. All processed rows will be preserved.")
                 final_combined_output_df = pd.concat(valid_phase_results_dfs, ignore_index=True)
             else:
